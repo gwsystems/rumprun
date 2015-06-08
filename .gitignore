@@ -2,6 +2,10 @@
 *.o
 obj
 
+.out
+.a
+
+
 platform/*/img/*.ffs
 rump
 rump-kernel

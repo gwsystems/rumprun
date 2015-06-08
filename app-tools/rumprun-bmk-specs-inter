@@ -1,0 +1,25 @@
+%rename cpp_options old_cpp_options
+ 
+*cpp_options:
+-nostdinc -isystem /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include -isystem /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/c++ %(old_cpp_options) -D__NetBSD__  -Ulinux -U__linux -U__linux__ -U__gnu_linux__ -D__RUMPRUN__
+
+%rename cc1_options old_cc1_options
+
+*cc1_options:
+%(old_cc1_options) -fno-stack-protector -fno-builtin-sin -fno-builtin-sinf -fno-builtin-cos -fno-builtin-cosf
+
+*startfile:
+
+
+*endfile:
+
+
+*lib:
+-L/home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/lib
+
+*link:
+%{m64:-m elf_x86_64;mx32:-m elf32_x86_64;m32:-m elf_i386} %:replace-outfile(-lstdc++ -lc++) %{rdynamic:}
+
+%rename link_libgcc old_link_libgcc
+
+%rename libgcc old_libgcc

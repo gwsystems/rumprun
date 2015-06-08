@@ -1,0 +1,58 @@
+rumpuser_base.d rumpuser_base.ln rumpuser_base.go rumpuser_base.pico rumpuser_base.po rumpuser_base.o: \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/rumpuser_base.c \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/core.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/platform.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/types.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/errno.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/null.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/printf.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/sched.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/string.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-rumpuser/core_types.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-rumpuser/rumpuser.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/rump/rumpuser.h
+rumpuser_clock.d rumpuser_clock.ln rumpuser_clock.go rumpuser_clock.pico rumpuser_clock.po rumpuser_clock.o: \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/rumpuser_clock.c \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/errno.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/memalloc.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/null.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/sched.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/types.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/string.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-rumpuser/core_types.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-rumpuser/rumpuser.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/rump/rumpuser.h
+rumpuser_cons.d rumpuser_cons.ln rumpuser_cons.go rumpuser_cons.pico rumpuser_cons.po rumpuser_cons.o: \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/rumpuser_cons.c \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/printf.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-rumpuser/core_types.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-rumpuser/rumpuser.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/rump/rumpuser.h
+rumpuser_mem.d rumpuser_mem.ln rumpuser_mem.go rumpuser_mem.pico rumpuser_mem.po rumpuser_mem.o: \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/rumpuser_mem.c \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/core.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/platform.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/types.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/errno.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/memalloc.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/null.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-rumpuser/core_types.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-rumpuser/rumpuser.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/rump/rumpuser.h
+rumpuser_stubs.d rumpuser_stubs.ln rumpuser_stubs.go rumpuser_stubs.pico rumpuser_stubs.po rumpuser_stubs.o: \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/rumpuser_stubs.c \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/errno.h
+rumpuser_synch.d rumpuser_synch.ln rumpuser_synch.go rumpuser_synch.pico rumpuser_synch.po rumpuser_synch.o: \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/rumpuser_synch.c \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/core.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/platform.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/types.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/errno.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/memalloc.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/queue.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/null.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/sched.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-core/string.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-rumpuser/core_types.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include/bmk-rumpuser/rumpuser.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/rump/rumpuser.h

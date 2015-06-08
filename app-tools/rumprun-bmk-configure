@@ -1,0 +1,9 @@
+#!/bin/sh
+# invoke this (for example) as  .../app-configure ./configure --prefix=...
+set -e
+prog=$1; shift
+
+export CC=/home/hobbes/Code/Research/rump2cos/rumprun/app-tools/rumprun-bmk-cc
+export CXX=/home/hobbes/Code/Research/rump2cos/rumprun/app-tools/rumprun-bmk-c++
+
+exec "$prog" --host=i386-rumprun-netbsd "$@"
