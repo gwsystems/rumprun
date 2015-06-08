@@ -7,7 +7,7 @@
 
 #include <assert.h>
 
-
+char *paws[524288];
 
 int
 rumpuser_getfileinfo(const char *name, uint64_t *size, int *type)
@@ -41,4 +41,10 @@ rumpuser_open(const char *name, int mode, int *fdp)
   }
 
   return rv;
+}
+
+int
+rumpuser_close(int fd) {
+  *paws = NULL;
+  return 0;
 }

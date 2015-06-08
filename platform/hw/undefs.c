@@ -38,7 +38,7 @@
     int name(void); int name(void) {return rv;}
 
 //NOTHING(rumpuser_open)
-NOTHING(rumpuser_close)
+//NOTHING(rumpuser_close)
 NOTHING(rumpuser_bio)
 
 //REALNOTHING(rumpuser_getfileinfo, BMK_ENOSYS)
