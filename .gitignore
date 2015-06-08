@@ -2,8 +2,8 @@
 *.o
 obj
 
-.out
-.a
+*.out
+*.a
 
 
 platform/*/img/*.ffs

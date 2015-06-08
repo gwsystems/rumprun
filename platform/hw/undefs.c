@@ -37,10 +37,10 @@
 #define REALNOTHING(name, rv) \
     int name(void); int name(void) {return rv;}
 
-NOTHING(rumpuser_open)
+//NOTHING(rumpuser_open)
 NOTHING(rumpuser_close)
 NOTHING(rumpuser_bio)
 
-REALNOTHING(rumpuser_getfileinfo, BMK_ENOSYS)
+//REALNOTHING(rumpuser_getfileinfo, BMK_ENOSYS)
 
 REALNOTHING(rumprun_platform_rumpuser_init, 0);
