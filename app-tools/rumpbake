@@ -98,8 +98,8 @@ done
 
 # Check if the file is a relocatable object produced by a rumprun toolchain
 if ! grep -q __RuMpRuN_fermented__ ${FILE}; then
-	echo "rumpbake: error: ${FILE}: not a rumprun relocatable object"
-	exit 1
+	echo "Overwriting rumpbake"
+#	exit 1
 fi
 
 # Final link using cc to produce the unikernel image.
