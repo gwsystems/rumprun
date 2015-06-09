@@ -7,7 +7,8 @@
 
 #include <assert.h>
 
-char *paws[524288];
+char paws[524288];
+#define PAWS_SIZE sizeof(char)*524288
 
 int
 rumpuser_getfileinfo(const char *name, uint64_t *size, int *type)
@@ -16,8 +17,7 @@ rumpuser_getfileinfo(const char *name, uint64_t *size, int *type)
 
   if(bmk_strcmp(name, "paws") == 0)
   {
-    // For paws, we don't care about if it is a valid host file or not. We don't need info on it.
-    *size = sizeof(char)*524288;
+    *size = PAWS_SIZE;
     *type = RUMPUSER_FT_BLK;
     rv = 0;
   } else {
@@ -45,6 +45,46 @@ rumpuser_open(const char *name, int mode, int *fdp)
 
 int
 rumpuser_close(int fd) {
-  *paws = NULL;
+  bmk_memset(&paws[0], 0, sizeof(paws));
   return 0;
+}
+
+void
+rumpuser_bio(int fd, int op, void *data, size_t dlen, int64_t off,
+    rump_biodone_fn biodone, void *donearg)
+{
+  bmk_printf("%d\n", op & RUMPUSER_BIO_READ);
+  bmk_printf("%d\n", op & RUMPUSER_BIO_WRITE);
+  bmk_printf("%d\n", op & RUMPUSER_BIO_SYNC);
+
+  size_t rv;
+  int error;
+  char *message = (char *)data;
+  rv = 0; // The amount that is sucessfully read or written
+  error = 0;
+
+  assert(donearg != NULL);
+  assert(data != NULL);
+  assert(off < dlen);
+
+  if(op & RUMPUSER_BIO_READ)
+  {
+    bmk_printf("operation: reading\n");
+    bmk_printf("offset: %ld\n", (long)off);
+    assert(PAWS_SIZE >= dlen);
+    char *returnstr = bmk_strcpy(message, &paws[off]);
+    assert(returnstr != NULL);
+    rv = dlen;
+  }
+  else if(op & RUMPUSER_BIO_WRITE)
+  {
+     bmk_printf("operation: writing\n");
+     bmk_printf("offset: %ld\n", (long)off);
+     assert(PAWS_SIZE >= dlen);
+     char *returnstr = bmk_strcpy(&paws[off], message);
+     assert(returnstr != NULL);
+     rv = dlen;
+  }
+
+  biodone(donearg, rv, error);
 }
