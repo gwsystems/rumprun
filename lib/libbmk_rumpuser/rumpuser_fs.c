@@ -67,8 +67,6 @@ rumpuser_bio(int fd, int op, void *data, size_t dlen, int64_t off,
 
   if(op & RUMPUSER_BIO_READ)
   {
-    bmk_printf("operation: reading\n");
-    //bmk_printf("offset: %ld\n", (long)off);
     assert(PAWS_SIZE >= dlen);
     char *returnstr = bmk_strcpy(data, &paws[off]);
     assert(returnstr != NULL);
@@ -76,8 +74,6 @@ rumpuser_bio(int fd, int op, void *data, size_t dlen, int64_t off,
   }
   else if(op & RUMPUSER_BIO_WRITE)
   {
-    bmk_printf("operation: writing\n");
-    //bmk_printf("offset: %ld\n", (long)off);
     assert(PAWS_SIZE >= dlen);
     char *returnstr = bmk_strcpy(&paws[off], data);
     assert(returnstr != NULL);
