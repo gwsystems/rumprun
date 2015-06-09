@@ -53,13 +53,11 @@ void
 rumpuser_bio(int fd, int op, void *data, size_t dlen, int64_t off,
     rump_biodone_fn biodone, void *donearg)
 {
-  bmk_printf("%d\n", op & RUMPUSER_BIO_READ);
+  bmk_printf("%d, ", op & RUMPUSER_BIO_READ);
   bmk_printf("%d\n", op & RUMPUSER_BIO_WRITE);
-  bmk_printf("%d\n", op & RUMPUSER_BIO_SYNC);
 
   size_t rv;
   int error;
-  char *message = (char *)data;
   rv = 0; // The amount that is sucessfully read or written
   error = 0;
 
@@ -70,20 +68,20 @@ rumpuser_bio(int fd, int op, void *data, size_t dlen, int64_t off,
   if(op & RUMPUSER_BIO_READ)
   {
     bmk_printf("operation: reading\n");
-    bmk_printf("offset: %ld\n", (long)off);
+    //bmk_printf("offset: %ld\n", (long)off);
     assert(PAWS_SIZE >= dlen);
-    char *returnstr = bmk_strcpy(message, &paws[off]);
+    char *returnstr = bmk_strcpy(data, &paws[off]);
     assert(returnstr != NULL);
     rv = dlen;
   }
   else if(op & RUMPUSER_BIO_WRITE)
   {
-     bmk_printf("operation: writing\n");
-     bmk_printf("offset: %ld\n", (long)off);
-     assert(PAWS_SIZE >= dlen);
-     char *returnstr = bmk_strcpy(&paws[off], message);
-     assert(returnstr != NULL);
-     rv = dlen;
+    bmk_printf("operation: writing\n");
+    //bmk_printf("offset: %ld\n", (long)off);
+    assert(PAWS_SIZE >= dlen);
+    char *returnstr = bmk_strcpy(&paws[off], data);
+    assert(returnstr != NULL);
+    rv = dlen;
   }
 
   biodone(donearg, rv, error);
