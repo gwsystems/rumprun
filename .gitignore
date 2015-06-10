@@ -5,6 +5,7 @@ obj
 *.out
 *.a
 
+buildtest.*
 
 platform/*/img/*.ffs
 rump
