@@ -96,16 +96,18 @@ link)
 	    "$@" ${EXTRALIBS} || die
 
 	# Try a stub link with minimal rump components. If that fails then stop.
-	${CC} ${CFLAGS} -no-integrated-cpp \
-	    -specs=/home/hobbes/Code/Research/rump2cos/rumprun/app-tools/rumprun-bmk-specs-stub \
-	    ${OUTFILE} -o /dev/null
-	if [ $? -ne 0 ]; then
-		[ -f "${OUTFILE}" ] && rm -f ${OUTFILE}
-		die
-	fi
-
-	# Some build systems insist that the output looks like an executable.
-	chmod +x ${OUTFILE}
+  # RG: We comment this out becuase when using multiple source files while also making direct RK function calls
+  # we need to be able to just make a relocatable object. Don't run this test.
+#	${CC} ${CFLAGS} -no-integrated-cpp \
+#	    -specs=/home/hobbes/Code/Research/rump2cos/rumprun/app-tools/rumprun-bmk-specs-stub \
+#	    ${OUTFILE} -o /dev/null
+#	if [ $? -ne 0 ]; then
+#		[ -f "${OUTFILE}" ] && rm -f ${OUTFILE}
+#		die
+#	fi
+#
+#	# Some build systems insist that the output looks like an executable.
+#	chmod +x ${OUTFILE}
 	;;
 *)
 	echo "$0: internal error, unknown mode"
