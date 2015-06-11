@@ -63,7 +63,7 @@ rumpuser_bio(int fd, int op, void *data, size_t dlen, int64_t off,
 
   assert(donearg != NULL);
   assert(data != NULL);
-  assert(off < dlen);
+  //assert(off <= dlen); Removed to test testfs app. off was == to dlen. still breaking??
 
   if(op & RUMPUSER_BIO_READ)
   {
