@@ -7,8 +7,11 @@
 
 #include <assert.h>
 
-char paws[524288];
-#define PAWS_SIZE sizeof(char)*524288
+extern char _binary_backing_img_start;
+extern char _binary_backing_img_end;
+
+#define PAWS_SIZE (&_binary_backing_img_end - &_binary_backing_img_start)
+char *paws = &_binary_backing_img_start;
 
 int
 rumpuser_getfileinfo(const char *name, uint64_t *size, int *type)
@@ -17,7 +20,7 @@ rumpuser_getfileinfo(const char *name, uint64_t *size, int *type)
 
   if(bmk_strcmp(name, "paws") == 0)
   {
-    *size = PAWS_SIZE;
+    *size = (uint64_t)PAWS_SIZE;
     *type = RUMPUSER_FT_BLK;
     rv = 0;
   } else {
@@ -45,7 +48,7 @@ rumpuser_open(const char *name, int mode, int *fdp)
 
 int
 rumpuser_close(int fd) {
-  bmk_memset(&paws[0], 0, sizeof(paws));
+  bmk_memset(&paws, 0, sizeof(paws));
   return 0;
 }
 
@@ -53,29 +56,30 @@ void
 rumpuser_bio(int fd, int op, void *data, size_t dlen, int64_t off,
     rump_biodone_fn biodone, void *donearg)
 {
-  bmk_printf("%d, ", op & RUMPUSER_BIO_READ);
-  bmk_printf("%d\n", op & RUMPUSER_BIO_WRITE);
+
+  bmk_printf("operation: %d\n", op);
 
   size_t rv;
   int error;
+  size_t pawssize = (size_t)PAWS_SIZE;
   rv = 0; // The amount that is sucessfully read or written
   error = 0;
 
   assert(donearg != NULL);
   assert(data != NULL);
-  //assert(off <= dlen); Removed to test testfs app. off was == to dlen. still breaking??
+  assert(off <= PAWS_SIZE);
 
   if(op & RUMPUSER_BIO_READ)
   {
-    assert(PAWS_SIZE >= dlen);
-    char *returnstr = bmk_strcpy(data, &paws[off]);
+    assert(pawssize >= dlen);
+    char *returnstr = bmk_memcpy(data, paws + off, dlen); // &paws[off]
     assert(returnstr != NULL);
     rv = dlen;
   }
   else if(op & RUMPUSER_BIO_WRITE)
   {
-    assert(PAWS_SIZE >= dlen);
-    char *returnstr = bmk_strcpy(&paws[off], data);
+    assert(pawssize >= dlen);
+    char *returnstr = bmk_memcpy(paws + off, data, dlen);
     assert(returnstr != NULL);
     rv = dlen;
   }
