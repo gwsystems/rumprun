@@ -57,8 +57,6 @@ rumpuser_bio(int fd, int op, void *data, size_t dlen, int64_t off,
     rump_biodone_fn biodone, void *donearg)
 {
 
-  bmk_printf("operation: %d\n", op);
-
   size_t rv;
   int error;
   size_t pawssize = (size_t)PAWS_SIZE;
@@ -76,7 +74,7 @@ rumpuser_bio(int fd, int op, void *data, size_t dlen, int64_t off,
     assert(returnstr != NULL);
     rv = dlen;
   }
-  else if(op & RUMPUSER_BIO_WRITE)
+  else if(op & RUMPUSER_BIO_WRITE || op & RUMPUSER_BIO_SYNC)
   {
     assert(pawssize >= dlen);
     char *returnstr = bmk_memcpy(paws + off, data, dlen);
