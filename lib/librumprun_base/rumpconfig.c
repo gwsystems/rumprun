@@ -40,6 +40,7 @@
 
 #include <assert.h>
 #include <err.h>
+#include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -290,11 +291,13 @@ static char *
 configetfs(const char *path)
 {
 	char buf[32];
+	char epath[32];
 	char *p;
 	int rv;
 
+	snprintf(epath, sizeof(epath), "XENBLK_%s", path);
 	snprintf(buf, sizeof(buf), "/dev/%s", path);
-	rv = rump_pub_etfs_register(buf, path, RUMP_ETFS_BLK);
+	rv = rump_pub_etfs_register(buf, epath, RUMP_ETFS_BLK);
 	if (rv != 0)
 		errx(1, "etfs register for \"%s\" failed: %d", path, rv);
 
@@ -303,10 +306,48 @@ configetfs(const char *path)
 	return p;
 }
 
+static void
+mount_ufs(const char *fstype, const char *dev, const char *mp)
+{
+	struct ufs_args mntargs = { .fspec = __UNCONST(dev) };
+
+	if (mount(fstype, mp, 0, &mntargs, sizeof(mntargs)) == -1)
+		errx(1, "rumprun_config: mount_%s failed", fstype);
+}
+
+static void
+mount_cd9660(const char *fstype, const char *dev, const char *mp)
+{
+	struct iso_args mntargs = { .fspec = dev };
+
+	if (mount(MOUNT_CD9660,
+	    mp, MNT_RDONLY, &mntargs, sizeof(mntargs)) == -1)
+		errx(1, "rumprun_config: mount_cd9660 failed");
+}
+
+static void
+mount_kernfs(const char *fstype, const char *dev, const char *mp)
+{
+
+	if (mount(MOUNT_KERNFS, mp, 0, NULL, 0) == -1)
+		errx(1, "rumprun_config: mount_%s failed", fstype);
+}
+
+struct {
+	const char *mt_fstype;
+	void (*mt_mount)(const char *, const char *, const char *);
+} mounters[] = {
+	{ "ffs",	mount_ufs, },
+	{ "ext2fs",	mount_ufs, },
+	{ "cd9660",	mount_cd9660 },
+	{ "kernfs",	mount_kernfs },
+};
+
 static int
 handle_blk(jsmntok_t *t, int left, char *data)
 {
-	const char *source, *path, *fstype, *mp;
+	const char *source, *path, *fstype;
+	char *mp;
 	jsmntok_t *key, *value;
 	int i, objsize;
 
@@ -322,7 +363,7 @@ handle_blk(jsmntok_t *t, int left, char *data)
 	fstype = source = path = mp = NULL;
 
 	for (i = 0; i < objsize; i++, t+=2) {
-		const char *valuestr;
+		char *valuestr;
 		key = t;
 		value = t+1;
 
@@ -364,32 +405,43 @@ handle_blk(jsmntok_t *t, int left, char *data)
 
 	/* we only need to do something only if a mountpoint is specified */
 	if (mp) {
+		char *chunk;
+		unsigned mi;
+
 		if (!fstype) {
 			err(1, "no fstype for mountpoint \"%s\"\n", mp);
 		}
 
-		/* XXX: handles only one component */
-		if (mkdir(mp, 0777) == -1)
-			errx(1, "creating mountpoint \"%s\" failed", mp);
+		for (chunk = mp;;) {
+			bool end;
 
-		if (strcmp(fstype, "ffs") == 0) {
-			struct ufs_args mntargs =
-			    { .fspec = __UNCONST(path) };
+			/* find & terminate the next chunk */
+			chunk += strspn(chunk, "/");
+			chunk += strcspn(chunk, "/");
+			end = (*chunk == '\0');
+			*chunk = '\0';
 
-			if (mount(MOUNT_FFS, mp, 0,
-			    &mntargs, sizeof(mntargs)) == -1) {
-				errx(1, "rumprun_config: mount_ffs failed");
+			if (mkdir(mp, 0755) == -1) {
+				if (errno != EEXIST)
+					err(1, "failed to create mp dir \"%s\"",
+					    chunk);
 			}
-		} else if(strcmp(fstype, "cd9660") == 0) {
-			struct iso_args mntargs = { .fspec = path };
 
-			if (mount(MOUNT_CD9660, mp, MNT_RDONLY,
-			    &mntargs, sizeof(mntargs)) == -1) {
-				errx(1, "rumprun_config: mount_cd9660 failed");
-			}
-		} else {
-			errx(1, "unknown fstype \"%s\"", fstype);
+			/* restore path */
+			if (!end)
+				*chunk = '/';
+			else
+				break;
 		}
+
+		for (mi = 0; mi < __arraycount(mounters); mi++) {
+			if (strcmp(fstype, mounters[mi].mt_fstype) == 0) {
+				mounters[mi].mt_mount(fstype, path, mp);
+				break;
+			}
+		}
+		if (mi == __arraycount(mounters))
+			errx(1, "unknown fstype \"%s\"", fstype);
 	}
 
 	return 2*objsize + 1;

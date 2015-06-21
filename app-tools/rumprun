@@ -331,14 +331,13 @@ parse_newnetspec ()
 json_store_xen_blkspec ()
 {
 
-	vdev=hd$(echo ${bindex} | tr '[0-9]' '[a-j]')
+	vdev=xvd$(echo ${bindex} | tr '[0-9]' '[a-j]')
 	conf_disk="${conf_disk}'file:$image,$vdev,w',"
 
 	json_open_block blk
 
-	# XXX: should not assume ld (virtio)
 	json_append_ln	'"source":	"'etfs'"'
-	json_append_ln	'"path":	"'blk${bindex}'"'
+	json_append_ln	'"path":	"'${vdev}'"'
 
 	# if the image does not need to be mounted, we're done
 	[ -n "${mountpoint}" ] || { json_finalize_block ; return ; }
@@ -393,6 +392,19 @@ json_store_iso_blkspec ()
 	json_finalize_block
 }
 
+json_store_kernfs ()
+{
+
+	json_open_block blk
+
+	json_append_ln	'"source":	"dev"' # XXX: not really dev
+	json_append_ln	'"path":	"virtual"'
+	json_append_ln	'"fstype":	"kernfs"'
+	json_append_ln	'"mountpoint":	"/kern"'
+
+	json_finalize_block
+}
+
 parse_blkspec ()
 {
 	spec=$1
@@ -422,7 +434,7 @@ run_xen ()
 	unset gdbsx
 	for x in gdbsx /usr/lib/xen-4.4/bin/gdbsx ; do
 		if type ${x}> /dev/null 2>&1; then
-			gdbsx="$x"
+			gdbsx=$(which ${x})
 			break
 		fi
 	done
@@ -506,6 +518,9 @@ run_xen ()
 	[ "$1" = "--" ] && shift
 	[ $# -lt 1 ] && usage
 
+	# kernfs is always present on Xen
+	json_store_kernfs
+
 	json_append_ln "\"cmdline\": \""$@"\""
 	json_finalize_block
 
@@ -553,7 +568,7 @@ EOM
 		else
 			bits=32
 		fi
-		${DUMPCMD} ${gdbsx} -a ${domid} ${bits} ${opt_debug} &
+		${DUMPCMD} ${sudo} ${gdbsx} -a ${domid} ${bits} ${opt_debug} &
 	fi
 	# Go go go!
 	[ -z "$opt_pause" ] && ${DUMPCMD} ${sudo} xl unpause ${domid}
@@ -612,7 +627,7 @@ run_qemu ()
 			;;
 		n)
 			netname=_net${nindex}
-			createif_qemu "${netname},-net user"
+			createif_qemu "${netname},vioif,-net user"
 			parse_netspec ${netname} "${OPTARG}" || usage
 			;;
 		N)
@@ -650,7 +665,15 @@ run_qemu ()
 
 	check_app $1
 
-	qemucmd="${DUMPCMD} qemu-system-i386 ${opt_netif} ${opt_kvm}	\
+	# XXX: using host objdump here is wrong, but xen uses it too,
+	# and both offenses should be easy to fix at the same time
+	if objdump -f ${1} | grep -q elf64; then
+		qemu=qemu-system-x86_64
+	else
+		qemu=qemu-system-i386
+	fi
+
+	qemucmd="${DUMPCMD} ${qemu} ${opt_netif} ${opt_kvm}		\
 	    ${opt_drivespec} ${opt_debug} ${opt_pause} -m ${opt_mem}	\
 	    ${opt_guestargs} -kernel $1"
 	if [ -n "$opt_interactive" ]; then

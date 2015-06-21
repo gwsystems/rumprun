@@ -6,6 +6,7 @@ obj
 *.a
 
 buildtest.*
+buildtest
 
 platform/*/img/*.ffs
 rump

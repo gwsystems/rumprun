@@ -41,7 +41,7 @@ fi
 usage ()
 {
 	cat <<EOM
-usage: rumpbake TARGET OUTPUT FILE
+usage: rumpbake TARGET OUTPUT FILE [FILE ...]
        rumpbake list
 
 When invoked the single argument "list", lists supported target boards.
@@ -54,6 +54,28 @@ EOM
 	exit 1
 }
 
+nuketmpdir ()
+{
+
+	nukeme="${TMPDIR}"
+	TMPDIR=''
+	rm -rf ${nukeme}
+}
+
+ALLCONFIGS=
+addconfig ()
+{
+	[ $# -ge 2 ] || { echo rumpbake.conf error; exit 1; }
+
+	confname=$1
+	toolchain=$2
+	shift 2
+
+	ALLCONFIGS="${ALLCONFIGS} ${confname}"
+	eval TOOLCHAIN_${confname}=${toolchain}
+	eval CONFIG_${confname}=\"$@\"
+}
+
 APP_TOOLS_DIR=$(dirname $0)
 CONF=${APP_TOOLS_DIR}/rumpbake.conf
 if [ ! -f ${CONF} ]; then
@@ -62,11 +84,9 @@ if [ ! -f ${CONF} ]; then
 fi
 . ${CONF}
 
-CONFIG=
-
 TARGET="${1}"
 if [ "${TARGET}" = "list" ]; then
-	set | sed -ne 's/^CONFIG_\([a-zA-Z0-9_]*\)=.*$/\1/p'
+	echo ${ALLCONFIGS} | xargs -n 1 echo
 	exit 0
 fi
 
@@ -74,22 +94,26 @@ OUTPUT="${2}"
 [ $# -gt 2 ] || usage
 shift 2
 
+[ $# -le 8 ] || { echo '>> max 8 binaries supported currently' ; exit 1; }
+
 # Santize the config argument passed in to remove shell
 # metacharacters
 config="$(echo ${TARGET} | sed -e 's/-/_/g' -e 's/[^A-Za-z0-9_]//g')"
+for c in ${ALLCONFIGS}; do
+	[ "$c" = "$config" ] && break
+done
+if [ "$c" != "$config" ]; then
+	echo "rumpbake: error: unsupported config \"$config\""
+	exit 1
+fi
+
 # Sets CONFIG to $(CONFIG_<name>) and CC to $(CC_<name>)
 eval CONFIG="\${CONFIG_${config}}"
 eval TOOLCHAIN="\${TOOLCHAIN_${config}}"
-if [ -z "${CONFIG}" -o -z "${TOOLCHAIN}" ]; then
-	echo "rumpbake: error: Unsupported configuration \`${config}'"
-	usage
-fi
-
-FILE=$1
 
 # Parse CONFIG, mapping each component to $LIBS_component and each resulting
 # lib to -l$lib
-LIBS=
+LIBS=-lrumpvfs
 for component in ${CONFIG}; do
 	for lib in $(eval echo \${LIBS_${component}}); do
 		LIBS="${LIBS} -l${lib}"
@@ -104,5 +128,4 @@ fi
 
 # Final link using cc to produce the unikernel image.
 ${APP_TOOLS_DIR}/${TOOLCHAIN}-cc \
-	-bake -o ${OUTPUT} ${FILE} -Wl,--whole-archive ${LIBS} \
-	|| exit 1
+    -bake -o ${OUTPUT} ${allobjs} -Wl,--whole-archive ${LIBS} || exit 1

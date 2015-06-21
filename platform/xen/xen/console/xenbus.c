@@ -14,6 +14,7 @@
 #include "console.h"
 
 #include <bmk-core/memalloc.h>
+#include <bmk-core/pgalloc.h>
 #include <bmk-core/printf.h>
 #include <bmk-core/string.h>
 
@@ -51,11 +52,10 @@ close:
     minios_mask_evtchn(dev->evtchn);
     minios_unbind_evtchn(dev->evtchn);
     bmk_memfree(dev->backend, BMK_MEMWHO_WIREDBMK);
-    bmk_memfree(dev->nodename, BMK_MEMWHO_WIREDBMK);
 
     gnttab_end_access(dev->ring_ref);
 
-    minios_free_page(dev->ring);
+    bmk_pgfree_one(dev->ring);
     bmk_memfree(dev, BMK_MEMWHO_WIREDBMK);
 }
 
@@ -89,7 +89,7 @@ struct consfront_dev *init_consfront(char *_nodename)
         dev->dom = res;
     minios_evtchn_alloc_unbound(dev->dom, console_handle_input, dev, &dev->evtchn);
 
-    dev->ring = (struct xencons_interface *) minios_alloc_page();
+    dev->ring = bmk_pgalloc_one();
     bmk_memset(dev->ring, 0, PAGE_SIZE);
     dev->ring_ref = gnttab_grant_access(dev->dom, virt_to_mfn(dev->ring), 0);
 

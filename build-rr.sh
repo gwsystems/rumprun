@@ -31,6 +31,19 @@ die ()
 	exit 1
 }
 
+helpme ()
+{
+
+	echo "Usage: $0 [-s srcdir] [-q] hw|xen [-- buildrump.sh options]"
+	printf "\t-s: specify alternative src-netbsd location (expert-only)\n"
+	printf "\t-q: quiet(er) build.  option maybe be specified twice.\n\n"
+	printf "buildrump.sh options are passed to buildrump.sh (expert-only)\n"
+	printf "\n"
+	printf "The toolchain is picked up from the environment.  See the\n"
+	printf "rumprun wiki for more information.\n"
+	exit 1
+}
+
 set -e
 
 # defaults
@@ -41,7 +54,7 @@ BUILDRUMP=$(pwd)/buildrump.sh
 # figure out where gmake lies
 if [ -z "${MAKE}" ]; then
 	MAKE=make
-	type gmake >/dev/null && MAKE=gmake
+	! type gmake >/dev/null || MAKE=gmake
 fi
 
 
@@ -61,14 +74,14 @@ parseargs ()
 		'q')
 			BUILD_QUIET=${BUILD_QUIET:=-}q
 			;;
-		'?')
-			echo HELP!
+		'h'|'?')
+			helpme
 			exit 1
 		esac
 	done
 	shift $((${OPTIND} - 1))
 
-	[ $# -gt 0 ] || die Need platform argument
+	[ $# -gt 0 ] || helpme
 
 	platform=$1
 	export PLATFORMDIR=platform/${platform}
@@ -142,8 +155,18 @@ buildrump ()
 	    "$@" tools
 
 	RUMPMAKE=$(pwd)/${RUMPTOOLS}/rumpmake
+
+	# Check that a clang build is not attempted.  This is the first
+	# place we can do it without replicating buildrump.sh compiler
+	# detection code
+	HAVE_LLVM=$(${RUMPMAKE} -f /dev/null -V '${HAVE_LLVM}')
+	[ ! "${HAVE_LLVM}" = "1" ] \
+	    || die rumprun does not yet support clang ${CC:+(\$CC: $CC)}
+
 	MACHINE=$(${RUMPMAKE} -f /dev/null -V '${MACHINE}')
-	[ -z "${MACHINE}" ] && die could not figure out target machine
+	[ -n "${MACHINE}" ] || die could not figure out target machine
+
+	makeconfigmk ${PLATFORMDIR}/config.mk
 
 	cat >> ${RUMPTOOLS}/mk.conf << EOF
 .if defined(LIB) && \${LIB} == "pthread"
@@ -152,8 +175,8 @@ PTHREAD_MAKELWP=pthread_makelwp_rumprun.c
 CPPFLAGS.pthread_makelwp_rumprun.c= -I$(pwd)/include
 .endif  # LIB == pthread
 EOF
-	[ -n "${PLATFORM_MKCONF}" ] \
-	    && echo "${PLATFORM_MKCONF}" >> ${RUMPTOOLS}/mk.conf
+	[ -z "${PLATFORM_MKCONF}" ] \
+	    || echo "${PLATFORM_MKCONF}" >> ${RUMPTOOLS}/mk.conf
 
 	# build rump kernel
 	${BUILDRUMP}/buildrump.sh ${BUILD_QUIET} ${STDJ} -k		\
@@ -167,7 +190,7 @@ builduserspace ()
 	usermtree ${RUMPDEST}
 
 	LIBS="$(stdlibs ${RUMPSRC})"
-	havecxx && LIBS="${LIBS} $(stdlibsxx ${RUMPSRC})"
+	! havecxx || LIBS="${LIBS} $(stdlibsxx ${RUMPSRC})"
 
 	userincludes ${RUMPSRC} ${LIBS} $(pwd)/lib/librumprun_tester
 	for lib in ${LIBS}; do
@@ -179,9 +202,6 @@ builduserspace ()
 	if havecxx; then
 		( cd lib/librumprun_unwind
 		    ${RUMPMAKE} dependall && ${RUMPMAKE} install )
-		CONFIG_CXX=yes
-	else
-		CONFIG_CXX=no
 	fi
 }
 
@@ -192,10 +212,23 @@ buildpci ()
 	${MAKE} -C ${PLATFORMDIR} links
 
 	if eval ${PLATFORM_PCI_P}; then
-		${RUMPMAKE} -f ${PLATFORMDIR}/pci/Makefile.pci obj
-		${RUMPMAKE} -f ${PLATFORMDIR}/pci/Makefile.pci dependall
-		${RUMPMAKE} -f ${PLATFORMDIR}/pci/Makefile.pci install
+		${RUMPMAKE} -f ${PLATFORMDIR}/pci/Makefile.pci ${STDJ} obj
+		${RUMPMAKE} -f ${PLATFORMDIR}/pci/Makefile.pci ${STDJ} dependall
+		${RUMPMAKE} -f ${PLATFORMDIR}/pci/Makefile.pci ${STDJ} install
 	fi
+}
+
+wraponetool ()
+{
+
+	configfile=$1
+	tool=$2
+
+	tpath=$(${RUMPMAKE} -f bsd.own.mk -V "\${${tool}}")
+	if ! [ -n "${tpath}" -a -x ${tpath} ]; then
+		die Could not locate buildrump.sh tool \"${tool}\".
+	fi
+	echo "${tool}=${tpath}" >> ${configfile}
 }
 
 makeconfigmk ()
@@ -203,16 +236,23 @@ makeconfigmk ()
 
 	echo "BUILDRUMP=${BUILDRUMP}" > ${1}
 	echo "RUMPSRC=${RUMPSRC}" >> ${1}
-	echo "CONFIG_CXX=${CONFIG_CXX}" >> ${1}
 	echo "RUMPMAKE=${RUMPMAKE}" >> ${1}
 	echo "BUILDRUMP_TOOLFLAGS=$(pwd)/${RUMPTOOLS}/toolchain-conf.mk" >> ${1}
 	echo "MACHINE=${MACHINE}" >> ${1}
 
-	tools="AR CPP CC INSTALL NM OBJCOPY"
-	havecxx && tools="${tools} CXX"
-	for t in ${tools}; do
-		echo "${t}=$(${RUMPMAKE} -f bsd.own.mk -V "\${${t}}")" >> ${1}
+	# wrap mandatory toolchain bits
+	for t in AR AS CC CPP LD NM OBJCOPY OBJDUMP RANLIB READELF \
+            SIZE STRINGS STRIP; do
+		wraponetool ${1} ${t}
 	done
+
+	# c++ is optional, wrap it iff available
+	if havecxx; then
+		echo "CONFIG_CXX=yes" >> ${1}
+		wraponetool ${1} CXX
+	else
+		echo "CONFIG_CXX=no" >> ${1}
+	fi
 }
 
 
@@ -230,8 +270,6 @@ checksubmodules
 
 buildrump "$@"
 builduserspace
-
-makeconfigmk ${PLATFORMDIR}/config.mk
 
 # depends on config.mk
 buildpci
