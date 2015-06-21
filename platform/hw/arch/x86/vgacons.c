@@ -83,3 +83,12 @@ bmk_cons_clear(void)
 	for (x = 0; x < CONS_HEIGHT * CONS_WIDTH; x++)
 		cons_putat(' ', x % CONS_WIDTH, x / CONS_WIDTH);
 }
+
+void
+bmk_cons_puts(const char *s)
+{
+	int c;
+
+	while ((c = *s++) != 0)
+		bmk_cons_putc(c);
+}

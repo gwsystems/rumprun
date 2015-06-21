@@ -56,9 +56,9 @@ get_config(void)
 	int retry;
 
 	if (xenbus_transaction_start(&txn))
-		jsonordie();
+		return jsonordie();
 	if (xenbus_read(txn, "rumprun/cfg", &cfg) != NULL)
-		jsonordie();
+		cfg = jsonordie();
 	xenbus_transaction_end(txn, 0, &retry);
 
 	return cfg;
@@ -71,7 +71,10 @@ app_main(start_info_t *si)
 
 	rumprun_boot(get_config());
 
-	cookie = rumprun(main, rumprun_cmdline_argc, rumprun_cmdline_argv);
-	rumprun_wait(cookie);
+	RUNMAINS();
+
+	while ((cookie = rumprun_get_finished()) != NULL)
+		rumprun_wait(cookie);
+
 	rumprun_reboot();
 }

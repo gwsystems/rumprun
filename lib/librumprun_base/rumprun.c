@@ -23,6 +23,8 @@
  * SUCH DAMAGE.
  */
 
+#include <sys/cdefs.h>
+
 #include <sys/types.h>
 #include <sys/mount.h>
 #include <sys/queue.h>
@@ -51,6 +53,21 @@
 
 static pthread_mutex_t w_mtx;
 static pthread_cond_t w_cv;
+
+int
+rumprun_notmain(int argc, char **argv)
+{
+
+	return ENOSYS;
+}
+__weak_alias(rumpbake_main1,rumprun_notmain);
+__weak_alias(rumpbake_main2,rumprun_notmain);
+__weak_alias(rumpbake_main3,rumprun_notmain);
+__weak_alias(rumpbake_main4,rumprun_notmain);
+__weak_alias(rumpbake_main5,rumprun_notmain);
+__weak_alias(rumpbake_main6,rumprun_notmain);
+__weak_alias(rumpbake_main7,rumprun_notmain);
+__weak_alias(rumpbake_main8,rumprun_notmain);
 
 void
 rumprun_boot(char *cmdline)
@@ -169,11 +186,6 @@ void *
 rumprun(int (*mainfun)(int, char *[]), int argc, char *argv[])
 {
 	struct rumprunner *rr;
-	static int called;
-
-	if (called)
-		bmk_platform_halt(">1 rumprun() calls not implemented yet");
-	called = 1;
 
 	rr = malloc(sizeof(*rr));
 
@@ -219,8 +231,10 @@ rumprun_get_finished(void)
 		pthread_cond_wait(&w_cv, &w_mtx);
 	}
 	LIST_FOREACH(rr, &rumprunners, rr_entries) {
-		if (rr->rr_done)
+		if (rr->rr_done) {
+			LIST_REMOVE(rr, rr_entries);
 			break;
+		}
 	}
 	pthread_mutex_unlock(&w_mtx);
 	assert(rr);

@@ -42,6 +42,7 @@
 #include <mini-os/lib.h>
 
 #include <bmk-core/platform.h>
+#include <bmk-core/pgalloc.h>
 #include <bmk-core/string.h>
 
 #ifdef MM_DEBUG
@@ -199,7 +200,7 @@ USED static void print_chunks(void *start, int nr_pages)
  * Initialise allocator, placing addresses [@min,@max] in free pool.
  * @min and @max are PHYSICAL addresses.
  */
-static void init_page_allocator(unsigned long min, unsigned long max)
+void bmk_pgalloc_loadmem(unsigned long min, unsigned long max)
 {
     int i;
     unsigned long range, bitmap_size;
@@ -257,7 +258,7 @@ static void init_page_allocator(unsigned long min, unsigned long max)
 
 
 /* Allocate 2^@order contiguous pages. Returns a VIRTUAL address. */
-unsigned long minios_alloc_pages(int order)
+void *bmk_pgalloc(int order)
 {
     int i;
     chunk_head_t *alloc_ch, *spare_ch;
@@ -298,7 +299,7 @@ unsigned long minios_alloc_pages(int order)
     
     map_alloc(PHYS_PFN(to_phys(alloc_ch)), 1UL<<order);
 
-    return((unsigned long)alloc_ch);
+    return(alloc_ch);
 
  no_memory:
 
@@ -307,7 +308,7 @@ unsigned long minios_alloc_pages(int order)
     return 0;
 }
 
-void minios_free_pages(void *pointer, int order)
+void bmk_pgfree(void *pointer, int order)
 {
     chunk_head_t *freed_ch, *to_merge_ch;
     chunk_tail_t *freed_ct;
@@ -394,7 +395,7 @@ void init_mm(void)
     minios_printk("MM: Initialise page allocator for %lx(%lx)-%lx(%lx)\n",
            (u_long)to_virt(PFN_PHYS(start_pfn)), PFN_PHYS(start_pfn), 
            (u_long)to_virt(PFN_PHYS(max_pfn)), PFN_PHYS(max_pfn));
-    init_page_allocator(PFN_PHYS(start_pfn), PFN_PHYS(max_pfn));
+    bmk_pgalloc_loadmem(PFN_PHYS(start_pfn), PFN_PHYS(max_pfn));
     minios_printk("MM: done\n");
     memsize = PFN_PHYS(max_pfn) - PFN_PHYS(start_pfn);
 
