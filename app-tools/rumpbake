@@ -120,11 +120,24 @@ for component in ${CONFIG}; do
 	done
 done
 
-# Check if the file is a relocatable object produced by a rumprun toolchain
-if ! grep -q __RuMpRuN_fermented__ ${FILE}; then
-	echo "Overwriting rumpbake"
-#	exit 1
-fi
+TMPDIR=$(mktemp -d /tmp/rumpbake.XXXXXX)
+trap nuketmpdir 0 INT TERM
+
+# Check if the file is a relocatable object produced by a rumprun toolchain.
+# Create a temporary object with a unique "main"
+objnum=1
+allobjs=
+for f in "$@"; do
+	if ! grep -q __RuMpRuN_fermented__ ${f}; then
+		echo "over writting rumpbake"
+		#exit 1
+	fi
+	${APP_TOOLS_DIR}/${TOOLCHAIN}-objcopy				\
+	    --redefine-sym main=rumpbake_main${objnum}			\
+	    ${f} ${TMPDIR}/tmp${objnum}.obj
+	allobjs="${allobjs} ${TMPDIR}/tmp${objnum}.obj"
+	objnum=$((${objnum}+1))
+done
 
 # Final link using cc to produce the unikernel image.
 ${APP_TOOLS_DIR}/${TOOLCHAIN}-cc \

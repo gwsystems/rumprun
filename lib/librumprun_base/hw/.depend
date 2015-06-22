@@ -270,6 +270,8 @@ rumpconfig.d rumpconfig.ln rumpconfig.go rumpconfig.pico rumpconfig.po rumpconfi
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/assert.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/err.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/errno.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/errno.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/fcntl.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/stdio.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/stdlib.h \
@@ -302,12 +304,12 @@ rumpconfig.d rumpconfig.ln rumpconfig.go rumpconfig.pico rumpconfig.po rumpconfi
  /home/hobbes/Code/Research/rump2cos/rumprun/lib/librumprun_base/../../include/bmk-core/jsmn.h
 rumprun.d rumprun.ln rumprun.go rumprun.pico rumprun.po rumprun.o: \
  /home/hobbes/Code/Research/rump2cos/rumprun/lib/librumprun_base/rumprun.c \
- /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/types.h \
- /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/featuretest.h \
- /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/i386/types.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/cdefs.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/i386/cdefs.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/cdefs_elf.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/types.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/featuretest.h \
+ /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/i386/types.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/i386/int_types.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/common_int_types.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/i386/ansi.h \

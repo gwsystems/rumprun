@@ -39,14 +39,24 @@ __strong_alias(__sigpending14,_stubnosys);
 __strong_alias(sigprocmask,_stubnosys);
 __weak_alias(__sigprocmask14,_stubnosys);
 __strong_alias(_sys___sigprocmask14,_stubnosys);
+__weak_alias(rumpbake_main1,_stubnosys);
+__weak_alias(rumpbake_main2,_stubnosys);
+__weak_alias(rumpbake_main3,_stubnosys);
+__weak_alias(rumpbake_main4,_stubnosys);
+__weak_alias(rumpbake_main5,_stubnosys);
+__weak_alias(rumpbake_main6,_stubnosys);
+__weak_alias(rumpbake_main7,_stubnosys);
+__weak_alias(rumpbake_main8,_stubnosys);
 __strong_alias(rumprun,_stubnosys);
 __strong_alias(rumprun_boot,_stubnosys);
 __strong_alias(rumprun_get_finished,_stubnosys);
+__strong_alias(rumprun_notmain,_stubnosys);
 __strong_alias(rumprun_reboot,_stubnosys);
 __strong_alias(rumprun_wait,_stubnosys);
 int __dso_handle;
 __strong_alias(_netbsd_userlevel_fini,_stubnosys);
 __strong_alias(_netbsd_userlevel_init,_stubnosys);
+int mounters;
 int parsers;
 int rumprun_cmdline_argc;
 int rumprun_cmdline_argv;
@@ -521,6 +531,18 @@ __strong_alias(_sys_lchown,_stubnosys);
 __weak_alias(lutimes,_stubnosys);
 __weak_alias(_lutimes,_stubnosys);
 __strong_alias(_sys_lutimes,_stubnosys);
+
+__weak_alias(__posix_chown,_stubnosys);
+__weak_alias(___posix_chown,_stubnosys);
+__strong_alias(_sys___posix_chown,_stubnosys);
+
+__weak_alias(__posix_fchown,_stubnosys);
+__weak_alias(___posix_fchown,_stubnosys);
+__strong_alias(_sys___posix_fchown,_stubnosys);
+
+__weak_alias(__posix_lchown,_stubnosys);
+__weak_alias(___posix_lchown,_stubnosys);
+__strong_alias(_sys___posix_lchown,_stubnosys);
 
 __weak_alias(getsid,_stubnosys);
 __weak_alias(_getsid,_stubnosys);

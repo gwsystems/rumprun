@@ -50,6 +50,7 @@ case $0 in
 	exit 1
 	;;
 esac
+LDFLAGS="-L/home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/lib"
 
 # Figure out what we're supposed to be doing. If called with '-bake' then we're
 # definitely baking. Otherwise assume we're linking and switch to compilation
@@ -96,16 +97,16 @@ link)
 	    "$@" ${EXTRALIBS} || die
 
 	# Try a stub link with minimal rump components. If that fails then stop.
-#	${CC} ${CFLAGS} -no-integrated-cpp \
-#	    -specs=/home/hobbes/Code/Research/rump2cos/rumprun/app-tools/rumprun-bmk-specs-stub \
-#	    ${OUTFILE} -o /dev/null
-#	if [ $? -ne 0 ]; then
-#		[ -f "${OUTFILE}" ] && rm -f ${OUTFILE}
-#		die
-#	fi
-#
-#	# Some build systems insist that the output looks like an executable.
-#	chmod +x ${OUTFILE}
+	${CC} ${CFLAGS} -no-integrated-cpp \
+	    -specs=/home/hobbes/Code/Research/rump2cos/rumprun/app-tools/rumprun-bmk-specs-stub \
+	    ${OUTFILE} -o /dev/null
+	if [ $? -ne 0 ]; then
+		[ -f "${OUTFILE}" ] && rm -f ${OUTFILE}
+		die
+	fi
+
+	# Some build systems insist that the output looks like an executable.
+	chmod +x ${OUTFILE}
 	;;
 *)
 	echo "$0: internal error, unknown mode"
