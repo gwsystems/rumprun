@@ -26,7 +26,7 @@ rumprun_tester.o: \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/fd_set.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/pthread_types.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/err.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include/stdarg.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/errno.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/errno.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/fcntl.h \
@@ -36,7 +36,7 @@ rumprun_tester.o: \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/sigtypes.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/time.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/null.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdbool.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include/stdbool.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/stdio.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/stdlib.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/string.h \

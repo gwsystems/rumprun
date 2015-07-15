@@ -55,8 +55,8 @@ rumpconfig.o: \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/mount.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/uio.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/ucred.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/limits.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/syslimits.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include-fixed/limits.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include-fixed/syslimits.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/limits.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/fstypes.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/queue.h \
@@ -74,7 +74,7 @@ rumpconfig.o: \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/pool.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/assert.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/err.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include/stdarg.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/errno.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/errno.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/fcntl.h \
@@ -88,12 +88,12 @@ rumpconfig.o: \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/proplib.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_array.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_object.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdbool.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include/stdbool.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_bool.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_data.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_dictionary.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_number.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include/stdint.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/stdint.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_string.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_ingest.h \

@@ -73,12 +73,12 @@ _lwp.d _lwp.ln _lwp.go _lwp.pico _lwp.po _lwp.o: \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/proplib.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_array.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_object.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdbool.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include/stdbool.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_bool.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_data.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_dictionary.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_number.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include/stdint.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/stdint.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_string.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_ingest.h \
@@ -250,8 +250,8 @@ rumpconfig.d rumpconfig.ln rumpconfig.go rumpconfig.pico rumpconfig.po rumpconfi
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/mount.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/uio.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/ucred.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/limits.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/syslimits.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include-fixed/limits.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include-fixed/syslimits.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/limits.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/fstypes.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/queue.h \
@@ -269,7 +269,7 @@ rumpconfig.d rumpconfig.ln rumpconfig.go rumpconfig.pico rumpconfig.po rumpconfi
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/pool.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/assert.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/err.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include/stdarg.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/errno.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/errno.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/fcntl.h \
@@ -283,12 +283,12 @@ rumpconfig.d rumpconfig.ln rumpconfig.go rumpconfig.pico rumpconfig.po rumpconfi
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/proplib.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_array.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_object.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdbool.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include/stdbool.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_bool.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_data.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_dictionary.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_number.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include/stdint.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/stdint.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_string.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_ingest.h \
@@ -351,8 +351,8 @@ rumprun.d rumprun.ln rumprun.go rumprun.pico rumprun.po rumprun.o: \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/i386/limits.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/uio.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/ucred.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/limits.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/syslimits.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include-fixed/limits.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include-fixed/syslimits.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/limits.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/fstypes.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/queue.h \
@@ -367,7 +367,7 @@ rumprun.d rumprun.ln rumprun.go rumprun.pico rumprun.po rumprun.o: \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/condvar.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/assert.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/err.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include/stdarg.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/errno.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/errno.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/pthread.h \
@@ -383,12 +383,12 @@ rumprun.d rumprun.ln rumprun.go rumprun.pico rumprun.po rumprun.o: \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/proplib.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_array.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_object.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdbool.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include/stdbool.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_bool.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_data.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_dictionary.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_number.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include/stdint.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/stdint.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_string.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_ingest.h \
@@ -515,12 +515,12 @@ syscall_misc.d syscall_misc.ln syscall_misc.go syscall_misc.pico syscall_misc.po
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/proplib.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_array.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_object.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdbool.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include/stdbool.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_bool.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_data.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_dictionary.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_number.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include/stdint.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/stdint.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_string.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_ingest.h \
@@ -579,7 +579,7 @@ sysproxy.d sysproxy.ln sysproxy.go sysproxy.pico sysproxy.po sysproxy.o: \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/pthread.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sched.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/sched.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include/stdarg.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/stdio.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/stdlib.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/string.h \
@@ -590,12 +590,12 @@ sysproxy.d sysproxy.ln sysproxy.go sysproxy.pico sysproxy.po sysproxy.o: \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/proplib.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_array.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_object.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdbool.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include/stdbool.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_bool.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_data.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_dictionary.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_number.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include/stdint.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/stdint.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_string.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_ingest.h \
@@ -612,10 +612,10 @@ sysproxy.d sysproxy.ln sysproxy.go sysproxy.pico sysproxy.po sysproxy.o: \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/inttypes.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/inttypes.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/i386/int_fmtio.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/limits.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/syslimits.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include-fixed/limits.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include-fixed/syslimits.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/limits.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/i386/limits.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/syslimits.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include/stddef.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/atomic.h

@@ -46,7 +46,7 @@ sysproxy.o: \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/pthread.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sched.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/sched.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include/stdarg.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/stdio.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/stdlib.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/string.h \
@@ -57,12 +57,12 @@ sysproxy.o: \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/proplib.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_array.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_object.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdbool.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include/stdbool.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_bool.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_data.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_dictionary.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_number.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include/stdint.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/stdint.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_string.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_ingest.h \
@@ -79,10 +79,10 @@ sysproxy.o: \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/inttypes.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/inttypes.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/i386/int_fmtio.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/limits.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/syslimits.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include-fixed/limits.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include-fixed/syslimits.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/limits.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/i386/limits.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/syslimits.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include/stddef.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/atomic.h

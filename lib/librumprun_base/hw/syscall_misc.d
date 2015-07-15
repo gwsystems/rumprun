@@ -62,12 +62,12 @@ syscall_misc.o: \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/proplib.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_array.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_object.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdbool.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include/stdbool.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_bool.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_data.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_dictionary.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_number.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h \
+ /usr/lib/gcc/i686-linux-gnu/4.8/include/stdint.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/sys/stdint.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_string.h \
  /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rump/include/prop/prop_ingest.h \

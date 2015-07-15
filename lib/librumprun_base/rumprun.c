@@ -80,7 +80,7 @@ rumprun_boot(char *cmdline)
 	int tmpfserrno;
 
 	rump_boot_setsigmodel(RUMP_SIGMODEL_IGNORE);
-	rump_init();
+	rmp_init();
 
 	/* mount /tmp before we let any userspace bits run */
 	rump_sys_mount(MOUNT_TMPFS, "/tmp", 0, &ta, sizeof(ta));
