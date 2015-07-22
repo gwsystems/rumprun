@@ -1,6 +1,0 @@
-#!/bin/sh
-
-export CC=/home/hobbes/Code/Research/rump2cos/rumprun/app-tools/rumprun-bmk-cc
-export CXX=/home/hobbes/Code/Research/rump2cos/rumprun/app-tools/rumprun-bmk-c++
-
-exec gmake "$@"
