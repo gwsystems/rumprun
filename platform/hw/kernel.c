@@ -36,16 +36,6 @@
 #include <bmk-core/queue.h>
 #include <bmk-core/sched.h>
 
-unsigned long bmk_membase;
-unsigned long bmk_memsize;
-
-unsigned long
-bmk_platform_memsize(void)
-{
-
-	return bmk_memsize;
-}
-
 void
 bmk_platform_block(bmk_time_t until)
 {
@@ -56,7 +46,7 @@ bmk_platform_block(bmk_time_t until)
 		bmk_spldepth = 1;
 		spl0();
 	}
-	bmk_cpu_nanohlt();
+	bmk_cpu_block(until);
 	if (s) {
 		splhigh();
 		bmk_spldepth = s;

@@ -59,12 +59,21 @@ ENTRY(_start)
 	cld
 	movl $bootstack, %esp
 
+	/* save multiboot info pointer at top of stack, we pop it in 64bit */
+	pushl $0
+	pushl %ebx
+
+	/* clear console */
+	pushl %eax
+	movw $0x20, %ax
+	movl $(CONS_ADDRESS), %edi
+	movl $(CONS_WIDTH*CONS_HEIGHT), %ecx
+	rep stosw
+	popl %eax
+
 	/* only multiboot is supported for now */
 	cmpl $MULTIBOOT_BOOTLOADER_MAGIC, %eax
 	jne nomultiboot
-
-	/* store multiboot structure address, process contents later in C */
-	movl %ebx, bmk_cpu_multiboot_info
 
 	lgdt (gdt64_ptr)
 	pushl $0x0
@@ -114,15 +123,27 @@ ENTRY(_start)
 	jmp haltme
 
 nomultiboot:
-	/*
-	 * XXX: should print something, but can't call C code yet.
-	 * write putc in asm or something else?
-	 */
+	/* we don't have printf available yet, just output manually */
+	mov $nomultimesg, %ebx
+	mov $(CONS_ADDRESS), %ecx
+1:
+	movsbl (%ebx), %eax
+	test %al, %al
+	je haltme
+	orl $0x500, %eax
+	movl %eax, (%ecx)
+	inc %ebx
+	addl $2, %ecx
+	jmp 1b
+
 haltme:
 	cli
 	hlt
 	jmp haltme
 END(_start)
+
+nomultimesg:
+	.asciz "not multibooted, halting!"
 
 #include "pagetable.S"
 
@@ -158,10 +179,13 @@ ENTRY(_start64)
 	movq $bootstack, %rsp
 	xorq %rbp, %rbp
 
+	/* read multiboot info pointer */
+	movq -8(%rsp), %rdi
+
 	pushq $0x0
 	pushq $0x0
 
-	call bmk_cpu_boot
+	call bmk_x86_boot
 	hlt
 END(_start64)
 

@@ -2,9 +2,12 @@
 #define PAGE_SIZE (1<<PAGE_SHIFT)
 
 #ifndef _LOCORE
+struct multiboot_info;
+void	bmk_x86_boot(struct multiboot_info *);
+
 void	bmk_x86_initpic(void);
 void	bmk_x86_initidt(void);
-void	bmk_x86_inittimer(void);
+void	bmk_x86_initclocks(void);
 void	bmk_x86_fillgate(int, void *, int);
 
 /* trap "handlers" */
@@ -22,4 +25,6 @@ void bmk_x86_trap_12(void);
 void bmk_x86_trap_13(void);
 void bmk_x86_trap_14(void);
 void bmk_x86_trap_17(void);
+
+void bmk_x86_cpuid(uint32_t, uint32_t *, uint32_t *, uint32_t *, uint32_t *);
 #endif

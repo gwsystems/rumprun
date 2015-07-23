@@ -54,8 +54,9 @@ BUILDRUMP=$(pwd)/buildrump.sh
 # figure out where gmake lies
 if [ -z "${MAKE}" ]; then
 	MAKE=make
-	! type gmake >/dev/null || MAKE=gmake
+	! type gmake >/dev/null 2>&1 || MAKE=gmake
 fi
+type ${MAKE} >/dev/null 2>&1 || die '"make" required but not found'
 
 
 #
@@ -83,9 +84,9 @@ parseargs ()
 
 	[ $# -gt 0 ] || helpme
 
-	platform=$1
-	export PLATFORMDIR=platform/${platform}
-	[ -d ${PLATFORMDIR} ] || die Platform \"$platform\" not supported!
+	PLATFORM=$1
+	export PLATFORMDIR=platform/${PLATFORM}
+	[ -d ${PLATFORMDIR} ] || die Platform \"$PLATFORM\" not supported!
 	shift
 
 	if [ $# -gt 0 ]; then
@@ -117,11 +118,8 @@ parseargs ()
 checksubmodules ()
 {
 
-	# old git versions need to run submodule in the repo root. *sheesh*
 	# We assume that if the git submodule command fails, it's because
-	# we're using external $RUMPSRC
-	( top="$(git rev-parse --show-cdup)"
-	[ -z "${top}" ] || cd "${top}"
+	# we're using external $RUMPSRC.
 	if git submodule status ${RUMPSRC} 2>/dev/null | grep -q '^-' \
 	    || git submodule status ${BUILDRUMP} 2>/dev/null | grep -q '^-';
 	then
@@ -141,7 +139,30 @@ checksubmodules ()
 		echo '>>'
 		echo -n '>>'
 		for x in 1 2 3 4 5; do echo -n ' !' ; sleep 1 ; done
-	fi )
+	fi
+}
+
+checkprevbuilds ()
+{
+
+	if [ -f .prevbuild ]; then
+		. ./.prevbuild
+		if [ "${PB_MACHINE}" != "${MACHINE}" \
+		    -o "${PB_PLATFORM}" != "${PLATFORM}" ]; then
+			echo '>> ERROR:'
+			echo '>> Building for multiple machine/platform combos'
+			echo '>> from the same rumprun source tree is currently'
+			echo '>> not supported.  See rumprun issue #35.'
+			printf '>> %20s: %s/%s\n' 'Previously built' \
+			    ${PB_PLATFORM} ${PB_MACHINE}
+			printf '>> %20s: %s/%s\n' 'Now building' \
+			    ${PLATFORM} ${MACHINE}
+			exit 1
+		fi
+	else
+		echo PB_MACHINE=${MACHINE} > ./.prevbuild
+		echo PB_PLATFORM=${PLATFORM} >> ./.prevbuild
+	fi
 }
 
 buildrump ()
@@ -153,6 +174,11 @@ buildrump ()
 	    -V MKPIC=no -V RUMP_CURLWP=__thread				\
 	    -V RUMP_KERNEL_IS_LIBC=1 -V BUILDRUMP_SYSROOT=yes		\
 	    "$@" tools
+
+	echo '>>'
+	echo '>> Now that we have the appropriate tools, perfoming'
+	echo '>> further setup for rumprun build'
+	echo '>>'
 
 	RUMPMAKE=$(pwd)/${RUMPTOOLS}/rumpmake
 
@@ -166,6 +192,8 @@ buildrump ()
 	MACHINE=$(${RUMPMAKE} -f /dev/null -V '${MACHINE}')
 	[ -n "${MACHINE}" ] || die could not figure out target machine
 
+	checkprevbuilds
+
 	makeconfigmk ${PLATFORMDIR}/config.mk
 
 	cat >> ${RUMPTOOLS}/mk.conf << EOF
@@ -178,10 +206,19 @@ EOF
 	[ -z "${PLATFORM_MKCONF}" ] \
 	    || echo "${PLATFORM_MKCONF}" >> ${RUMPTOOLS}/mk.conf
 
+	TOOLTUPLE=$(${RUMPMAKE} -f bsd.own.mk \
+	    -V '${MACHINE_GNU_PLATFORM:S/--netbsd/-rumprun-netbsd/}')
+	echo "RUMPRUN_TUPLE=${TOOLTUPLE}" >> ${RUMPTOOLS}/mk.conf
+
 	# build rump kernel
 	${BUILDRUMP}/buildrump.sh ${BUILD_QUIET} ${STDJ} -k		\
 	    -s ${RUMPSRC} -T ${RUMPTOOLS} -o ${RUMPOBJ} -d ${RUMPDEST}	\
 	    "$@" build kernelheaders install
+
+	echo '>>'
+	echo '>> Rump kernel components built.  Proceeding to build'
+	echo '>> rumprun bits'
+	echo '>>'
 }
 
 builduserspace ()
@@ -196,7 +233,7 @@ builduserspace ()
 	for lib in ${LIBS}; do
 		makeuserlib ${lib}
 	done
-	makeuserlib $(pwd)/lib/librumprun_tester ${platform}
+	makeuserlib $(pwd)/lib/librumprun_tester ${PLATFORM}
 
 	# build unwind bits if we support c++
 	if havecxx; then
@@ -277,14 +314,18 @@ buildpci
 # run routine specified in platform.conf
 doextras || die 'platforms extras failed.  tillerman needs tea?'
 
+# create high-level link to rumprun components
+ln -sf ${PLATFORMDIR}/rump ./rumprun
+
 # do final build of the platform bits
 ( cd ${PLATFORMDIR} && ${MAKE} || exit 1)
 [ $? -eq 0 ] || die platform make failed!
 
-# link result to top level (por que?!?)
-ln -sf ${PLATFORMDIR}/rump .
-
-
+# echo some useful information for the user
 echo
+echo '>>'
+echo ">> Built rumprun for ${PLATFORM} : ${TOOLTUPLE}"
+echo ">> cc: ${TOOLTUPLE}-$(${RUMPMAKE} -f bsd.own.mk -V '${ACTIVE_CC}')"
+echo '>>'
 echo ">> $0 ran successfully"
 exit 0

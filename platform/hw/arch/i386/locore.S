@@ -34,37 +34,44 @@
 .long MYMULTIBOOT_FLAGS
 .long -(MULTIBOOT_HEADER_MAGIC+MYMULTIBOOT_FLAGS)
 
-.section bootstack
-.set stack_size, 4096
-.globl _bootstack
-.comm _bootstack, stack_size
+.space 4096
+bootstack:
 
 ENTRY(_start)
 	cld
-	movl $(_bootstack + stack_size), %esp
+	movl $bootstack, %esp
 
+	/* save multiboot info pointer */
 	pushl %ebx
+
+	/* clear console */
 	pushl %eax
-	call bmk_cons_clear
+	movw $0x20, %ax
+	movl $(CONS_ADDRESS), %edi
+	movl $(CONS_WIDTH*CONS_HEIGHT), %ecx
+	rep stosw
 	popl %eax
 
 	/* only multiboot is supported for now */
 	cmpl $MULTIBOOT_BOOTLOADER_MAGIC, %eax
 	jne nomultiboot
 
-	call bmk_cpu_boot
+	call bmk_x86_boot
+
 	jmp haltme
 
 nomultiboot:
 	/* we don't have printf available yet, just output manually */
 	mov $nomultimesg, %ebx
+	mov $(CONS_ADDRESS), %ecx
 1:
 	movsbl (%ebx), %eax
 	test %al, %al
 	je haltme
-	movl %eax, 0(%esp)
-	call bmk_cons_putc
+	orl $0x500, %eax
+	movl %eax, (%ecx)
 	inc %ebx
+	addl $2, %ecx
 	jmp 1b
 
 haltme:
@@ -148,9 +155,10 @@ END(bmk_cpu_insr)
  */
 ENTRY(bmk_cpu_isr_clock)
 	cli
-	call bmk_isr_clock
+	pushl %eax
 	movb $0x20, %al
 	outb %al, $0x20
+	popl %eax
 	sti
 	iret
 END(bmk_cpu_isr_clock)

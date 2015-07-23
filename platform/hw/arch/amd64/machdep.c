@@ -83,7 +83,6 @@ struct tss {
 static struct gate_descriptor idt[256];
 
 /* actual interrupt service routines */
-void bmk_cpu_isr_clock(void);
 void bmk_cpu_isr_9(void);
 void bmk_cpu_isr_10(void);
 void bmk_cpu_isr_11(void);
@@ -132,9 +131,6 @@ bmk_cpu_init(void)
 
 	bmk_x86_initpic();
 
-	/* fill clock interrupt */
-	bmk_x86_fillgate(32, bmk_cpu_isr_clock, 0);
-
 	/*
 	 * fill TSS
 	 */
@@ -154,15 +150,15 @@ bmk_cpu_init(void)
 	td->td_zero = 0;
 	bmk_amd64_ltr(4*8);
 
-	bmk_x86_inittimer();
+	bmk_x86_initclocks();
 }
 
-void bmk_cpu_pagefault(void *, void *);
+void bmk_cpu_fattrap(const char *, void *, unsigned long);
 void
-bmk_cpu_pagefault(void *addr, void *rip)
+bmk_cpu_fattrap(const char *name, void *rip, unsigned long cr2)
 {
 
-	bmk_printf("FATAL pagefault at address %p (rip %p)\n", addr, rip);
+	bmk_printf("FATAL TRAP: %s at %p (0x%lx)\n", name, rip, cr2);
 	hlt();
 }
 
