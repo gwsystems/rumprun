@@ -1,0 +1,10 @@
+PCIDIR!=	cd ${.PARSEDIR} ; pwd -P
+
+.include "${PCIDIR}/../config.mk"
+.include "${BUILDRUMP_TOOLFLAGS}"
+
+PCI_HYPERCALLS=		rumppci.c
+PCI_HYPERCALLS_PATH:=	${PCIDIR}
+PCI_CPPFLAGS:=		-I${PCIDIR}/../include
+
+.include "${PCIDIR}/../../../lib/Makefile.pcicommon"
