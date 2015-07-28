@@ -1,3 +1,0 @@
-#!/bin/sh
-
-exec /home/hobbes/Code/Research/rump2cos/rumprun/platform/hw/rumptools/bin/i486--netbsdelf-ld "${@}"

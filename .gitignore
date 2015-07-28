@@ -5,6 +5,9 @@ obj
 *.out
 *.a
 
+.depend
+*.d
+
 buildtest.*
 buildtest
 
@@ -20,3 +23,5 @@ platform/*/config.mk
 platform/*/tests/hello/hello
 platform/*/tests/hello/hellopp
 platform/*/tests/wopr/wopr
+
+app-tools/rumprun-*
