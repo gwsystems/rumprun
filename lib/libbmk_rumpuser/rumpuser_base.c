@@ -42,7 +42,7 @@ int
 rumpuser_init(int version, const struct rumpuser_hyperup *hyp)
 {
 
-	bmk_printf("FUCK THE WORLD\0");
+	bmk_printf("rumpuser_init\n");
 
 	if (version != RUMPHYPER_MYVERSION) {
 		bmk_platform_halt("rump kernel hypercall revision mismatch\n");
