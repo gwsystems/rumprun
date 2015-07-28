@@ -53,11 +53,16 @@ OBJS= ${OBJS_BMK} ${OBJS_APP}
 
 .PHONY: clean cleandir test
 
-APP_TOOLS_TARGETARCH=${MACHINE}
+#APP_TOOLS_TARGETARCH=${MACHINE}
+#APP_TOOLS_PLATFORM= cos
+#APP_TOOLS_HEADOBJ= $(abspath rumprun.o)
+#APP_TOOLS_OBJS=
+#APP_TOOLS_LDSCRIPT:= $(abspath ${LDSCRIPT})
+#APP_TOOLS_DIR:= $(abspath ../../app-tools)
+
 APP_TOOLS_PLATFORM= cos
-APP_TOOLS_HEADOBJ= $(abspath rumprun.o)
-APP_TOOLS_OBJS=
-APP_TOOLS_LDSCRIPT:= $(abspath ${LDSCRIPT})
+APP_TOOLS_OBJS_BAKE= $(abspath cosrun.o)
+APP_TOOLS_LDSCRIPT_BAKE:= $(abspath ${LDSCRIPT})
 APP_TOOLS_DIR:= $(abspath ../../app-tools)
 
 include ${APP_TOOLS_DIR}/Makefile.app-tools
