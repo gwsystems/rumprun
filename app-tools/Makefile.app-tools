@@ -67,8 +67,13 @@ $(foreach spec,${APP_TOOL_SPECS},$(eval \
     $(call APPTOOLS_templ,${spec}.in,${spec})))
 $(eval $(call APPTOOLS_templ,cc.in,$(GNUPLATFORM)-${_CCVARIANT}))
 $(eval $(call APPTOOLS_templ,cc.in,$(GNUPLATFORM)-${_CXXVARIANT}))
-$(eval $(call APPTOOLS_templ,specs-bake.in,rumprun-$(APP_TOOLS_PLATFORM)-specs-bake))
 
+ifeq ($(APP_TOOLS_PLATFORM),cos)
+	$(eval $(call APPTOOLS_templ,cos-specs-bake.in,rumprun-$(APP_TOOLS_PLATFORM)-specs-bake))
+else
+	$(eval $(call APPTOOLS_templ,specs-bake.in,rumprun-$(APP_TOOLS_PLATFORM)-specs-bake))
+endif
+	
 define APPTOOLS_passthrough
 uptool_$1=$(shell echo $1 | tr '[:lower:]' '[:upper:]')
 toolval_$1=$${$${uptool_$1}}
