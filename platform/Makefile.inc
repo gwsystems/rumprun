@@ -8,8 +8,12 @@ BASEDIR:=       $(shell pwd)/../../lib/librumprun_base
 
 COMMONDIR:=	$(abspath ../)
 
-LDFLAGS_BAKE+=	-L${BASEDIR}/${PLATFORM} -L${COREDIR}/${PLATFORM}	\
-		-L${RUMPUSERDIR}/${PLATFORM}
+# For cos platform, we don't want libbmk_core
+ifeq (${PLATFORM}, cos)
+LDFLAGS_BAKE+= -L${BASEDIR}/${PLATFORM} -L${RUMPUSERDIR}/${PLATFORM}
+else
+LDFLAGS_BAKE+=	-L${COREDIR}/${PLATFORM} -L${BASEDIR}/${PLATFORM} -L${RUMPUSERDIR}/${PLATFORM}
+endif
 
 .PHONY: ${BASEDIR}/${PLATFORM}/librumprun_base.a
 ${BASEDIR}/${PLATFORM}/librumprun_base.a:
@@ -32,7 +36,15 @@ ${RUMPUSERDIR}/${PLATFORM}/libbmk_rumpuser.a:
 	    && ${RUMPMAKE} MAKEOBJDIR=${PLATFORM} obj \
 	    && ${RUMPMAKE} MAKEOBJDIR=${PLATFORM} dependall )
 
-commonlibs: ${BASEDIR}/${PLATFORM}/librumprun_base.a ${COREDIR}/${PLATFORM}/libbmk_core.a ${RUMPUSERDIR}/${PLATFORM}/libbmk_rumpuser.a ${COMMONDIR}/pseudolinkstubs.o
+
+
+ifeq (${PLATFORM}, cos)
+COMMONLIBS := ${BASEDIR}/${PLATFORM}/librumprun_base.a ${RUMPUSERDIR}/${PLATFORM}/libbmk_rumpuser.a ${COMMONDIR}/pseudolinkstubs.o
+else
+COMMONLIBS := ${BASEDIR}/${PLATFORM}/librumprun_base.a ${COREDIR}/${PLATFORM}/libbmk_core.a ${RUMPUSERDIR}/${PLATFORM}/libbmk_rumpuser.a ${COMMONDIR}/pseudolinkstubs.o
+endif
+
+commonlibs: ${COMMONLIBS}
 
 .PHONY: buildtest
 buildtest: ../../tests/hello/hello.c ${OBJ_DIR}/rumprun.o commonlibs app-tools
