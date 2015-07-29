@@ -9,7 +9,8 @@ SRCS+=		rumpuser_clock.c
 SRCS+=		rumpuser_cons.c
 SRCS+=		rumpuser_mem.c
 SRCS+=		rumpuser_synch.c
-SRCS+=    rumpuser_fs.c
+#SRCS+=    rumpuser_fs.c
+#SRCS+=    backing.o
 
 SRCS+=		rumpuser_stubs.c
 
