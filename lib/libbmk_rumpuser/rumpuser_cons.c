@@ -30,8 +30,6 @@
 #include <bmk-rumpuser/core_types.h>
 #include <bmk-rumpuser/rumpuser.h>
 
-#include <rumpcalls.h>
-
 void
 rumpuser_putchar(int c)
 {

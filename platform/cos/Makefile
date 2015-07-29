@@ -73,7 +73,7 @@ include/bmk/machine:
 links: include/bmk/machine
 
 cosrun.o: cosrun.c
-	${CC} -c cosrun.c -o cosrun.o
+	${CC} -I../../../Composite/src/components/implementation/no_interface/rumpbooter -c cosrun.c -o cosrun.o
 
 cleandir: clean
 
