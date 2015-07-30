@@ -10,9 +10,9 @@ bmk_printf(const char *fmt, ...)
 	int ret, len = 128;
 
 	va_start(arg_ptr, fmt);
-	ret = vsnprintf(s, len, fmt, arg_ptr);
+	ret = crcalls.rump_vsnprintf(s, len, fmt, arg_ptr);
 	va_end(arg_ptr);
-	crcalls.cos_print(s, ret);
+	crcalls.rump_cos_print(s, ret);
 
 	return;
 }
@@ -22,4 +22,3 @@ test_function(void)
 {
 	return 0;
 }
-
