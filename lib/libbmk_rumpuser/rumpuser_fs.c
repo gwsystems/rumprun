@@ -4,14 +4,16 @@
 #include <bmk-core/types.h>
 #include <bmk-core/string.h>
 #include <bmk-core/printf.h>
-
 #include <assert.h>
 
-extern char _binary_backing_img_start;
-extern char _binary_backing_img_end;
+//extern char _binary_backing_img_start;
+//extern char _binary_backing_img_end;
 
-#define PAWS_SIZE (&_binary_backing_img_end - &_binary_backing_img_start)
-char *paws = &_binary_backing_img_start;
+//#define PAWS_SIZE (&_binary_backing_img_end - &_binary_backing_img_start)
+//char *paws = &_binary_backing_img_start;
+
+#define PAWS_SIZE 0
+char *paws = NULL;
 
 int
 rumpuser_getfileinfo(const char *name, uint64_t *size, int *type)

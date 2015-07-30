@@ -57,7 +57,10 @@ include/bmk/machine:
 links: include/bmk/machine
 
 cosrun.o: ${OBJS}
-	${CC} -nostdlib ${CFLAGS} -Wl,-r ${OBJS_BMK} -o $@
+	${CC} -nostdlib ${CFLAGS} \
+	-I../../../Composite/src/components/implementation/no_interface/rumpbooter \
+	-I../../include/ \
+	-o $@ cosrun.c
 
 clean: app-tools_clean commonclean
 	rm -f ${OBJS} include/bmk/machine buildtest
