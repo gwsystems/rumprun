@@ -66,6 +66,9 @@ rumpuser_init(int version, const struct rumpuser_hyperup *hyp)
 int
 rumpuser_getparam(const char *name, void *buf, size_t buflen)
 {
+
+	bmk_printf("rumpuser_getparam\n");
+
 	int rv = 0;
 
 	if (buflen <= 1)
@@ -121,6 +124,9 @@ rumpuser_getparam(const char *name, void *buf, size_t buflen)
 int
 rumpuser_getrandom(void *buf, size_t buflen, int flags, size_t *retp)
 {
+
+	bmk_printf("rumpuser_getrandom\n");
+
 	unsigned char *rndbuf;
 
 	for (*retp = 0, rndbuf = buf; *retp < buflen; (*retp)++) {
@@ -134,12 +140,17 @@ void
 rumpuser_exit(int value)
 {
 
+	bmk_printf("rumpuser_exit\n");
+
 	bmk_platform_halt(value == RUMPUSER_PANIC ? "rumpuser panic" : NULL);
 }
 
 void
 rumpuser_seterrno(int err)
 {
+
+	bmk_printf("rumpuser_seterrno\n");
+
 	int *threrr = bmk_sched_geterrno();
 
 	*threrr = err;

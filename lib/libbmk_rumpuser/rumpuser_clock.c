@@ -28,6 +28,7 @@
 #include <bmk-core/null.h>
 #include <bmk-core/sched.h>
 #include <bmk-core/string.h>
+#include <bmk-core/printf.h>
 
 #include <bmk-rumpuser/core_types.h>
 #include <bmk-rumpuser/rumpuser.h>
@@ -35,6 +36,9 @@
 int
 rumpuser_clock_gettime(int which, int64_t *sec, long *nsec)
 {
+
+	bmk_printf("rumpuser_clock_gettime\n");
+
 	bmk_time_t time;
 
 	time = bmk_platform_clock_monotonic();
@@ -56,6 +60,9 @@ rumpuser_clock_gettime(int which, int64_t *sec, long *nsec)
 int
 rumpuser_clock_sleep(int enum_rumpclock, int64_t sec, long nsec)
 {
+
+	bmk_printf("rumpuser_clock_sleep\n");
+
 	enum rumpclock rclk = enum_rumpclock;
 	bmk_time_t deadline = 0;
 	int nlocks;

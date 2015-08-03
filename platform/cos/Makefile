@@ -58,6 +58,7 @@ links: include/bmk/machine
 
 cosrun.o: ${OBJS}
 	${CC} -nostdlib ${CFLAGS} \
+	-c \
 	-I../../../Composite/src/components/implementation/no_interface/rumpbooter \
 	-I../../include/ \
 	-o $@ cosrun.c

@@ -28,6 +28,7 @@
 #include <bmk-core/memalloc.h>
 #include <bmk-core/pgalloc.h>
 #include <bmk-core/null.h>
+#include <bmk-core/printf.h>
 
 #include <bmk-rumpuser/core_types.h>
 #include <bmk-rumpuser/rumpuser.h>
@@ -35,6 +36,8 @@
 int
 rumpuser_malloc(size_t len, int alignment, void **retval)
 {
+
+	bmk_printf("rumpuser_malloc\n");
 
 	/*
 	 * If we are allocating precisely a page-sized chunk
@@ -68,6 +71,8 @@ rumpuser_malloc(size_t len, int alignment, void **retval)
 void
 rumpuser_free(void *buf, size_t buflen)
 {
+
+	bmk_printf("rumpuser_free\n");
 
 	if (buflen == bmk_pagesize)
 		bmk_pgfree_one(buf);

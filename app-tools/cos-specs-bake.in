@@ -5,7 +5,7 @@
 
 
 *lib:
-!LDFLAGS_BAKE! --whole-archive -lrump --no-whole-archive		\
+!LDFLAGS_BAKE! -r --whole-archive -lrump --no-whole-archive		\
     --start-group -lrumprun_base -lpthread -lc --end-group		\
     -lbmk_rumpuser
 

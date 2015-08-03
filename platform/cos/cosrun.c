@@ -17,6 +17,8 @@ __thread struct bmk_thread *bmk_current;
 
 struct cos_rumpcalls crcalls;
 
+void* _GLOBAL_OFFSET_TABLE_ = (void *) 0x1337BEEF;
+
 
 /* Prototypes */
 

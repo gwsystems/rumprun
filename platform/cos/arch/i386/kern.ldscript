@@ -13,6 +13,39 @@ SECTIONS
 		*(.text.*)
 		*(.stub)
 		*(.note*)
+
+		. = ALIGN(4);
+		PROVIDE (__start_link_set_dkwedge_methods = .);
+		*(link_set_dkwedge_methods)
+		PROVIDE (__stop_link_set_dkwedge_methods = .);
+		. = ALIGN(4);
+		PROVIDE (__start_link_set_sysctl_funcs = .);
+		*(link_set_sysctl_funcs)
+		PROVIDE (__stop_link_set_sysctl_funcs = .);
+		. = ALIGN(4);
+		PROVIDE (__start_link_set_bufq_strats = .);
+		*(link_set_bufq_strats)
+		PROVIDE (__stop_link_set_bufq_strats = .);
+		. = ALIGN(4);
+		PROVIDE (__start_link_set_evcnts = .);
+		*(link_set_evcnts)
+		PROVIDE (__stop_link_set_evcnts = .);
+		. = ALIGN(4);
+		PROVIDE (__start_link_set_prop_linkpools = .);
+		*(link_set_prop_linkpools)
+		PROVIDE (__stop_link_set_prop_linkpools = .);
+		. = ALIGN(4);
+		PROVIDE (__start_link_set_domains = .);
+		*(link_set_domains)
+		PROVIDE (__stop_link_set_domains = .);
+		. = ALIGN(4);
+		PROVIDE (__start_link_set_rump_components = .);
+		*(link_set_rump_components)
+		PROVIDE (__stop_link_set_rump_components = .);
+		. = ALIGN(4);
+		PROVIDE (__start_link_set_modules = .);
+		*(link_set_modules)
+		PROVIDE (__stop_link_set_modules = .);
 	}
 	_etext = . ;
 
