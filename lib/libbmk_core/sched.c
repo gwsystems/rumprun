@@ -372,10 +372,11 @@ schedule(void)
 void *
 bmk_sched_tls_alloc(void)
 {
+	//allocs a char arry and stores all thread mem there.
 	char *tlsmem;
 
 	tlsmem = bmk_memalloc(TLSAREASIZE, 0, BMK_MEMWHO_WIREDBMK);
-	bmk_memcpy(tlsmem, _tdata_start, TDATASIZE);
+	bmk_memcpy(tlsmem, _tdata_start, TDATASIZE); //copy from alloc to tlsmem 
 	bmk_memset(tlsmem + TDATASIZE, 0, TBSSSIZE);
 
 	return tlsmem + TCBOFFSET;
