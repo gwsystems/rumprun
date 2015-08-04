@@ -559,6 +559,7 @@ rumpuser_curlwpop(int enum_rumplwpop, struct lwp *l)
 struct lwp *
 rumpuser_curlwp(void)
 {
+	bmk_printf("rumpuser_curlwp\n");
 
 	return current_lwp;
 }

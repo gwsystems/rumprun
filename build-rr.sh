@@ -171,7 +171,7 @@ buildrump ()
 	# build tools
 	${BUILDRUMP}/buildrump.sh ${BUILD_QUIET} ${STDJ} -k		\
 	    -s ${RUMPSRC} -T ${RUMPTOOLS} -o ${RUMPOBJ} -d ${RUMPDEST}	\
-	    -V MKPIC=no -V RUMP_CURLWP=__thread				\
+	    -V MKPIC=no -V RUMP_CURLWP=hypercall 			\
 	    -V RUMP_KERNEL_IS_LIBC=1 -V BUILDRUMP_SYSROOT=yes		\
 	    "$@" tools
 

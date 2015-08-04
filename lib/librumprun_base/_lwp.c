@@ -46,6 +46,7 @@
 
 #include <bmk-core/core.h>
 #include <bmk-core/sched.h>
+#include <bmk-core/printf.h>
 
 #include <rumprun-base/makelwp.h>
 
@@ -79,6 +80,8 @@ static ptrdiff_t meoff;
 static void
 assignme(void *tcb, struct rumprun_lwp *value)
 {
+	bmk_printf("_lwp.c: assignme\n");
+
 	struct rumprun_lwp **dst = (void *)((uintptr_t)tcb + meoff);
 
 	*dst = value;
@@ -87,6 +90,7 @@ assignme(void *tcb, struct rumprun_lwp *value)
 int
 _lwp_ctl(int ctl, struct lwpctl **data)
 {
+	bmk_printf("_lwp.c: _lwp_ctl\n");
 
 	*data = (struct lwpctl *)&me->rl_lwpctl;
 	return 0;
@@ -96,6 +100,9 @@ int
 rumprun_makelwp(void (*start)(void *), void *arg, void *private,
 	void *stack_base, size_t stack_size, unsigned long flag, lwpid_t *lid)
 {
+
+	bmk_printf("_lwp.c: rumprun_makelwp\n");
+
 	struct rumprun_lwp *rl;
 	struct lwp *curlwp, *newlwp;
 
@@ -133,6 +140,8 @@ static void
 rumprun_makelwp_tramp(void *arg)
 {
 
+	bmk_printf("_lwp.c: rumprun_makelwp_tramp\n");
+
 	rump_pub_lwproc_switch(arg);
 	(me->rl_start)(me->rl_arg);
 }
@@ -140,6 +149,9 @@ rumprun_makelwp_tramp(void *arg)
 static struct rumprun_lwp *
 lwpid2rl(lwpid_t lid)
 {
+
+	bmk_printf("_lwp.c: lwpid2rl\n");
+
 	struct rumprun_lwp *rl;
 
 	if (lid == 0)
@@ -154,6 +166,9 @@ lwpid2rl(lwpid_t lid)
 int
 _lwp_unpark(lwpid_t lid, const void *hint)
 {
+
+	bmk_printf("_lwp.c: _lwp_unpark\n");
+
 	struct rumprun_lwp *rl;
 
 	if ((rl = lwpid2rl(lid)) == NULL) {
@@ -167,6 +182,8 @@ _lwp_unpark(lwpid_t lid, const void *hint)
 ssize_t
 _lwp_unpark_all(const lwpid_t *targets, size_t ntargets, const void *hint)
 {
+	bmk_printf("_lwp.c: _lwp_unpark_all\n");
+
 	ssize_t rv;
 
 	if (targets == NULL)
@@ -189,6 +206,9 @@ _lwp_unpark_all(const lwpid_t *targets, size_t ntargets, const void *hint)
 static void
 schedhook(void *prevcookie, void *nextcookie)
 {
+
+	bmk_printf("_lwp.c: schedhook\n");
+
 	struct rumprun_lwp *prev, *next;
 
 	prev = prevcookie;
@@ -206,6 +226,9 @@ schedhook(void *prevcookie, void *nextcookie)
 void
 rumprun_lwp_init(void)
 {
+
+	bmk_printf("_lwp.c: rumprun_lwp_init\n");
+
 	void *tcb = bmk_sched_gettcb();
 
 	bmk_sched_set_hook(schedhook);
@@ -221,6 +244,9 @@ int
 _lwp_park(clockid_t clock_id, int flags, const struct timespec *ts,
 	lwpid_t unpark, const void *hint, const void *unparkhint)
 {
+
+	bmk_printf("_lwp.c: _lwp_park\n");
+
 	int rv;
 
 	if (unpark)
@@ -257,6 +283,8 @@ int
 _lwp_exit(void)
 {
 
+	bmk_printf("_lwp.c: _lwp_exit\n");
+
 	me->rl_lwpctl.lc_curcpu = LWPCTL_CPU_EXITED;
 	rump_pub_lwproc_releaselwp();
 	TAILQ_REMOVE(&all_lwp, me, rl_entries);
@@ -272,6 +300,9 @@ _lwp_exit(void)
 int
 _lwp_continue(lwpid_t lid)
 {
+
+	bmk_printf("_lwp.c: _lwp_continue\n");
+
 	struct rumprun_lwp *rl;
 
 	if ((rl = lwpid2rl(lid)) == NULL) {
@@ -285,6 +316,8 @@ _lwp_continue(lwpid_t lid)
 int
 _lwp_suspend(lwpid_t lid)
 {
+	bmk_printf("_lwp.c: _lwp_suspend\n");
+
 	struct rumprun_lwp *rl;
 
 	if ((rl = lwpid2rl(lid)) == NULL) {
@@ -298,6 +331,8 @@ _lwp_suspend(lwpid_t lid)
 int
 _lwp_wakeup(lwpid_t lid)
 {
+	bmk_printf("_lwp.c: _lwp_wakeup\n");
+
 	struct rumprun_lwp *rl;
 
 	if ((rl = lwpid2rl(lid)) == NULL)
@@ -310,6 +345,8 @@ _lwp_wakeup(lwpid_t lid)
 int
 _lwp_setname(lwpid_t lid, const char *name)
 {
+	bmk_printf("_lwp.c: _lwp_setname\n");
+
 	struct rumprun_lwp *rl;
 
 	if ((rl = lwpid2rl(lid)) == NULL)
@@ -323,6 +360,8 @@ lwpid_t
 _lwp_self(void)
 {
 
+	bmk_printf("_lwp.c: _lwp_self\n");
+
 	return me->rl_lwpid;
 }
 
@@ -331,6 +370,8 @@ int _sys_sched_yield(void);
 int
 _sys_sched_yield(void)
 {
+
+	bmk_printf("_lwp.c: _sys_sched_yield\n");
 
 	bmk_sched_yield();
 	return 0;
@@ -341,12 +382,15 @@ struct tls_tcb *
 _rtld_tls_allocate(void)
 {
 
+	bmk_printf("_lwp.c: _rtld_tls_allocate\n");
+
 	return bmk_sched_tls_alloc();
 }
 
 void
 _rtld_tls_free(struct tls_tcb *arg)
 {
+	bmk_printf("_lwp.c: _rtld_tls_free\n");
 
 	return bmk_sched_tls_free(arg);
 }
@@ -354,6 +398,8 @@ _rtld_tls_free(struct tls_tcb *arg)
 void *
 _lwp_getprivate(void)
 {
+
+	bmk_printf("_lwp.c: _lwp_getprivate\n");
 
 	return bmk_sched_gettcb();
 }
@@ -365,6 +411,8 @@ void _lwpabort(void);
 void __dead
 _lwpabort(void)
 {
+
+	bmk_printf("_lwp.c: _lwpabort\n");
 
 	printf("_lwpabort() called\n");
 	_exit(1);
