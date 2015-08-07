@@ -41,6 +41,8 @@
 #include <bmk-rumpuser/core_types.h>
 #include <bmk-rumpuser/rumpuser.h>
 
+#include <rumpcalls.h>
+
 TAILQ_HEAD(waithead, waiter);
 struct waiter {
 	struct bmk_thread *who;
@@ -160,6 +162,8 @@ rumpuser_mutex_init(struct rumpuser_mtx **mtxp, int flags)
 	mtx->flags = flags;
 	TAILQ_INIT(&mtx->waiters);
 	*mtxp = mtx;
+
+	bmk_printf("rumpuser_mutex_init exit\n");
 }
 
 void
@@ -532,26 +536,47 @@ rumpuser_cv_has_waiters(struct rumpuser_cv *cv, int *rvp)
  * curlwp
  */
 
-static __thread struct lwp *current_lwp;
+extern struct cos_rumpcalls crcalls;
+int bmk_curlwp_thdid(void);
+
+#include <consts.h>
+struct lwp *lwp_array[MAX_NUM_THREADS];
+
+int
+bmk_curlwp_thdid(void)
+{
+	bmk_printf("bmk_curlwp\n");
+
+	int thdid;
+
+	thdid = crcalls.rump_cos_get_thd_id();
+	return thdid;
+}
+
 void
 rumpuser_curlwpop(int enum_rumplwpop, struct lwp *l)
 {
 
 	bmk_printf("rumpuser_curlwpop\n");
 
-	enum rumplwpop op = enum_rumplwpop;
+	enum rumplwpop op;
+	int thdid;
+
+	thdid = bmk_curlwp_thdid();
+
+	op = enum_rumplwpop;
 
 	switch (op) {
 	case RUMPUSER_LWP_CREATE:
 	case RUMPUSER_LWP_DESTROY:
 		break;
 	case RUMPUSER_LWP_SET:
-		bmk_assert(current_lwp == NULL);
-		current_lwp = l;
+		bmk_assert(lwp_array[thdid] == NULL);
+		lwp_array[thdid] = l;
 		break;
 	case RUMPUSER_LWP_CLEAR:
-		bmk_assert(current_lwp == l);
-		current_lwp = NULL;
+		bmk_assert(lwp_array[thdid] == l);
+		lwp_array[thdid] = NULL;
 		break;
 	}
 }
@@ -560,6 +585,9 @@ struct lwp *
 rumpuser_curlwp(void)
 {
 	bmk_printf("rumpuser_curlwp\n");
+	int thdid;
 
-	return current_lwp;
+	thdid = bmk_curlwp_thdid();
+	return lwp_array[thdid];
+	//return current_lwp;
 }

@@ -1,7 +1,10 @@
-#include <rumpcalls.h>
-#include <stdio.h>
 #include <bmk-core/memalloc.h>
 #include <bmk-core/types.h>
+#include <bmk-core/null.h>
+
+#include <arch/i386/types.h>
+
+#include <rumpcalls.h>
 
 typedef long long bmk_time_t;
 
@@ -24,6 +27,7 @@ void* _GLOBAL_OFFSET_TABLE_ = (void *) 0x1337BEEF;
 
 struct bmk_thread;
 
+struct lwp *bmk_curlwp(void);
 void  bmk_printf(const char *fmt, ...);
 void  bmk_sched_yield(void);
 int  *bmk_sched_geterrno(void);
@@ -65,7 +69,6 @@ void  bmk_vprintf(const char *fmt, va_list ap);
 char *bmk_strncpy(char *d, const char *s, unsigned long n);
 int   rumprun_platform_rumpuser_init(void);
 int   bmk_isr_init(int (*func)(void *), void *arg, int intr);
-
 
 /* Prototype Definitions */
 
@@ -271,8 +274,12 @@ int
 bmk_strcmp(const char *a, const char *b)
 {
 	bmk_printf("bmk_strcmp is being called.\n");
-	while(1){}
-	return 0;
+
+	int rv;
+
+	rv = crcalls.rump_strcmp(a, b);
+
+	return rv;
 }
 
 void *
@@ -296,8 +303,10 @@ void *
 bmk_memalloc(unsigned long nbytes, unsigned long align, enum bmk_memwho who)
 {
 	bmk_printf("bmk_memalloc is being called.\n");
-	while(1);
-	return NULL;
+	void *rv;
+
+	rv = crcalls.rump_memalloc(nbytes, align);
+	return rv;
 }
 
 void *
@@ -327,8 +336,12 @@ char *
 bmk_strncpy(char *d, const char *s, unsigned long n)
 {
 	bmk_printf("bmk_strncpy is being called.\n");
-	while(1);
-	return NULL;
+
+	char *rv;
+
+	rv = crcalls.rump_strncpy(d, s, n);
+
+	return rv;
 }
 
 /* RG:
@@ -354,7 +367,10 @@ bmk_isr_init(int (*func)(void *), void *arg, int intr)
 void *
 bmk_memcalloc(unsigned long n, unsigned long size, enum bmk_memwho who)
 {
-	bmk_printf("bmk_memalloc is being called.\n");
-	while(1);
-	return NULL;
+	bmk_printf("bmk_memcalloc is being called.\n");
+
+	void *rv;
+
+	rv = crcalls.rump_memcalloc(n, size);
+	return rv;
 }
