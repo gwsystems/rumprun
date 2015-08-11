@@ -536,16 +536,14 @@ rumpuser_cv_has_waiters(struct rumpuser_cv *cv, int *rvp)
  * curlwp
  */
 
-extern struct cos_rumpcalls crcalls;
 int bmk_curlwp_thdid(void);
 
-#include <consts.h>
 struct lwp *lwp_array[MAX_NUM_THREADS];
 
 int
 bmk_curlwp_thdid(void)
 {
-	bmk_printf("bmk_curlwp\n");
+	bmk_printf("bmk_curlwp_thdid\n");
 
 	int thdid;
 

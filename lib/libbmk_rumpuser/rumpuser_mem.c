@@ -37,7 +37,7 @@ int
 rumpuser_malloc(size_t len, int alignment, void **retval)
 {
 
-	bmk_printf("rumpuser_malloc\n");
+	bmk_printf("rumpuser_malloc, len needed: %d\n", len);
 
 	/*
 	 * If we are allocating precisely a page-sized chunk

@@ -14,6 +14,9 @@ include ../Makefile.inc
 
 CPPFLAGS=	-Iinclude -Irump/include -I../../include -nostdinc
 CFLAGS+=	${BUILDRUMP_TOOL_CFLAGS}
+CFLAGS+=        -I../../../Composite/src/components/implementation/no_interface/rumpbooter/
+CFLAGS+=        -I../../../Composite/src/kernel/include/shared/
+CFLAGS+=        -Iinclude -Irump/includle -I../../include
 
 # Check if we're building for a supported target.
 supported= false
@@ -40,7 +43,9 @@ LDFLAGS_BAKE+=	-L$(abspath rump/lib)
 
 include arch/${MACHINE}/Makefile.inc
 
-OBJS= ${OBJS_APP}
+OBJS_BMK = sched.o
+
+OBJS= ${OBJS_APP} ${OBJS_BMK}
 
 .PHONY:	clean cleandir test
 
@@ -57,12 +62,7 @@ include/bmk/machine:
 links: include/bmk/machine
 
 cosrun.o: ${OBJS}
-	${CC} -nostdlib ${CFLAGS} \
-	-c \
-	-I../../../Composite/src/components/implementation/no_interface/rumpbooter/ \
-	-I../../include/ \
-	-I./include/ \
-	-o $@ cosrun.c
+	${CC} -nostdlib ${CFLAGS} -o $@ cosrun.c -Wl,-r ${OBJS_BMK}
 
 clean: app-tools_clean commonclean
 	rm -f ${OBJS} include/bmk/machine buildtest

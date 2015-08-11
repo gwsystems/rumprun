@@ -34,16 +34,12 @@ void
 rumpuser_putchar(int c)
 {
 
-	bmk_printf("rumpuser_putchar\n");
-
 	bmk_printf("%c", c);
 }
 
 void
 rumpuser_dprintf(const char *fmt, ...)
 {
-
-	bmk_printf("rumpuser_dprintf\n");
 
 	va_list ap;
 
