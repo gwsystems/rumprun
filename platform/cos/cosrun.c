@@ -215,3 +215,24 @@ bmk_memcalloc(unsigned long n, unsigned long size, enum bmk_memwho who)
 	rv = crcalls.rump_memcalloc(n, size);
 	return rv;
 }
+
+void
+bmk_platform_cpu_sched_settls(struct bmk_tcb *next)
+{
+	bmk_printf("bmk_platform_cpu_sched_settls is being called.\n");
+	while(1);
+}
+
+unsigned long
+bmk_platform_splhigh(void)
+{
+	bmk_printf("bmk_platform_splhigh is being called.\n");
+	return 0;
+}
+
+void *
+bmk_xmalloc_bmk(unsigned long howmuch)
+{
+	bmk_printf("bmk_xmalloc_bmk is being called.\n");
+	return NULL;
+}
