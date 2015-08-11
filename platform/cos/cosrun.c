@@ -28,6 +28,8 @@ void* _GLOBAL_OFFSET_TABLE_ = (void *) 0x1337BEEF;
 
 struct bmk_thread;
 
+struct bmk_tcb;
+
 struct lwp *bmk_curlwp(void);
 void  bmk_printf(const char *fmt, ...);
 bmk_time_t bmk_platform_clock_monotonic(void);
@@ -47,6 +49,13 @@ char *bmk_strncpy(char *d, const char *s, unsigned long n);
 int   rumprun_platform_rumpuser_init(void);
 int   bmk_isr_init(int (*func)(void *), void *arg, int intr);
 
+void bmk_platform_cpu_sched_settls(struct bmk_tcb *next);
+unsigned long bmk_platform_splhigh(void);
+void bmk_platform_block(bmk_time_t until);
+void bmk_cpu_sched_create(struct bmk_thread *thread, struct bmk_tcb *tcb, void (*f)(void *), void *arg, void *stack_base, unsigned long stack_size);
+char * bmk_strcpy(char *d, const char *s);
+void bmk_platform_splx(unsigned long);
+void bmk_cpu_sched_switch(void * x, void * y);
 /* Prototype Definitions */
 
 void
@@ -62,6 +71,58 @@ bmk_printf(const char *fmt, ...)
 	crcalls.rump_cos_print(s, ret);
 
 	return;
+}
+
+void
+bmk_platform_cpu_sched_settls(struct bmk_tcb *next){
+	bmk_printf("bmk_platform_cpu_sched_settls");
+}
+
+unsigned long
+bmk_platform_splhigh(void)
+{
+	bmk_printf("bmk_platform_splhigh");
+	return 0;
+}
+
+void
+bmk_platform_block(bmk_time_t until)
+{
+	bmk_printf("bmk_platform_block");
+}
+
+void
+bmk_platform_splx(unsigned long x)
+{
+	bmk_printf("bmk_platform_splx");
+}
+
+void
+bmk_cpu_sched_create(struct bmk_thread *thread, struct bmk_tcb *tcb,
+        void (*f)(void *), void *arg,
+        void *stack_base, unsigned long stack_size)
+{
+	bmk_printf("bmk_cpu_sched_create");
+}
+
+char *
+bmk_strcpy(char *d, const char *s)
+{
+	bmk_printf("bmk_strcpy");
+	return 0;
+}
+
+void
+bmk_cpu_sched_switch(void * x, void * y)
+{
+	bmk_printf("bmk_cpu_sched_switch");
+}
+
+void *
+bmk_xmalloc_bmk(unsigned long howmuch)
+{
+	bmk_printf("bmk_xmalloc_bmk");
+	return 0;
 }
 
 void
