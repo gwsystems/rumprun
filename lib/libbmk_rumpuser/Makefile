@@ -3,8 +3,8 @@ LIBISPRIVATE=	# defined
 
 # kernel-level source code
 CFLAGS+=        -fno-stack-protector
-CFLAGS+=        -I/home/hobbes/Code/Research/rump2cos/Composite/src/components/implementation/no_interface/rumpbooter/
-CFLAGS+=        -I/home/hobbes/Code/Research/rump2cos/Composite/src/kernel/include/shared/
+CFLAGS+=        -I$(.CURDIR)/../../../../rump2cos/Composite/src/components/implementation/no_interface/rumpbooter/
+CFLAGS+=        -I$(.CURDIR)/../../../../../research/rump2cos/Composite/src/kernel/include/shared/
 
 
 SRCS=		rumpuser_base.c
