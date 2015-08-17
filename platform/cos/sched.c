@@ -42,7 +42,9 @@
 
 #include <arch/i386/types.h>
 
+/* Located on the composite side */
 #include <rumpcalls.h>
+#include <cos_init.h>
 
 void *bmk_mainstackbase;
 unsigned long bmk_mainstacksize;
@@ -95,9 +97,22 @@ struct bmk_thread {
 
 	TAILQ_ENTRY(bmk_thread) bt_schedq;
 	TAILQ_ENTRY(bmk_thread) bt_threadq;
+
+	/* RG additions */
+	capid_t cos_thdcap; // thdcap_t == capid_t
 };
 
-struct bmk_thread *bmk_threads[MAX_NUM_THREADS];
+void
+set_cos_thdcap(struct bmk_thread *thread, capid_t value)
+{
+	thread->cos_thdcap = value;
+}
+
+capid_t
+get_cos_thdcap(struct bmk_thread *thread)
+{
+	return thread->cos_thdcap;
+}
 
 TAILQ_HEAD(threadqueue, bmk_thread);
 static struct threadqueue threadq = TAILQ_HEAD_INITIALIZER(threadq);
@@ -126,8 +141,8 @@ static void (*scheduler_hook)(void *, void *);
 static void
 print_threadinfo(struct bmk_thread *thread)
 {
-	bmk_printf("print_threadinfo");
-	bmk_printf("thread \"%s\" at %p, flags 0x%x\n",
+	bmk_printf("SCHED: print_threadinfo\n");
+	bmk_printf("SCHED: thread \"%s\" at %p, flags 0x%x\n",
 	    thread->bt_name, thread, thread->bt_flags);
 }
 
@@ -135,7 +150,7 @@ static inline void
 setflags(struct bmk_thread *thread, int add, int remove)
 {
 
-	bmk_printf("setflags");
+	bmk_printf("SCHED: setflags\n");
 	thread->bt_flags &= ~remove;
 	thread->bt_flags |= add;
 }
@@ -143,7 +158,7 @@ setflags(struct bmk_thread *thread, int add, int remove)
 static void
 set_runnable(struct bmk_thread *thread)
 {
-	bmk_printf("set_runnable");
+	bmk_printf("SCHED: set_runnable\n");
 	struct threadqueue *tq;
 	int tflags;
 	int flags;
@@ -194,7 +209,7 @@ timeq_sorted_insert(struct bmk_thread *thread)
 {
 	struct bmk_thread *iter;
 
-	bmk_printf("timeq_sorted_insert");
+	bmk_printf("timeq_sorted_insert\n");
 
 	bmk_assert(thread->bt_wakeup_time != BMK_SCHED_BLOCK_INFTIME);
 
@@ -224,7 +239,7 @@ timeq_sorted_insert(struct bmk_thread *thread)
 static void
 clear_runnable(void)
 {
-	bmk_printf("clear_runnable");
+	bmk_printf("SCHED: clear_runnable\n");
 	struct bmk_thread *thread = bmk_current;
 	int newfl;
 
@@ -251,7 +266,7 @@ static void
 stackalloc(void **stack, unsigned long *ss)
 {
 
-	bmk_printf("stackalloc");
+	bmk_printf("SCHED: stackalloc\n");
 	*stack = bmk_pgalloc(bmk_stackpageorder);
 	*ss = bmk_stacksize;
 }
@@ -260,7 +275,7 @@ static void
 stackfree(struct bmk_thread *thread)
 {
 
-	bmk_printf("stackfree");
+	bmk_printf("SCHED: stackfree\n");
 	bmk_pgfree(thread->bt_stackbase, bmk_stackpageorder);
 }
 
@@ -268,7 +283,7 @@ void
 bmk_sched_dumpqueue(void)
 {
 	struct bmk_thread *thr;
-	bmk_printf("bmk_sched_dumpqueue");
+	bmk_printf("SCHED: bmk_sched_dumpqueue\n");
 
 	bmk_printf("BEGIN runq dump\n");
 	TAILQ_FOREACH(thr, &runq, bt_schedq) {
@@ -292,7 +307,7 @@ bmk_sched_dumpqueue(void)
 static void
 sched_switch(struct bmk_thread *prev, struct bmk_thread *next)
 {
-	bmk_printf("sched_switch");
+	bmk_printf("SCHED: sched_switch\n");
 
 	bmk_assert(next->bt_flags & THR_RUNNING);
 	bmk_assert((next->bt_flags & THR_QMASK) == 0);
@@ -306,7 +321,7 @@ sched_switch(struct bmk_thread *prev, struct bmk_thread *next)
 static void
 schedule(void)
 {
-	bmk_printf("schedule");
+	bmk_printf("SCHED: schedule\n");
 	struct bmk_thread *prev, *next, *thread;
 	unsigned long flags;
 
@@ -388,7 +403,7 @@ schedule(void)
 void *
 bmk_sched_tls_alloc(void)
 {
-	bmk_printf("bmk_sched_tls_alloc");
+	bmk_printf("SCHED: bmk_sched_tls_alloc\n");
 	//allocs a char arry and stores all thread mem there.
 	char *tlsmem;
 
@@ -406,7 +421,7 @@ void
 bmk_sched_tls_free(void *mem)
 {
 
-	bmk_printf("bmk_sched_tls_free");
+	bmk_printf("SCHED: bmk_sched_tls_free\n");
 	mem = (void *)((unsigned long)mem - TCBOFFSET);
 	bmk_memfree(mem, BMK_MEMWHO_WIREDBMK);
 }
@@ -415,7 +430,7 @@ void *
 bmk_sched_gettcb(void)
 {
 
-	bmk_printf("bmk_sched_gettcb");
+	bmk_printf("SCHED: bmk_sched_gettcb\n");
 	return (void *)bmk_current->bt_tcb.btcb_tp;
 }
 
@@ -423,7 +438,7 @@ static void
 inittcb(struct bmk_tcb *tcb, void *tlsarea, unsigned long tlssize)
 {
 
-	bmk_printf("inittcb");
+	bmk_printf("SCHED: inittcb\n");
 #if 0
 	/* TCB initialization for Variant I */
 	/* TODO */
@@ -439,7 +454,7 @@ static long bmk_curoff;
 static void
 initcurrent(void *tcb, struct bmk_thread *value)
 {
-	bmk_printf("initcurrent");
+	bmk_printf("SCHED: initcurrent\n");
 	struct bmk_thread **dst = (void *)((unsigned long)tcb + bmk_curoff);
 
 	*dst = value;
@@ -450,15 +465,11 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 	void (*f)(void *), void *data,
 	void *stack_base, unsigned long stack_size, void *tlsarea)
 {
-	bmk_printf("bmk_sched_create_withtls");
+	bmk_printf("SCHED: bmk_sched_create_withtls\n");
 	struct bmk_thread *thread;
 	unsigned long flags;
 
 	thread = bmk_xmalloc_bmk(sizeof(*thread));
-
-	// RG
-	bmk_current = thread;
-	// RG
 
 	bmk_memset(thread, 0, sizeof(*thread));
 	bmk_strncpy(thread->bt_name, name, sizeof(thread->bt_name)-1);
@@ -480,6 +491,9 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 	thread->bt_wakeup_time = BMK_SCHED_BLOCK_INFTIME;
 
 	inittcb(&thread->bt_tcb, tlsarea, TCBOFFSET);
+
+	// We want to edit this function to make bmk_current = thread we are passing in
+	// for the new thread that we just created, not the one currently running
 	initcurrent(tlsarea, thread);
 
 	TAILQ_INSERT_TAIL(&threadq, thread, bt_threadq);
@@ -498,7 +512,7 @@ bmk_sched_create(const char *name, void *cookie, int joinable,
 	void (*f)(void *), void *data,
 	void *stack_base, unsigned long stack_size)
 {
-	bmk_printf("bmk_sched_create");
+	bmk_printf("SCHED: bmk_sched_create\n");
 	void *tlsarea;
 
 	tlsarea = bmk_sched_tls_alloc();
@@ -516,7 +530,7 @@ static TAILQ_HEAD(, join_waiter) joinwq = TAILQ_HEAD_INITIALIZER(joinwq);
 void
 bmk_sched_exit_withtls(void)
 {
-	bmk_printf("bmk_sched_exit_withtls");
+	bmk_printf("SCHED: bmk_sched_exit_withtls\n");
 	struct bmk_thread *thread = bmk_current;
 	struct join_waiter *jw_iter;
 	unsigned long flags;
@@ -556,7 +570,7 @@ bmk_sched_exit_withtls(void)
 void
 bmk_sched_exit(void)
 {
-	bmk_printf("bmk_sched_exit");
+	bmk_printf("SCHED: bmk_sched_exit\n");
 
 	bmk_sched_tls_free((void *)bmk_current->bt_tcb.btcb_tp);
 	bmk_sched_exit_withtls();
@@ -565,7 +579,7 @@ bmk_sched_exit(void)
 void
 bmk_sched_join(struct bmk_thread *joinable)
 {
-	bmk_printf("bmk_sched_join");
+	bmk_printf("SCHED: bmk_sched_join\n");
 	struct join_waiter jw;
 	struct bmk_thread *thread = bmk_current;
 	unsigned long flags;
@@ -604,7 +618,7 @@ bmk_sched_join(struct bmk_thread *joinable)
 void
 bmk_sched_suspend(struct bmk_thread *thread)
 {
-	bmk_printf("bmk_sched_suspend");
+	bmk_printf("SCHED: bmk_sched_suspend\n");
 
 	bmk_platform_halt("sched_suspend unimplemented");
 }
@@ -613,14 +627,14 @@ void
 bmk_sched_unsuspend(struct bmk_thread *thread)
 {
 
-	bmk_printf("bmk_sched_unsuspend");
+	bmk_printf("SCHED: bmk_sched_unsuspend\n");
 	bmk_platform_halt("sched_unsuspend unimplemented");
 }
 
 void
 bmk_sched_blockprepare_timeout(bmk_time_t deadline)
 {
-	bmk_printf("bmk_sched_blockprepare_timeout");
+	bmk_printf("SCHED: bmk_sched_blockprepare_timeout\n");
 	struct bmk_thread *thread = bmk_current;
 	int flags;
 
@@ -636,7 +650,7 @@ bmk_sched_blockprepare_timeout(bmk_time_t deadline)
 void
 bmk_sched_blockprepare(void)
 {
-	bmk_printf("bmk_sched_blockprepare");
+	bmk_printf("SCHED: bmk_sched_blockprepare\n");
 
 	bmk_sched_blockprepare_timeout(BMK_SCHED_BLOCK_INFTIME);
 }
@@ -644,7 +658,7 @@ bmk_sched_blockprepare(void)
 int
 bmk_sched_block(void)
 {
-	bmk_printf("bmk_sched_block");
+	bmk_printf("SCHED: bmk_sched_block\n");
 	struct bmk_thread *thread = bmk_current;
 	int tflags;
 
@@ -663,7 +677,7 @@ void
 bmk_sched_wake(struct bmk_thread *thread)
 {
 
-	bmk_printf("bmk_sched_wake");
+	bmk_printf("SCHED: bmk_sched_wake\n");
 	thread->bt_wakeup_time = BMK_SCHED_BLOCK_INFTIME;
 	set_runnable(thread);
 }
@@ -679,7 +693,7 @@ bmk_sched_wake(struct bmk_thread *thread)
 void
 bmk_sched_init(void)
 {
-	bmk_printf("bmk_sched_init");
+	bmk_printf("SCHED: bmk_sched_init\n");
 	unsigned long tlsinit;
 	struct bmk_tcb tcbinit;
 
@@ -705,7 +719,7 @@ bmk_sched_init(void)
 void __attribute__((noreturn))
 bmk_sched_startmain(void (*mainfun)(void *), void *arg)
 {
-	bmk_printf("bmk_sched_startmain");
+	bmk_printf("SCHED: bmk_sched_startmain\n");
 	struct bmk_thread *mainthread;
 	struct bmk_thread initthread;
 
@@ -733,7 +747,7 @@ void
 bmk_sched_set_hook(void (*f)(void *, void *))
 {
 
-	bmk_printf("bmk_sched_set_hook");
+	bmk_printf("SCHED: bmk_sched_set_hook\n");
 	scheduler_hook = f;
 }
 
@@ -741,7 +755,7 @@ struct bmk_thread *
 bmk_sched_init_mainlwp(void *cookie)
 {
 
-	bmk_printf("bmk_sched_init_mainlwp");
+	bmk_printf("SCHED: bmk_sched_init_mainlwp\n");
 	bmk_current->bt_cookie = cookie;
 	return bmk_current;
 }
@@ -750,7 +764,7 @@ const char *
 bmk_sched_threadname(struct bmk_thread *thread)
 {
 
-	bmk_printf("bmk_sched_threadname");
+	bmk_printf("SCHED: bmk_sched_threadname\n");
 	return thread->bt_name;
 }
 
@@ -763,14 +777,14 @@ int *
 bmk_sched_geterrno(void)
 {
 
-	bmk_printf("bmk_sched_geterrno");
+	bmk_printf("SCHED: bmk_sched_geterrno\n");
 	return &bmk_current->bt_errno;
 }
 
 void
 bmk_sched_yield(void)
 {
-	bmk_printf("bmk_sched_yield");
+	bmk_printf("SCHED: bmk_sched_yield\n");
 	struct bmk_thread *thread = bmk_current;
 	int flags;
 

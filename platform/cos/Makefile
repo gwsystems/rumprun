@@ -15,6 +15,7 @@ include ../Makefile.inc
 CPPFLAGS=	-Iinclude -Irump/include -I../../include -nostdinc
 CFLAGS+=	${BUILDRUMP_TOOL_CFLAGS}
 CFLAGS+=        -I../../../Composite/src/components/implementation/no_interface/rumpbooter/
+CFLAGS+=        -I../../../Composite/src/components/include/
 CFLAGS+=        -I../../../Composite/src/kernel/include/shared/
 CFLAGS+=        -Iinclude -Irump/includle -I../../include
 
@@ -43,7 +44,7 @@ LDFLAGS_BAKE+=	-L$(abspath rump/lib)
 
 include arch/${MACHINE}/Makefile.inc
 
-OBJS_BMK = sched.o
+OBJS_BMK = sched.o init.o
 
 OBJS= ${OBJS_APP} ${OBJS_BMK}
 

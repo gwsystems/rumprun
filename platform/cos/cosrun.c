@@ -2,6 +2,8 @@
 #include <bmk-core/types.h>
 #include <bmk-core/null.h>
 #include <bmk-core/core.h>
+#include <bmk-core/jsmn.h>
+#include <bmk-core/sched.h>
 
 //#include <bmk/kernel.h>
 
@@ -32,6 +34,7 @@ struct bmk_tcb;
 
 struct lwp *bmk_curlwp(void);
 void  bmk_printf(const char *fmt, ...);
+int bmk_snprintf(char *bf, unsigned long size, const char *fmt, ...);
 bmk_time_t bmk_platform_clock_monotonic(void);
 bmk_time_t bmk_platform_clock_epochoffset(void);
 void __attribute__((noreturn)) bmk_platform_halt(const char *panicstring);
@@ -73,28 +76,47 @@ bmk_printf(const char *fmt, ...)
 	return;
 }
 
+int
+bmk_snprintf(char *bf, unsigned long size, const char *fmt, ...)
+{
+	bmk_printf("bmk_snprintf:\n");
+
+	int ret;
+	va_list arg_ptr;
+
+	va_start(arg_ptr, fmt);
+	ret = crcalls.rump_vsnprintf(bf, size, fmt, arg_ptr);
+	va_end(arg_ptr);
+
+	return ret;
+}
+
 void
 bmk_platform_cpu_sched_settls(struct bmk_tcb *next){
-	bmk_printf("bmk_platform_cpu_sched_settls");
+	bmk_printf("bmk_platform_cpu_sched_settls is being called\n");
+	while(1);
 }
 
 unsigned long
 bmk_platform_splhigh(void)
 {
-	bmk_printf("bmk_platform_splhigh");
+	bmk_printf("bmk_platform_splhigh is being callled\n");
+	while(1);
 	return 0;
 }
 
 void
 bmk_platform_block(bmk_time_t until)
 {
-	bmk_printf("bmk_platform_block");
+	bmk_printf("bmk_platform_block is being called\n");
+	while(1);
 }
 
 void
 bmk_platform_splx(unsigned long x)
 {
-	bmk_printf("bmk_platform_splx");
+	bmk_printf("bmk_platform_splx is being called\n");
+	while(1);
 }
 
 void
@@ -102,27 +124,50 @@ bmk_cpu_sched_create(struct bmk_thread *thread, struct bmk_tcb *tcb,
         void (*f)(void *), void *arg,
         void *stack_base, unsigned long stack_size)
 {
-	bmk_printf("bmk_cpu_sched_create");
+
+	/*
+	 * In the composite related function we want to:
+	 * We need to get the thdid so we can set up bmk_current thd
+	 * later on *initcurrent*, We want to assign thdcap_t within the
+	 * thread that is being passed in.
+	 * */
+	bmk_printf("bmk_cpu_sched_create is being called\n");
+
+	crcalls.rump_cpu_sched_create(thread, tcb, f, arg, stack_base, stack_size);
 }
 
 char *
 bmk_strcpy(char *d, const char *s)
 {
-	bmk_printf("bmk_strcpy");
-	return 0;
+	bmk_printf("bmk_strcpy is being called\n");
+	bmk_printf("TODO: implement with composite's strcpy instead\n");
+
+	char *orig = d;
+
+	while ((*d++ = *s++) != '\0')
+		continue;
+	return orig;
 }
 
 void
 bmk_cpu_sched_switch(void * x, void * y)
 {
-	bmk_printf("bmk_cpu_sched_switch");
+	bmk_printf("bmk_cpu_sched_switch is being called\n");
+	while(1);
 }
 
 void *
 bmk_xmalloc_bmk(unsigned long howmuch)
 {
-	bmk_printf("bmk_xmalloc_bmk");
-	return 0;
+	bmk_printf("bmk_xmalloc_bmk is being called\n");
+
+	void *rv;
+
+	rv = crcalls.rump_memalloc(howmuch, 0);
+	if (rv == NULL)
+		bmk_platform_halt("xmalloc failed");
+
+	return rv;
 }
 
 void
@@ -179,16 +224,27 @@ void *
 bmk_memset(void *b, int c, unsigned long n)
 {
 	bmk_printf("bmk_memset is being called.\n");
-	while(1){}
-	return NULL;
+	bmk_printf("TODO: implement with composite's memset instead\n");
+
+
+	unsigned char *v = b;
+
+	while (n--)
+		*v++ = (unsigned char)c;
+
+	return b;
 }
 
 void *
 bmk_memcpy(void *d, const void *src, unsigned long n)
 {
 	bmk_printf("bmk_memcpy is being called.\n");
-	while(1){}
-	return NULL;
+
+	void *ret;
+
+	ret = crcalls.rump_memcpy(d, src, n);
+
+	return ret;
 }
 
 
@@ -278,22 +334,14 @@ bmk_memcalloc(unsigned long n, unsigned long size, enum bmk_memwho who)
 }
 
 void
-bmk_platform_cpu_sched_settls(struct bmk_tcb *next)
+jsmn_init(jsmn_parser *parser)
 {
-	bmk_printf("bmk_platform_cpu_sched_settls is being called.\n");
-	while(1);
+	bmk_printf("jsmn_init unimplemented");
 }
 
-unsigned long
-bmk_platform_splhigh(void)
+jsmnerr_t
+jsmn_parse(jsmn_parser *parser, const char *js, unsigned long len, jsmntok_t *tokens, unsigned int num_tokens)
 {
-	bmk_printf("bmk_platform_splhigh is being called.\n");
+	bmk_printf("jsmn_parse unimplemented");
 	return 0;
-}
-
-void *
-bmk_xmalloc_bmk(unsigned long howmuch)
-{
-	bmk_printf("bmk_xmalloc_bmk is being called.\n");
-	return NULL;
 }

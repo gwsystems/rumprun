@@ -45,6 +45,7 @@
 #include <fs/tmpfs/tmpfs_args.h>
 
 #include <bmk-core/platform.h>
+#include <bmk-core/printf.h>
 
 #include <rumprun-base/rumprun.h>
 #include <rumprun-base/config.h>
@@ -112,7 +113,10 @@ rumprun_boot(char *cmdline)
 
 	rump_init_server("tcp://0:12345");
 
-	_rumprun_config(cmdline);
+	// RG: not calling _rumprun_config as I don't want to deal
+	// with taking out json stuff as of right now. TODO
+	bmk_printf("skipping over _rumprun_config(cmdline). TODO - see if this has an impact");
+	//_rumprun_config(cmdline);
 
 	/*
 	 * give all threads a chance to run, and ensure that the main

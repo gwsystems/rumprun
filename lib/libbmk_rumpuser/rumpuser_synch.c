@@ -150,6 +150,23 @@ struct rumpuser_mtx {
 	struct bmk_thread *bmk_o;
 };
 
+static void
+print_rumpuser_mtx(struct rumpuser_mtx *mtx)
+{
+	bmk_printf("\n--START:print_rumpuser_mtx--\n\n");
+
+	bmk_printf("struct waithead waiters: %p\n", mtx->waiters);
+
+	bmk_printf("int v: %d\n", mtx->v);
+	bmk_printf("int flags: %d\n", mtx->flags);
+
+	bmk_printf("struct lwp *o: %p\n", mtx->o);
+
+	bmk_printf("struct bmk_thread *bmk_o: %p\n", mtx->bmk_o);
+
+	bmk_printf("\n--END: print_rumpuser_mtx--\n\n");
+}
+
 void
 rumpuser_mutex_init(struct rumpuser_mtx **mtxp, int flags)
 {
@@ -162,8 +179,6 @@ rumpuser_mutex_init(struct rumpuser_mtx **mtxp, int flags)
 	mtx->flags = flags;
 	TAILQ_INIT(&mtx->waiters);
 	*mtxp = mtx;
-
-	bmk_printf("rumpuser_mutex_init exit\n");
 }
 
 void
@@ -173,6 +188,8 @@ rumpuser_mutex_enter(struct rumpuser_mtx *mtx)
 	bmk_printf("rumpuser_mutex_enter\n");
 
 	int nlocks;
+
+	print_rumpuser_mtx(mtx);
 
 	if (rumpuser_mutex_tryenter(mtx) != 0) {
 		rumpkern_unsched(&nlocks, NULL);
@@ -205,6 +222,13 @@ rumpuser_mutex_tryenter(struct rumpuser_mtx *mtx)
 
 	struct lwp *l = rumpuser_curlwp();
 
+	bmk_printf("rumpuser_mutex_tryenter: lwp pointer: %p\n", l);
+	bmk_printf("rumpuser_mutex_tryenter: mtx->bmk_o pointer: %p\n", mtx->bmk_o);
+	bmk_printf("rumpuser_mutex_tryenter: bmk_current pointer: %p\n", bmk_current);
+
+	// Problem arries because rumpuser_curlwp() originally correctly assigns bmk_current...
+	// yet no scheduling calls have been made yet, so I am not sure
+	// Possible test with hw kernel??
 	if (mtx->bmk_o == bmk_current) {
 		bmk_platform_halt("rumpuser mutex: locking against myself");
 	}
@@ -548,6 +572,7 @@ bmk_curlwp_thdid(void)
 	int thdid;
 
 	thdid = crcalls.rump_cos_get_thd_id();
+	bmk_printf("bmk_curlwp_thdid: %d\n", thdid);
 	return thdid;
 }
 
