@@ -431,7 +431,6 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 {
 	struct bmk_thread *thread;
 	unsigned long flags;
-	bmk_printf("here I am lol");
 	thread = bmk_xmalloc_bmk(sizeof(*thread));
 	bmk_memset(thread, 0, sizeof(*thread));
 	bmk_strncpy(thread->bt_name, name, sizeof(thread->bt_name)-1);
@@ -471,6 +470,7 @@ bmk_sched_create(const char *name, void *cookie, int joinable,
 	void (*f)(void *), void *data,
 	void *stack_base, unsigned long stack_size)
 {
+
 	void *tlsarea;
 
 	tlsarea = bmk_sched_tls_alloc();

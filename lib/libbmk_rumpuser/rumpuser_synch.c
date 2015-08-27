@@ -111,13 +111,13 @@ rumpuser_thread_create(void *(*f)(void *), void *arg, const char *thrname,
 {
 
 	struct bmk_thread *thr;
-	bmk_printf("rumpuser_thread_create>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");	
+	bmk_printf("rumpuser_thread_create>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
 	thr = bmk_sched_create(thrname, NULL, joinable,
 	    (void (*)(void *))f, arg, NULL, 0);
-	bmk_printf("bmk_sched_create returned>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");	
+	bmk_printf("bmk_sched_create returned>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
 	//thr = bmk_sched_create(thrname, NULL, joinable,
 	  //  (void (*)(void *))f, arg, NULL, 0);
-	
+
 	if (!thr)
 		return BMK_EINVAL;
 
@@ -152,22 +152,22 @@ struct rumpuser_mtx {
 	struct bmk_thread *bmk_o;
 };
 
-static void
-print_rumpuser_mtx(struct rumpuser_mtx *mtx)
-{
-	bmk_printf("\n--START:print_rumpuser_mtx--\n\n");
-
-	bmk_printf("struct waithead waiters: %p\n", mtx->waiters);
-
-	bmk_printf("int v: %d\n", mtx->v);
-	bmk_printf("int flags: %d\n", mtx->flags);
-
-	bmk_printf("struct lwp *o: %p\n", mtx->o);
-
-	bmk_printf("struct bmk_thread *bmk_o: %p\n", mtx->bmk_o);
-
-	bmk_printf("\n--END: print_rumpuser_mtx--\n\n");
-}
+//static void
+//print_rumpuser_mtx(struct rumpuser_mtx *mtx)
+//{
+//	bmk_printf("\n--START:print_rumpuser_mtx--\n\n");
+//
+//	bmk_printf("struct waithead waiters: %p\n", mtx->waiters);
+//
+//	bmk_printf("int v: %d\n", mtx->v);
+//	bmk_printf("int flags: %d\n", mtx->flags);
+//
+//	bmk_printf("struct lwp *o: %p\n", mtx->o);
+//
+//	bmk_printf("struct bmk_thread *bmk_o: %p\n", mtx->bmk_o);
+//
+//	bmk_printf("\n--END: print_rumpuser_mtx--\n\n");
+//}
 
 void
 rumpuser_mutex_init(struct rumpuser_mtx **mtxp, int flags)
@@ -191,7 +191,7 @@ rumpuser_mutex_enter(struct rumpuser_mtx *mtx)
 
 	int nlocks;
 
-	print_rumpuser_mtx(mtx);
+	//print_rumpuser_mtx(mtx);
 
 	if (rumpuser_mutex_tryenter(mtx) != 0) {
 		rumpkern_unsched(&nlocks, NULL);
@@ -224,9 +224,9 @@ rumpuser_mutex_tryenter(struct rumpuser_mtx *mtx)
 
 	struct lwp *l = rumpuser_curlwp();
 
-	bmk_printf("rumpuser_mutex_tryenter: lwp pointer: %p\n", l);
-	bmk_printf("rumpuser_mutex_tryenter: mtx->bmk_o pointer: %p\n", mtx->bmk_o);
-	bmk_printf("rumpuser_mutex_tryenter: bmk_current pointer: %p\n", bmk_current);
+	//bmk_printf("rumpuser_mutex_tryenter: lwp pointer: %p\n", l);
+	//bmk_printf("rumpuser_mutex_tryenter: mtx->bmk_o pointer: %p\n", mtx->bmk_o);
+	//bmk_printf("rumpuser_mutex_tryenter: bmk_current pointer: %p\n", bmk_current);
 
 	// Problem arries because rumpuser_curlwp() originally correctly assigns bmk_current...
 	// yet no scheduling calls have been made yet, so I am not sure
@@ -234,7 +234,7 @@ rumpuser_mutex_tryenter(struct rumpuser_mtx *mtx)
 	if (mtx->bmk_o == bmk_current) {
 		bmk_platform_halt("rumpuser mutex: locking against myself");
 	}
-	bmk_printf("mtx_v:%d\n", mtx->v);
+
 	if (mtx->v)
 		return BMK_EBUSY;
 
@@ -614,7 +614,6 @@ rumpuser_curlwp(void)
 	int thdid;
 
 	thdid = bmk_curlwp_thdid();
-	bmk_printf("thdid:%d\n", thdid);
 	return lwp_array[thdid];
 	//return current_lwp;
 }

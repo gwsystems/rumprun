@@ -409,6 +409,13 @@ bmk_sched_tls_alloc(void)
 	char *tlsmem;
 
 	tlsmem = bmk_memalloc(TLSAREASIZE, 0, BMK_MEMWHO_WIREDBMK);
+
+	bmk_printf("SCHED: tlsmem %p\n", tlsmem);
+	bmk_printf("SCHED: _tdata_start %p\n", _tdata_start);
+	bmk_printf("SCHED:\n TDATASIZE %d\n", TDATASIZE);
+	bmk_printf("SCHED:\n TLSAREASIZE %d\n", TLSAREASIZE);
+	bmk_printf("SCHED:\n TBSSSIZE %d\n", TBSSSIZE);
+
 	bmk_memcpy(tlsmem, _tdata_start, TDATASIZE); //copy from alloc to tlsmem 
 	bmk_memset(tlsmem + TDATASIZE, 0, TBSSSIZE);
 	bmk_printf("SCHED: tls_alloc is returning\n");
@@ -466,7 +473,8 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 	void (*f)(void *), void *data,
 	void *stack_base, unsigned long stack_size, void *tlsarea)
 {
-	bmk_printf("F: %p\n", f);
+	bmk_printf("SCHED: F: %p\n", f);
+
 	struct bmk_thread *thread;
 	unsigned long flags;
 
@@ -503,7 +511,7 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 	flags = bmk_platform_splhigh();
 	TAILQ_INSERT_TAIL(&runq, thread, bt_schedq);
 	thread->bt_flags |= THR_RUNQ;
-	
+
 	bmk_printf("SCHED: this returns\n");
 	bmk_platform_splx(flags);
 	bmk_printf("SCHED: this returns\n");
@@ -516,12 +524,20 @@ bmk_sched_create(const char *name, void *cookie, int joinable,
 	void *stack_base, unsigned long stack_size)
 {
 	bmk_printf("SCHED: bmk_sched_create\n");
+
 	void *tlsarea;
+	struct bmk_thread *ret;
+
 	tlsarea = bmk_sched_tls_alloc();
-		
-	bmk_printf("SCHED: F: %p", f);
-	return bmk_sched_create_withtls(name, cookie, joinable, f, data,
-	    stack_base, stack_size, tlsarea);
+
+	bmk_printf("SCHED: tlsarea: %p\n", tlsarea);
+
+	ret = bmk_sched_create_withtls(name, cookie, joinable, f, data,
+	    	stack_base, stack_size, tlsarea);
+
+	bmk_printf("SCHED: returning thread: %p\n", ret);
+
+	return ret;
 }
 
 struct join_waiter {

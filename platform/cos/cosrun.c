@@ -180,7 +180,7 @@ bmk_memfree(void *cp, enum bmk_memwho who)
 {
 	bmk_printf("bmk_memfree is being called.\n");
 
-	crcalls.rump_memfree(cp);	
+	crcalls.rump_memfree(cp);
 	bmk_printf("bmk_memfree has been called.\n");
 }
 
