@@ -110,12 +110,14 @@ rumpuser_thread_create(void *(*f)(void *), void *arg, const char *thrname,
 	int joinable, int pri, int cpuidx, void **tptr)
 {
 
-	bmk_printf("rumpuser_thread_create\n");
-
 	struct bmk_thread *thr;
-
+	bmk_printf("rumpuser_thread_create>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");	
 	thr = bmk_sched_create(thrname, NULL, joinable,
 	    (void (*)(void *))f, arg, NULL, 0);
+	bmk_printf("bmk_sched_create returned>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");	
+	//thr = bmk_sched_create(thrname, NULL, joinable,
+	  //  (void (*)(void *))f, arg, NULL, 0);
+	
 	if (!thr)
 		return BMK_EINVAL;
 
@@ -172,7 +174,7 @@ rumpuser_mutex_init(struct rumpuser_mtx **mtxp, int flags)
 {
 
 	bmk_printf("rumpuser_mutex_init\n");
-
+	
 	struct rumpuser_mtx *mtx;
 
 	mtx = bmk_memcalloc(1, sizeof(*mtx), BMK_MEMWHO_WIREDBMK);
@@ -232,6 +234,7 @@ rumpuser_mutex_tryenter(struct rumpuser_mtx *mtx)
 	if (mtx->bmk_o == bmk_current) {
 		bmk_platform_halt("rumpuser mutex: locking against myself");
 	}
+	bmk_printf("mtx_v:%d\n", mtx->v);
 	if (mtx->v)
 		return BMK_EBUSY;
 
@@ -607,10 +610,11 @@ rumpuser_curlwpop(int enum_rumplwpop, struct lwp *l)
 struct lwp *
 rumpuser_curlwp(void)
 {
-	bmk_printf("rumpuser_curlwp\n");
+	bmk_printf("rumpuser_curlwp");
 	int thdid;
 
 	thdid = bmk_curlwp_thdid();
+	bmk_printf("thdid:%d\n", thdid);
 	return lwp_array[thdid];
 	//return current_lwp;
 }

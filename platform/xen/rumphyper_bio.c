@@ -65,7 +65,7 @@ rumprun_platform_rumpuser_init(void)
 	for (i = 0; i < NBLKDEV; i++) {
 		blkdevs[i].blk_vbd = -1;
 	}
-
+	while(;;)
 	return 0;
 }
 

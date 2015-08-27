@@ -431,7 +431,7 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 {
 	struct bmk_thread *thread;
 	unsigned long flags;
-
+	bmk_printf("here I am lol");
 	thread = bmk_xmalloc_bmk(sizeof(*thread));
 	bmk_memset(thread, 0, sizeof(*thread));
 	bmk_strncpy(thread->bt_name, name, sizeof(thread->bt_name)-1);

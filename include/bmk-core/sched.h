@@ -87,7 +87,7 @@ const char 	*bmk_sched_threadname(struct bmk_thread *);
 
 void	bmk_cpu_sched_bouncer(void);
 void	bmk_cpu_sched_switch(void *, void *);
-
+void    bmk_cpu_sched_switch_viathd(struct bmk_thread *prev, struct bmk_thread *next); //added by lucas
 void	bmk_platform_cpu_sched_settls(struct bmk_tcb *);
 
 bmk_time_t	bmk_platform_clock_monotonic(void);

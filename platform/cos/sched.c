@@ -48,7 +48,6 @@
 
 void *bmk_mainstackbase;
 unsigned long bmk_mainstacksize;
-
 /*
  * sleep for how long if there's absolutely nothing to do
  * (default 1s)
@@ -315,7 +314,9 @@ sched_switch(struct bmk_thread *prev, struct bmk_thread *next)
 	if (scheduler_hook)
 		scheduler_hook(prev->bt_cookie, next->bt_cookie);
 	bmk_platform_cpu_sched_settls(&next->bt_tcb);
-	bmk_cpu_sched_switch(&prev->bt_tcb, &next->bt_tcb);
+	bmk_printf("SCHED: switch_viathd before\n");
+	bmk_cpu_sched_switch_viathd(prev, next);
+	bmk_printf("SCHED: switch_viathd\n");
 }
 
 static void
@@ -410,7 +411,7 @@ bmk_sched_tls_alloc(void)
 	tlsmem = bmk_memalloc(TLSAREASIZE, 0, BMK_MEMWHO_WIREDBMK);
 	bmk_memcpy(tlsmem, _tdata_start, TDATASIZE); //copy from alloc to tlsmem 
 	bmk_memset(tlsmem + TDATASIZE, 0, TBSSSIZE);
-
+	bmk_printf("SCHED: tls_alloc is returning\n");
 	return tlsmem + TCBOFFSET;
 }
 
@@ -465,7 +466,7 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 	void (*f)(void *), void *data,
 	void *stack_base, unsigned long stack_size, void *tlsarea)
 {
-	bmk_printf("SCHED: bmk_sched_create_withtls\n");
+	bmk_printf("F: %p\n", f);
 	struct bmk_thread *thread;
 	unsigned long flags;
 
@@ -486,7 +487,7 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 
 	bmk_cpu_sched_create(thread, &thread->bt_tcb, f, data,
 	    stack_base, stack_size);
-
+	bmk_printf("SCHED: cpu_sched_create was called\n");
 	thread->bt_cookie = cookie;
 	thread->bt_wakeup_time = BMK_SCHED_BLOCK_INFTIME;
 
@@ -502,8 +503,10 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 	flags = bmk_platform_splhigh();
 	TAILQ_INSERT_TAIL(&runq, thread, bt_schedq);
 	thread->bt_flags |= THR_RUNQ;
+	
+	bmk_printf("SCHED: this returns\n");
 	bmk_platform_splx(flags);
-
+	bmk_printf("SCHED: this returns\n");
 	return thread;
 }
 
@@ -514,8 +517,9 @@ bmk_sched_create(const char *name, void *cookie, int joinable,
 {
 	bmk_printf("SCHED: bmk_sched_create\n");
 	void *tlsarea;
-
 	tlsarea = bmk_sched_tls_alloc();
+		
+	bmk_printf("SCHED: F: %p", f);
 	return bmk_sched_create_withtls(name, cookie, joinable, f, data,
 	    stack_base, stack_size, tlsarea);
 }

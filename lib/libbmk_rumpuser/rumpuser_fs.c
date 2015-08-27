@@ -50,6 +50,7 @@ rumpuser_open(const char *name, int mode, int *fdp)
 
 int
 rumpuser_close(int fd) {
+  bmk_printf("rumpuser close is being called"); 
   bmk_memset(&paws, 0, sizeof(paws));
   return 0;
 }

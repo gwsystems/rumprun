@@ -50,7 +50,7 @@ rumpuser_init(int version, const struct rumpuser_hyperup *hyp)
 	}
 
 	rumpuser__hyp = *hyp;
-
+	
 	return rumprun_platform_rumpuser_init();
 }
 

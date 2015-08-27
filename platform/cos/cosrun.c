@@ -4,7 +4,7 @@
 #include <bmk-core/core.h>
 #include <bmk-core/jsmn.h>
 #include <bmk-core/sched.h>
-
+#include <execinfo.h>
 //#include <bmk/kernel.h>
 
 #include <arch/i386/types.h>
@@ -52,13 +52,15 @@ char *bmk_strncpy(char *d, const char *s, unsigned long n);
 int   rumprun_platform_rumpuser_init(void);
 int   bmk_isr_init(int (*func)(void *), void *arg, int intr);
 
+void print_trace(void);
+
 void bmk_platform_cpu_sched_settls(struct bmk_tcb *next);
 unsigned long bmk_platform_splhigh(void);
 void bmk_platform_block(bmk_time_t until);
 void bmk_cpu_sched_create(struct bmk_thread *thread, struct bmk_tcb *tcb, void (*f)(void *), void *arg, void *stack_base, unsigned long stack_size);
 char * bmk_strcpy(char *d, const char *s);
 void bmk_platform_splx(unsigned long);
-void bmk_cpu_sched_switch(void * x, void * y);
+void bmk_cpu_sched_switch_viathd(struct bmk_thread *prev, struct bmk_thread *next);
 /* Prototype Definitions */
 
 void
@@ -93,15 +95,15 @@ bmk_snprintf(char *bf, unsigned long size, const char *fmt, ...)
 
 void
 bmk_platform_cpu_sched_settls(struct bmk_tcb *next){
-	bmk_printf("bmk_platform_cpu_sched_settls is being called\n");
-	while(1);
+	bmk_printf("bmk_platform_cpu_sched_settls is being called/ignored\n");
+//	while(1);
 }
 
 unsigned long
 bmk_platform_splhigh(void)
 {
-	bmk_printf("bmk_platform_splhigh is being callled\n");
-	while(1);
+	bmk_printf("bmk_platform_splhigh is being called/ignored\n");
+//	while(1);
 	return 0;
 }
 
@@ -115,8 +117,8 @@ bmk_platform_block(bmk_time_t until)
 void
 bmk_platform_splx(unsigned long x)
 {
-	bmk_printf("bmk_platform_splx is being called\n");
-	while(1);
+	bmk_printf("bmk_platform_splx is being called/ignored\n");
+	//while(1);
 }
 
 void
@@ -134,6 +136,7 @@ bmk_cpu_sched_create(struct bmk_thread *thread, struct bmk_tcb *tcb,
 	bmk_printf("bmk_cpu_sched_create is being called\n");
 
 	crcalls.rump_cpu_sched_create(thread, tcb, f, arg, stack_base, stack_size);
+	bmk_printf("bmk_cpu_sched_create has been called\n");
 }
 
 char *
@@ -150,10 +153,12 @@ bmk_strcpy(char *d, const char *s)
 }
 
 void
-bmk_cpu_sched_switch(void * x, void * y)
+bmk_cpu_sched_switch_viathd(struct bmk_thread *prev, struct bmk_thread *next)
 {
-	bmk_printf("bmk_cpu_sched_switch is being called\n");
-	while(1);
+	bmk_printf("SCHED: bmk_cpu_sched_switch_viathd is being called\n");
+		
+	crcalls.rump_cpu_sched_switch_viathd(prev, next);
+	bmk_printf("SCHED: bmk_cpu_sched_switch_viathd has been called\n");
 }
 
 void *
@@ -174,7 +179,9 @@ void
 bmk_memfree(void *cp, enum bmk_memwho who)
 {
 	bmk_printf("bmk_memfree is being called.\n");
-	while(1){}
+
+	crcalls.rump_memfree(cp);	
+	bmk_printf("bmk_memfree has been called.\n");
 }
 
 void *
@@ -205,7 +212,9 @@ void __attribute__((noreturn))
 bmk_platform_halt(const char *panicstring)
 {
 	bmk_printf("bmk_platform_halt is being called.\n");
-	while(1){}
+	bmk_printf("It's message is: ");
+	bmk_printf(panicstring);
+	while(1);
 }
 
 int
@@ -220,18 +229,28 @@ bmk_strcmp(const char *a, const char *b)
 	return rv;
 }
 
+/*void 
+print_trace (void)
+{
+	void *array[10];
+	size_t size;
+	char **strings;
+	size_t i;
+
+	size = backtrace(array, 10);
+	strings = backtrace_symbols(array, size);
+
+	for(i=0; i < size; i++)
+		bmk_printf("%s\n", strings[i]);
+
+}*/
+
 void *
 bmk_memset(void *b, int c, unsigned long n)
 {
 	bmk_printf("bmk_memset is being called.\n");
-	bmk_printf("TODO: implement with composite's memset instead\n");
-
-
-	unsigned char *v = b;
-
-	while (n--)
-		*v++ = (unsigned char)c;
-
+		
+	crcalls.rump_memset(b, c, n);
 	return b;
 }
 
