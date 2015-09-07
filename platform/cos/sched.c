@@ -410,15 +410,23 @@ bmk_sched_tls_alloc(void)
 
 	tlsmem = bmk_memalloc(TLSAREASIZE, 0, BMK_MEMWHO_WIREDBMK);
 
-	bmk_printf("SCHED: tlsmem %p\n", tlsmem);
-	bmk_printf("SCHED: _tdata_start %p\n", _tdata_start);
-	bmk_printf("SCHED:\n TDATASIZE %d\n", TDATASIZE);
-	bmk_printf("SCHED:\n TLSAREASIZE %d\n", TLSAREASIZE);
-	bmk_printf("SCHED:\n TBSSSIZE %d\n", TBSSSIZE);
+	//bmk_printf("SCHED: tlsmem %p\n", tlsmem);
+	//bmk_printf("SCHED: _tdata_start %p\n", _tdata_start);
+	//bmk_printf("SCHED: TDATASIZE %d\n", TDATASIZE);
+	//bmk_printf("SCHED: TLSAREASIZE %d\n", TLSAREASIZE);
+	bmk_printf("SCHED: TBSSSIZE %d\n", TBSSSIZE);
 
 	bmk_memcpy(tlsmem, _tdata_start, TDATASIZE); //copy from alloc to tlsmem 
 	bmk_memset(tlsmem + TDATASIZE, 0, TBSSSIZE);
 	bmk_printf("SCHED: tls_alloc is returning\n");
+
+	/* Printing Stack */
+	//bmk_printf("---- Printing the return address of bmk_sched_tls_alloc and higher functions ----\n");
+	//bmk_printf("%p\n", __builtin_return_address(0));
+	//bmk_printf("%p\n", __builtin_return_address(1));
+	//bmk_printf("%p\n", __builtin_return_address(2));
+	//bmk_printf("%p\n", __builtin_return_address(3));
+
 	return tlsmem + TCBOFFSET;
 }
 
@@ -529,6 +537,8 @@ bmk_sched_create(const char *name, void *cookie, int joinable,
 	struct bmk_thread *ret;
 
 	tlsarea = bmk_sched_tls_alloc();
+
+	bmk_printf("SCHED: F: %p\n", f);
 
 	bmk_printf("SCHED: tlsarea: %p\n", tlsarea);
 
