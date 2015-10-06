@@ -77,6 +77,7 @@ __weak_alias(rump_init_server,rumprun_enosys);
 void
 rumprun_boot(char *cmdline)
 {
+	bmk_printf("rumprun_boot\n");
 	struct tmpfs_args ta = {
 		.ta_version = TMPFS_ARGS_VERSION,
 		.ta_size_max = 1*1024*1024,
@@ -85,11 +86,15 @@ rumprun_boot(char *cmdline)
 	int tmpfserrno;
 
 	rump_boot_setsigmodel(RUMP_SIGMODEL_IGNORE);
+	bmk_printf("Entering rump_init\n");
 	rump_init();
+	bmk_printf("Exit rump_init\n");
 
 	/* mount /tmp before we let any userspace bits run */
+	bmk_printf("Mounting filesystem\n");
 	rump_sys_mount(MOUNT_TMPFS, "/tmp", 0, &ta, sizeof(ta));
 	tmpfserrno = errno;
+	bmk_printf("Done Mounting filesystem\n");
 
 	/*
 	 * XXX: _netbsd_userlevel_init() should technically be called
@@ -101,7 +106,9 @@ rumprun_boot(char *cmdline)
 	 * Eventually, we of course want bootstrap process which is
 	 * rumprun() internally.
 	 */
+	bmk_printf("rumprun_lwp_init\n");
 	rumprun_lwp_init();
+	bmk_printf("exiting rumprun_lwp_init\n");
 	_netbsd_userlevel_init();
 
 	/* print tmpfs result only after we bootstrapped userspace */

@@ -111,10 +111,11 @@ rumpuser_thread_create(void *(*f)(void *), void *arg, const char *thrname,
 {
 
 	struct bmk_thread *thr;
-	bmk_printf("rumpuser_thread_create>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
+	bmk_printf("rumpuser_thread_create\n");
+	bmk_printf("thrname: %s\n", thrname);
 	thr = bmk_sched_create(thrname, NULL, joinable,
 	    (void (*)(void *))f, arg, NULL, 0);
-	bmk_printf("bmk_sched_create returned>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
+	bmk_printf("bmk_sched_create returned\n");
 	//thr = bmk_sched_create(thrname, NULL, joinable,
 	  //  (void (*)(void *))f, arg, NULL, 0);
 

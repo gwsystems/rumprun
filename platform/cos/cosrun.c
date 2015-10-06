@@ -11,13 +11,16 @@
 
 #include <rumpcalls.h>
 
+
+// THESE MIGHT NEED TO BE DEFINED FIXMEE
+
 typedef long long bmk_time_t;
 
 unsigned long bmk_stackpageorder;
 unsigned long bmk_stacksize;
 
 unsigned long bmk_pagesize = 4096;
-unsigned long bmk_pageshift;
+unsigned long bmk_pageshift = 12;
 
 unsigned long bmk_memsize;
 
@@ -39,12 +42,8 @@ bmk_time_t bmk_platform_clock_monotonic(void);
 bmk_time_t bmk_platform_clock_epochoffset(void);
 void __attribute__((noreturn)) bmk_platform_halt(const char *panicstring);
 int bmk_strcmp(const char *a, const char *b);
-void  bmk_memfree(void *cp, enum bmk_memwho who);
-void *bmk_memrealloc_user(void *cp, unsigned long nbytes);
 void *bmk_memset(void *b, int c, unsigned long n);
 void *bmk_memcpy(void *d, const void *src, unsigned long n);
-void *bmk_memalloc(unsigned long nbytes, unsigned long align, enum bmk_memwho who);
-void *bmk_memcalloc(unsigned long, unsigned long, enum bmk_memwho);
 void *bmk_pgalloc(int order);
 void  bmk_pgfree(void *pointer, int order);
 void  bmk_vprintf(const char *fmt, va_list ap);
@@ -161,37 +160,6 @@ bmk_cpu_sched_switch_viathd(struct bmk_thread *prev, struct bmk_thread *next)
 	bmk_printf("SCHED: bmk_cpu_sched_switch_viathd has been called\n");
 }
 
-void *
-bmk_xmalloc_bmk(unsigned long howmuch)
-{
-	bmk_printf("bmk_xmalloc_bmk is being called\n");
-
-	void *rv;
-
-	rv = crcalls.rump_memalloc(howmuch, 0);
-	if (rv == NULL)
-		bmk_platform_halt("xmalloc failed");
-
-	return rv;
-}
-
-void
-bmk_memfree(void *cp, enum bmk_memwho who)
-{
-	bmk_printf("bmk_memfree is being called.\n");
-
-	crcalls.rump_memfree(cp);
-	bmk_printf("bmk_memfree has been called.\n");
-}
-
-void *
-bmk_memrealloc_user(void *cp, unsigned long nbytes)
-{
-	bmk_printf("bmk_memreallac_user is being called.\n");
-	while(1){}
-	return NULL;
-}
-
 bmk_time_t
 bmk_platform_clock_monotonic(void)
 {
@@ -249,9 +217,16 @@ void *
 bmk_memset(void *b, int c, unsigned long n)
 {
 	bmk_printf("bmk_memset is being called.\n");
-		
-	crcalls.rump_memset(b, c, n);
+	unsigned char *v = b;
+
+	while (n--)
+		*v++ = (unsigned char)c;
+
 	return b;
+
+	// Changed in response to malloc bug. See notes
+	//crcalls.rump_memset(b, c, n);
+	//return b;
 }
 
 void *
@@ -266,32 +241,22 @@ bmk_memcpy(void *d, const void *src, unsigned long n)
 	return ret;
 }
 
-
-void *
-bmk_memalloc(unsigned long nbytes, unsigned long align, enum bmk_memwho who)
-{
-	bmk_printf("bmk_memalloc is being called.\n");
-	void *rv;
-
-	rv = crcalls.rump_memalloc(nbytes, align);
-	return rv;
-}
-
-void *
-bmk_pgalloc(int order)
-{
-	bmk_printf("bmk_pgalloc is being called.\n");
-	bmk_printf("bmk_pgalloc order: %d\n", order);
-	return crcalls.rump_pgalloc();
-}
-
-void
-bmk_pgfree(void *pointer, int order)
-{
-	bmk_printf("bmk_pgfree is being called.\n");
-	while(1);
-	return;
-}
+/* These implementations are now found within pgalloc.c*/
+//void *
+//bmk_pgalloc(int order)
+//{
+//	bmk_printf("bmk_pgalloc is being called.\n");
+//	bmk_printf("bmk_pgalloc order: %d\n", order);
+//	return crcalls.rump_pgalloc();
+//}
+//
+//void
+//bmk_pgfree(void *pointer, int order)
+//{
+//	bmk_printf("bmk_pgfree is being called.\n");
+//	while(1);
+//	return;
+//}
 
 void
 bmk_vprintf(const char *fmt, va_list ap)
@@ -339,17 +304,6 @@ bmk_isr_init(int (*func)(void *), void *arg, int intr)
 	bmk_printf("bmk_isr_init is being called.\n");
 	while(1);
 	return 0;
-}
-
-void *
-bmk_memcalloc(unsigned long n, unsigned long size, enum bmk_memwho who)
-{
-	bmk_printf("bmk_memcalloc is being called.\n");
-
-	void *rv;
-
-	rv = crcalls.rump_memcalloc(n, size);
-	return rv;
 }
 
 void
