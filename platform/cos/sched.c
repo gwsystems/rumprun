@@ -807,7 +807,7 @@ int *
 bmk_sched_geterrno(void)
 {
 
-	bmk_printf("SCHED: bmk_sched_geterrno\n");
+	bmk_printf("SCHED: bmk_sched_geterrno: %d\n", *(&bmk_current->bt_errno));
 	return &bmk_current->bt_errno;
 }
 

@@ -65,7 +65,21 @@ struct rumprun_lwp {
 	TAILQ_ENTRY(rumprun_lwp) rl_entries;
 };
 static TAILQ_HEAD(, rumprun_lwp) all_lwp = TAILQ_HEAD_INITIALIZER(all_lwp);
-static __thread struct rumprun_lwp *me;
+
+/* RG:
+ * We need to replace __thread with an array that contains rumprun_lwp structs
+ * We need the idx into this array to be the cos_thd_id
+ * We need the current "static __thread strcut rumprun_lwp *me" to be defined
+ * 	as a #define statment that access this array
+ */
+
+/* RG: Not entirely sure what size to make the array, I'm sure there is a max sized declared somewhere?
+ * Either way, we are using 200 which is the max size compusoite uses */
+struct rumprun_lwp *lwp_me_threads[200];
+//static __thread struct rumprun_lwp *me;
+
+int bmk_curlwp_thdid(void); /* Defined within rumpuser_synch.c */
+#define me lwp_me_threads[bmk_curlwp_thdid()]
 
 #define FIRST_LWPID 1
 static int curlwpid = FIRST_LWPID;
@@ -132,6 +146,8 @@ rumprun_makelwp(void (*start)(void *), void *arg, void *private,
 
 	*lid = rl->rl_lwpid;
 	TAILQ_INSERT_TAIL(&all_lwp, rl, rl_entries);
+
+	lwp_me_threads[rl->rl_lwpid] = rl;
 
 	return 0;
 }
@@ -236,6 +252,9 @@ rumprun_lwp_init(void)
 	meoff = (uintptr_t)&me - (uintptr_t)tcb;
 	assignme(tcb, &mainthread);
 	mainthread.rl_thread = bmk_sched_init_mainlwp(&mainthread);
+
+	/* RG */
+	lwp_me_threads[FIRST_LWPID] = &mainthread;
 
 	TAILQ_INSERT_TAIL(&all_lwp, me, rl_entries);
 }

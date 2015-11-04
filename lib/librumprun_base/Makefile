@@ -10,4 +10,9 @@ SRCS+=		sysproxy.c
 
 CPPFLAGS+=	-I${.CURDIR}/../../include
 
+# RG edits:
+# We need to be able to use rumpcalls.h inorder to call cos_thdid, this was apart of the fix for
+# __thread (TLS problem)
+CFLAGS+=        -I${.CURDIR}/../../../Composite/src/components/implementation/no_interface/rumpbooter
+
 .include <bsd.lib.mk>

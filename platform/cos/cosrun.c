@@ -155,7 +155,7 @@ void
 bmk_cpu_sched_switch_viathd(struct bmk_thread *prev, struct bmk_thread *next)
 {
 	bmk_printf("SCHED: bmk_cpu_sched_switch_viathd is being called\n");
-		
+
 	crcalls.rump_cpu_sched_switch_viathd(prev, next);
 	bmk_printf("SCHED: bmk_cpu_sched_switch_viathd has been called\n");
 }

@@ -571,11 +571,9 @@ struct lwp *lwp_array[MAX_NUM_THREADS];
 int
 bmk_curlwp_thdid(void)
 {
-	bmk_printf("bmk_curlwp_thdid\n");
-
 	int thdid;
 
-	thdid = crcalls.rump_cos_get_thd_id();
+	thdid = crcalls.rump_cos_thdid();
 	bmk_printf("bmk_curlwp_thdid: %d\n", thdid);
 	return thdid;
 }
@@ -611,7 +609,7 @@ rumpuser_curlwpop(int enum_rumplwpop, struct lwp *l)
 struct lwp *
 rumpuser_curlwp(void)
 {
-	bmk_printf("rumpuser_curlwp");
+	bmk_printf("rumpuser_curlwp\n");
 	int thdid;
 
 	thdid = bmk_curlwp_thdid();

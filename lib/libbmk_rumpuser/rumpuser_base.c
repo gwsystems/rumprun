@@ -149,7 +149,7 @@ void
 rumpuser_seterrno(int err)
 {
 
-	bmk_printf("rumpuser_seterrno\n");
+	bmk_printf("rumpuser_seterrno: %d\n", err);
 
 	int *threrr = bmk_sched_geterrno();
 
