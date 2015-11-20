@@ -63,9 +63,14 @@ void *__dso_handle;
 static void
 runinit(void)
 {
+	bmk_printf("netbsd_initfini.c: runinit\n");
 	const initfini_fn *fn;
 
+
+	bmk_printf("entered _libc_init()\n");
 	_libc_init();
+	bmk_printf("exited _libc_init()\n");
+
 	for (fn = __init_array_start; fn < __init_array_end; fn++)
 		(*fn)();
 }
@@ -73,6 +78,7 @@ runinit(void)
 static void
 runfini(void)
 {
+	bmk_printf("netbsd_initfini.c: runfini\n");
 	const initfini_fn *fn;
 
 	for (fn = __fini_array_start; fn < __fini_array_end; fn++)
@@ -88,6 +94,7 @@ struct initinfo {
 void
 _netbsd_userlevel_init(void)
 {
+	bmk_printf("netbsd_initfini.c: _netbsd_userlevel_init\n");
 	static struct initinfo ii;
 	static struct ps_strings ps;
 	AuxInfo *ai = ii.ai;
@@ -120,6 +127,7 @@ _netbsd_userlevel_init(void)
 void
 _netbsd_userlevel_fini(void)
 {
+	bmk_printf("netbsd_initfini.c: _netbsd_userlevel_fini\n");
 
 	runfini();
 }

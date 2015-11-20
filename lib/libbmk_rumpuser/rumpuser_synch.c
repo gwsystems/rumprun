@@ -54,8 +54,6 @@ static int
 wait(struct waithead *wh, bmk_time_t wakeup)
 {
 
-	bmk_printf("wait\n");
-
 	struct waiter w;
 
 	if (wakeup != BMK_SCHED_BLOCK_INFTIME)
@@ -79,8 +77,6 @@ static void
 wakeup_one(struct waithead *wh)
 {
 
-	bmk_printf("wakeup_one\n");
-
 	struct waiter *w;
 
 	if ((w = TAILQ_FIRST(wh)) != NULL) {
@@ -94,7 +90,6 @@ static void
 wakeup_all(struct waithead *wh)
 {
 
-	bmk_printf("wakeup_all\n");
 
 	struct waiter *w;
 
@@ -111,11 +106,8 @@ rumpuser_thread_create(void *(*f)(void *), void *arg, const char *thrname,
 {
 
 	struct bmk_thread *thr;
-	bmk_printf("rumpuser_thread_create\n");
-	bmk_printf("thrname: %s\n", thrname);
 	thr = bmk_sched_create(thrname, NULL, joinable,
 	    (void (*)(void *))f, arg, NULL, 0);
-	bmk_printf("bmk_sched_create returned\n");
 	//thr = bmk_sched_create(thrname, NULL, joinable,
 	  //  (void (*)(void *))f, arg, NULL, 0);
 
@@ -130,7 +122,6 @@ void
 rumpuser_thread_exit(void)
 {
 
-	bmk_printf("rumpuser_thread_exit\n");
 
 	bmk_sched_exit();
 }
@@ -139,7 +130,6 @@ int
 rumpuser_thread_join(void *p)
 {
 
-	bmk_printf("rumpuser_thread_join\n");
 
 	bmk_sched_join(p);
 	return 0;
@@ -174,8 +164,6 @@ void
 rumpuser_mutex_init(struct rumpuser_mtx **mtxp, int flags)
 {
 
-	bmk_printf("rumpuser_mutex_init\n");
-	
 	struct rumpuser_mtx *mtx;
 
 	mtx = bmk_memcalloc(1, sizeof(*mtx), BMK_MEMWHO_WIREDBMK);
@@ -188,7 +176,6 @@ void
 rumpuser_mutex_enter(struct rumpuser_mtx *mtx)
 {
 
-	bmk_printf("rumpuser_mutex_enter\n");
 
 	int nlocks;
 
@@ -206,7 +193,6 @@ void
 rumpuser_mutex_enter_nowrap(struct rumpuser_mtx *mtx)
 {
 
-	bmk_printf("rumpuser_mutex_enter_nowrap\n");
 
 	int rv;
 
@@ -221,7 +207,6 @@ int
 rumpuser_mutex_tryenter(struct rumpuser_mtx *mtx)
 {
 
-	bmk_printf("rumpuser_mutex_tryenter\n");
 
 	struct lwp *l = rumpuser_curlwp();
 
@@ -250,7 +235,6 @@ void
 rumpuser_mutex_exit(struct rumpuser_mtx *mtx)
 {
 
-	bmk_printf("rumpuser_mutex_exit\n");
 
 	bmk_assert(mtx->v == 1);
 	mtx->v = 0;
@@ -263,7 +247,6 @@ void
 rumpuser_mutex_destroy(struct rumpuser_mtx *mtx)
 {
 
-	bmk_printf("rumpuser_mutex_destroy\n");
 
 	bmk_assert(TAILQ_EMPTY(&mtx->waiters) && mtx->o == NULL);
 	bmk_memfree(mtx, BMK_MEMWHO_WIREDBMK);
@@ -273,7 +256,6 @@ void
 rumpuser_mutex_owner(struct rumpuser_mtx *mtx, struct lwp **lp)
 {
 
-	bmk_printf("rumpuser_mutex_owner\n");
 
 	*lp = mtx->o;
 }
@@ -289,7 +271,6 @@ void
 rumpuser_rw_init(struct rumpuser_rw **rwp)
 {
 
-	bmk_printf("rumpuser_rw_init\n");
 
 	struct rumpuser_rw *rw;
 
@@ -304,7 +285,6 @@ void
 rumpuser_rw_enter(int enum_rumprwlock, struct rumpuser_rw *rw)
 {
 
-	bmk_printf("rumpuser_rw_enter\n");
 
 	enum rumprwlock lk = enum_rumprwlock;
 	struct waithead *w = NULL;
@@ -331,7 +311,6 @@ int
 rumpuser_rw_tryenter(int enum_rumprwlock, struct rumpuser_rw *rw)
 {
 
-	bmk_printf("rumpuser_rw_tryenter\n");
 
 	enum rumprwlock lk = enum_rumprwlock;
 	int rv = -1;
@@ -362,7 +341,6 @@ void
 rumpuser_rw_exit(struct rumpuser_rw *rw)
 {
 
-	bmk_printf("rumpuser_rw_exit\n");
 
 
 	if (rw->o) {
@@ -384,7 +362,6 @@ void
 rumpuser_rw_destroy(struct rumpuser_rw *rw)
 {
 
-	bmk_printf("rumpuser_rw_destroy\n");
 
 	bmk_memfree(rw, BMK_MEMWHO_WIREDBMK);
 }
@@ -392,8 +369,6 @@ rumpuser_rw_destroy(struct rumpuser_rw *rw)
 void
 rumpuser_rw_held(int enum_rumprwlock, struct rumpuser_rw *rw, int *rvp)
 {
-
-	bmk_printf("rumpuser_rw_held\n");
 
 	enum rumprwlock lk = enum_rumprwlock;
 
@@ -411,7 +386,6 @@ void
 rumpuser_rw_downgrade(struct rumpuser_rw *rw)
 {
 
-	bmk_printf("rumpuser_rw_downgrade\n");
 
 	bmk_assert(rw->o == rumpuser_curlwp());
 	rw->v = -1;
@@ -421,7 +395,6 @@ int
 rumpuser_rw_tryupgrade(struct rumpuser_rw *rw)
 {
 
-	bmk_printf("rumpuser_rw_tryupgrade\n");
 
 	if (rw->v == -1) {
 		rw->v = 1;
@@ -440,7 +413,6 @@ struct rumpuser_cv {
 void
 rumpuser_cv_init(struct rumpuser_cv **cvp)
 {
-	bmk_printf("rumpuser_cv_init\n");
 
 	struct rumpuser_cv *cv;
 
@@ -453,7 +425,6 @@ void
 rumpuser_cv_destroy(struct rumpuser_cv *cv)
 {
 
-	bmk_printf("rumpuser_cv_destroy\n");
 
 	bmk_assert(cv->nwaiters == 0);
 	bmk_memfree(cv, BMK_MEMWHO_WIREDBMK);
@@ -463,7 +434,6 @@ static void
 cv_unsched(struct rumpuser_mtx *mtx, int *nlocks)
 {
 
-	bmk_printf("cv_unsched\n");
 
 	rumpkern_unsched(nlocks, mtx);
 	rumpuser_mutex_exit(mtx);
@@ -473,7 +443,6 @@ static void
 cv_resched(struct rumpuser_mtx *mtx, int nlocks)
 {
 
-	bmk_printf("cv_resched\n");
 
 	/* see rumpuser(3) */
 	if ((mtx->flags & (RUMPUSER_MTX_KMUTEX | RUMPUSER_MTX_SPIN)) ==
@@ -490,7 +459,6 @@ void
 rumpuser_cv_wait(struct rumpuser_cv *cv, struct rumpuser_mtx *mtx)
 {
 
-	bmk_printf("rumpuser_cv_wait\n");
 
 	int nlocks;
 
@@ -505,7 +473,6 @@ void
 rumpuser_cv_wait_nowrap(struct rumpuser_cv *cv, struct rumpuser_mtx *mtx)
 {
 
-	bmk_printf("rumpuser_cv_wait_nowrap\n");
 
 	cv->nwaiters++;
 	rumpuser_mutex_exit(mtx);
@@ -519,7 +486,6 @@ rumpuser_cv_timedwait(struct rumpuser_cv *cv, struct rumpuser_mtx *mtx,
 	int64_t sec, int64_t nsec)
 {
 
-	bmk_printf("rumpuser_cv_timedwait\n");
 
 	int nlocks;
 	int rv;
@@ -537,7 +503,6 @@ void
 rumpuser_cv_signal(struct rumpuser_cv *cv)
 {
 
-	bmk_printf("rumpuser_cv_signal\n");
 
 	wakeup_one(&cv->waiters);
 }
@@ -546,7 +511,6 @@ void
 rumpuser_cv_broadcast(struct rumpuser_cv *cv)
 {
 
-	bmk_printf("rumpuser_cv_broadcast\n");
 
 	wakeup_all(&cv->waiters);
 }
@@ -555,7 +519,6 @@ void
 rumpuser_cv_has_waiters(struct rumpuser_cv *cv, int *rvp)
 {
 
-	bmk_printf("rumpuser_cv_has_waiters\n");
 
 	*rvp = cv->nwaiters != 0;
 }
@@ -574,7 +537,6 @@ bmk_curlwp_thdid(void)
 	int thdid;
 
 	thdid = crcalls.rump_cos_thdid();
-	bmk_printf("bmk_curlwp_thdid: %d\n", thdid);
 	return thdid;
 }
 
@@ -582,7 +544,6 @@ void
 rumpuser_curlwpop(int enum_rumplwpop, struct lwp *l)
 {
 
-	bmk_printf("rumpuser_curlwpop\n");
 
 	enum rumplwpop op;
 	int thdid;
@@ -609,7 +570,6 @@ rumpuser_curlwpop(int enum_rumplwpop, struct lwp *l)
 struct lwp *
 rumpuser_curlwp(void)
 {
-	bmk_printf("rumpuser_curlwp\n");
 	int thdid;
 
 	thdid = bmk_curlwp_thdid();

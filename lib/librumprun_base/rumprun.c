@@ -93,7 +93,9 @@ rumprun_boot(char *cmdline)
 	/* mount /tmp before we let any userspace bits run */
 	bmk_printf("Mounting filesystem\n");
 	rump_sys_mount(MOUNT_TMPFS, "/tmp", 0, &ta, sizeof(ta));
-	tmpfserrno = errno;
+	//tmpfserrno = errno;
+	bmk_printf("Setting errno to be 0 so we don't access it\n");
+	tmpfserrno = 0;
 	bmk_printf("Done Mounting filesystem\n");
 
 	/*

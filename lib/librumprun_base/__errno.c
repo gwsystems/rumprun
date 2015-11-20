@@ -23,6 +23,7 @@
  * SUCH DAMAGE.
  */
 
+#include <bmk-core/printf.h>
 #include <errno.h>
 #undef __errno
 
@@ -31,6 +32,7 @@
 int *
 __errno(void)
 {
-
+	bmk_printf("__errno\n");
 	return bmk_sched_geterrno();
+	return (int*)1;
 }

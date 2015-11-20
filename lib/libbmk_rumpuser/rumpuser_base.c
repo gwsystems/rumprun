@@ -128,10 +128,7 @@ rumpuser_getrandom(void *buf, size_t buflen, int flags, size_t *retp)
 	bmk_printf("rumpuser_getrandom\n");
 
 	unsigned char *rndbuf;
-
-	for (*retp = 0, rndbuf = buf; *retp < buflen; (*retp)++) {
-		*rndbuf++ = bmk_platform_clock_monotonic() & 0xff;
-	}
+for (*retp = 0, rndbuf = buf; *retp < buflen; (*retp)++) { *rndbuf++ = bmk_platform_clock_monotonic() & 0xff; }
 
 	return 0;
 }
@@ -149,9 +146,8 @@ void
 rumpuser_seterrno(int err)
 {
 
-	bmk_printf("rumpuser_seterrno: %d\n", err);
-
-	int *threrr = bmk_sched_geterrno();
-
-	*threrr = err;
+	bmk_printf("rumpuser_seterrno\n");
+	bmk_printf("NEEDS TO BE REIMPLEMENTED, THIS HAS BEEN STUMPED OFF DUE TO GS REGISTER ACCESS\n");
+	//int *threrr = bmk_sched_geterrno();
+	//*threrr = err;
 }
