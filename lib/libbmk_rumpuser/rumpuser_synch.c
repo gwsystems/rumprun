@@ -108,9 +108,6 @@ rumpuser_thread_create(void *(*f)(void *), void *arg, const char *thrname,
 	struct bmk_thread *thr;
 	thr = bmk_sched_create(thrname, NULL, joinable,
 	    (void (*)(void *))f, arg, NULL, 0);
-	//thr = bmk_sched_create(thrname, NULL, joinable,
-	  //  (void (*)(void *))f, arg, NULL, 0);
-
 	if (!thr)
 		return BMK_EINVAL;
 
@@ -143,23 +140,6 @@ struct rumpuser_mtx {
 	struct bmk_thread *bmk_o;
 };
 
-//static void
-//print_rumpuser_mtx(struct rumpuser_mtx *mtx)
-//{
-//	bmk_printf("\n--START:print_rumpuser_mtx--\n\n");
-//
-//	bmk_printf("struct waithead waiters: %p\n", mtx->waiters);
-//
-//	bmk_printf("int v: %d\n", mtx->v);
-//	bmk_printf("int flags: %d\n", mtx->flags);
-//
-//	bmk_printf("struct lwp *o: %p\n", mtx->o);
-//
-//	bmk_printf("struct bmk_thread *bmk_o: %p\n", mtx->bmk_o);
-//
-//	bmk_printf("\n--END: print_rumpuser_mtx--\n\n");
-//}
-
 void
 rumpuser_mutex_init(struct rumpuser_mtx **mtxp, int flags)
 {
@@ -178,8 +158,6 @@ rumpuser_mutex_enter(struct rumpuser_mtx *mtx)
 
 
 	int nlocks;
-
-	//print_rumpuser_mtx(mtx);
 
 	if (rumpuser_mutex_tryenter(mtx) != 0) {
 		rumpkern_unsched(&nlocks, NULL);
@@ -210,13 +188,6 @@ rumpuser_mutex_tryenter(struct rumpuser_mtx *mtx)
 
 	struct lwp *l = rumpuser_curlwp();
 
-	//bmk_printf("rumpuser_mutex_tryenter: lwp pointer: %p\n", l);
-	//bmk_printf("rumpuser_mutex_tryenter: mtx->bmk_o pointer: %p\n", mtx->bmk_o);
-	//bmk_printf("rumpuser_mutex_tryenter: bmk_current pointer: %p\n", bmk_current);
-
-	// Problem arries because rumpuser_curlwp() originally correctly assigns bmk_current...
-	// yet no scheduling calls have been made yet, so I am not sure
-	// Possible test with hw kernel??
 	if (mtx->bmk_o == bmk_current) {
 		bmk_platform_halt("rumpuser mutex: locking against myself");
 	}
@@ -527,42 +498,26 @@ rumpuser_cv_has_waiters(struct rumpuser_cv *cv, int *rvp)
  * curlwp
  */
 
-int bmk_curlwp_thdid(void);
-
-struct lwp *lwp_array[MAX_NUM_THREADS];
-
-int
-bmk_curlwp_thdid(void)
-{
-	int thdid;
-
-	thdid = crcalls.rump_cos_thdid();
-	return thdid;
-}
+static __thread struct lwp *current_lwp;
 
 void
 rumpuser_curlwpop(int enum_rumplwpop, struct lwp *l)
 {
 
 
-	enum rumplwpop op;
-	int thdid;
-
-	thdid = bmk_curlwp_thdid();
-
-	op = enum_rumplwpop;
+	enum rumplwpop op = enum_rumplwpop;
 
 	switch (op) {
 	case RUMPUSER_LWP_CREATE:
 	case RUMPUSER_LWP_DESTROY:
 		break;
 	case RUMPUSER_LWP_SET:
-		bmk_assert(lwp_array[thdid] == NULL);
-		lwp_array[thdid] = l;
+		bmk_assert(current_lwp == NULL);
+		current_lwp = l;
 		break;
 	case RUMPUSER_LWP_CLEAR:
-		bmk_assert(lwp_array[thdid] == l);
-		lwp_array[thdid] = NULL;
+		bmk_assert(current_lwp == l);
+		current_lwp = NULL;
 		break;
 	}
 }
@@ -570,9 +525,5 @@ rumpuser_curlwpop(int enum_rumplwpop, struct lwp *l)
 struct lwp *
 rumpuser_curlwp(void)
 {
-	int thdid;
-
-	thdid = bmk_curlwp_thdid();
-	return lwp_array[thdid];
-	//return current_lwp;
+	return current_lwp;
 }

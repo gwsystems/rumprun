@@ -147,7 +147,6 @@ rumpuser_seterrno(int err)
 {
 
 	bmk_printf("rumpuser_seterrno\n");
-	bmk_printf("NEEDS TO BE REIMPLEMENTED, THIS HAS BEEN STUMPED OFF DUE TO GS REGISTER ACCESS\n");
-	//int *threrr = bmk_sched_geterrno();
-	//*threrr = err;
+	int *threrr = bmk_sched_geterrno();
+	*threrr = err;
 }

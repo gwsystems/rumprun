@@ -80,7 +80,7 @@ void	bmk_cpu_sched_create(struct bmk_thread *, struct bmk_tcb *,
 void	bmk_sched_set_hook(void (*)(void *, void *));
 struct bmk_thread *bmk_sched_init_mainlwp(void *);
 
-//extern struct bmk_thread *bmk_current;
+extern __thread struct bmk_thread *bmk_current;
 
 int *bmk_sched_geterrno(void);
 const char 	*bmk_sched_threadname(struct bmk_thread *);

@@ -94,8 +94,8 @@ bmk_snprintf(char *bf, unsigned long size, const char *fmt, ...)
 
 void
 bmk_platform_cpu_sched_settls(struct bmk_tcb *next){
-	bmk_printf("bmk_platform_cpu_sched_settls is being called/ignored\n");
-//	while(1);
+	bmk_printf("bmk_platform_cpu_sched_settls is being called\n");
+	while(1);
 }
 
 unsigned long
@@ -241,22 +241,6 @@ bmk_memcpy(void *d, const void *src, unsigned long n)
 	return ret;
 }
 
-/* These implementations are now found within pgalloc.c*/
-//void *
-//bmk_pgalloc(int order)
-//{
-//	bmk_printf("bmk_pgalloc is being called.\n");
-//	bmk_printf("bmk_pgalloc order: %d\n", order);
-//	return crcalls.rump_pgalloc();
-//}
-//
-//void
-//bmk_pgfree(void *pointer, int order)
-//{
-//	bmk_printf("bmk_pgfree is being called.\n");
-//	while(1);
-//	return;
-//}
 
 void
 bmk_vprintf(const char *fmt, va_list ap)
