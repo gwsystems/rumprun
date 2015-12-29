@@ -50,7 +50,7 @@ rumpuser_init(int version, const struct rumpuser_hyperup *hyp)
 	}
 
 	rumpuser__hyp = *hyp;
-	
+
 	return rumprun_platform_rumpuser_init();
 }
 
@@ -67,7 +67,7 @@ int
 rumpuser_getparam(const char *name, void *buf, size_t buflen)
 {
 
-	bmk_printf("rumpuser_getparam\n");
+	bmk_printf("rumpuser_getparam: %s\n", name);
 
 	int rv = 0;
 

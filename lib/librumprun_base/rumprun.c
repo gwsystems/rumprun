@@ -1,5 +1,4 @@
-/*-
- * Copyright (c) 2015 Antti Kantee.  All Rights Reserved.
+/*- * Copyright (c) 2015 Antti Kantee.  All Rights Reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -46,6 +45,9 @@
 
 #include <bmk-core/platform.h>
 #include <bmk-core/printf.h>
+#include <bmk-core/memalloc.h>
+
+#include <bmk-core/sched.h> // FIXME, FOR DEBUGING
 
 #include <rumprun-base/rumprun.h>
 #include <rumprun-base/config.h>
@@ -59,7 +61,6 @@ int rumprun_enosys(void);
 int
 rumprun_enosys(void)
 {
-
 	return ENOSYS;
 }
 __strong_alias(rumprun_notmain,rumprun_enosys);
@@ -78,6 +79,14 @@ void
 rumprun_boot(char *cmdline)
 {
 	bmk_printf("rumprun_boot\n");
+
+	/* RG: Testing to see if gs was set correctly
+	 * ...there was much more testing
+	 */
+	bmk_printf("\n\nbmk_current: %p\n", bmk_current);
+	/* End of testing */
+
+
 	struct tmpfs_args ta = {
 		.ta_version = TMPFS_ARGS_VERSION,
 		.ta_size_max = 1*1024*1024,
@@ -93,9 +102,7 @@ rumprun_boot(char *cmdline)
 	/* mount /tmp before we let any userspace bits run */
 	bmk_printf("Mounting filesystem\n");
 	rump_sys_mount(MOUNT_TMPFS, "/tmp", 0, &ta, sizeof(ta));
-	//tmpfserrno = errno;
-	bmk_printf("Setting errno to be 0 so we don't access it\n");
-	tmpfserrno = 0;
+	tmpfserrno = errno;
 	bmk_printf("Done Mounting filesystem\n");
 
 	/*

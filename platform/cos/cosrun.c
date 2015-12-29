@@ -93,9 +93,10 @@ bmk_snprintf(char *bf, unsigned long size, const char *fmt, ...)
 }
 
 void
-bmk_platform_cpu_sched_settls(struct bmk_tcb *next){
-	bmk_printf("bmk_platform_cpu_sched_settls is being called\n");
-	while(1);
+bmk_platform_cpu_sched_settls(struct bmk_tcb *next)
+{
+	bmk_printf("bmk_platform_cpu_sched_settls is being called / ignored\n");
+	return;
 }
 
 unsigned long

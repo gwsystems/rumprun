@@ -79,6 +79,11 @@ extern const char _tbss_start[], _tbss_end[];
     (((TDATASIZE + TBSSSIZE + sizeof(void *)-1)/sizeof(void *))*sizeof(void *))
 #define TLSAREASIZE (TCBOFFSET + BMK_TLS_EXTRA)
 
+/* The struct definition for bmk_thread was moved
+ * to rumpcalls.h on the composite side so the composite system
+ * could access bmk_current thread without whinning about imcomplete
+ * types.
+ */
 struct bmk_thread {
 	char bt_name[NAME_MAXLEN];
 
@@ -101,15 +106,20 @@ struct bmk_thread {
 	capid_t cos_thdcap; // thdcap_t == capid_t
 };
 
+//__thread struct bmk_thread *bmk_current;
+
 void
 set_cos_thdcap(struct bmk_thread *thread, capid_t value)
 {
+	bmk_printf("SCHED: set_cos_thdcap\n");
 	thread->cos_thdcap = value;
 }
 
 capid_t
 get_cos_thdcap(struct bmk_thread *thread)
 {
+	bmk_printf("SCHED: get_cos_thdcap\n");
+	bmk_printf("SCHED: cos_thdcap: %d\n", (int)thread->cos_thdcap);
 	return thread->cos_thdcap;
 }
 
@@ -314,9 +324,7 @@ sched_switch(struct bmk_thread *prev, struct bmk_thread *next)
 	if (scheduler_hook)
 		scheduler_hook(prev->bt_cookie, next->bt_cookie);
 	bmk_platform_cpu_sched_settls(&next->bt_tcb);
-	bmk_printf("SCHED: switch_viathd before\n");
 	bmk_cpu_sched_switch_viathd(prev, next);
-	bmk_printf("SCHED: switch_viathd\n");
 }
 
 static void
@@ -471,6 +479,7 @@ static void
 initcurrent(void *tcb, struct bmk_thread *value)
 {
 	bmk_printf("SCHED: initcurrent\n");
+	bmk_printf("SCHED: bmk_curoff: %ld\n", bmk_curoff);
 	struct bmk_thread **dst = (void *)((unsigned long)tcb + bmk_curoff);
 
 	*dst = value;
@@ -482,11 +491,14 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 	void *stack_base, unsigned long stack_size, void *tlsarea)
 {
 	bmk_printf("SCHED: F: %p\n", f);
+	bmk_printf("SCHED: bmk_sched_create_withtls\n");
 
 	struct bmk_thread *thread;
+	capid_t cos_thdcap;
 	unsigned long flags;
 
 	thread = bmk_xmalloc_bmk(sizeof(*thread));
+	/* Set tls here if nothing else is working */
 
 	bmk_memset(thread, 0, sizeof(*thread));
 	bmk_strncpy(thread->bt_name, name, sizeof(thread->bt_name)-1);
@@ -503,15 +515,31 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 
 	bmk_cpu_sched_create(thread, &thread->bt_tcb, f, data,
 	    stack_base, stack_size);
-	bmk_printf("SCHED: cpu_sched_create was called\n");
+
 	thread->bt_cookie = cookie;
 	thread->bt_wakeup_time = BMK_SCHED_BLOCK_INFTIME;
 
 	inittcb(&thread->bt_tcb, tlsarea, TCBOFFSET);
 
-	// We want to edit this function to make bmk_current = thread we are passing in
-	// for the new thread that we just created, not the one currently running
+	/* RG
+	 * We want to edit this function to make bmk_current = thread we are passing in
+	 * for the new thread that we just created, not the one currently running
+	 * We can do this by seting the value in tlsarea[0] = thread*
+	 */
+	if(((struct bmk_thread **)tlsarea)[0] == thread) while(1);
 	initcurrent(tlsarea, thread);
+	if(((struct bmk_thread **)tlsarea)[0] != thread) while(1);
+	/* For further testing, call tls_set and tls_get */
+
+	/*
+	 * RG Set tls in gs here
+	 * We need to wait till after bmk_cpu_sched_create is called
+	 * so that we can use can get the cos_thdcap of the thread that
+	 * we are setting tls for.
+	 */
+	cos_thdcap = get_cos_thdcap(thread);
+	crcalls.rump_tls_init((unsigned long)tlsarea, cos_thdcap);
+
 
 	TAILQ_INSERT_TAIL(&threadq, thread, bt_threadq);
 
@@ -520,9 +548,7 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 	TAILQ_INSERT_TAIL(&runq, thread, bt_schedq);
 	thread->bt_flags |= THR_RUNQ;
 
-	bmk_printf("SCHED: this returns\n");
 	bmk_platform_splx(flags);
-	bmk_printf("SCHED: this returns\n");
 	return thread;
 }
 
@@ -726,16 +752,20 @@ bmk_sched_init(void)
 	bmk_printf("SCHED: bmk_sched_init\n");
 	unsigned long tlsinit;
 	struct bmk_tcb tcbinit;
+	struct bmk_thread *current;
 
 	inittcb(&tcbinit, &tlsinit, 0);
 	bmk_platform_cpu_sched_settls(&tcbinit);
+
+	/* RG addition for compiler issues */
+	current = bmk_current;
 
 	/*
 	 * Not sure if the membars are necessary, but better to be
 	 * Marvin the Paranoid Paradroid than get eaten by 999
 	 */
 	__asm__ __volatile__("" ::: "memory");
-	bmk_curoff = (unsigned long)&bmk_current - (unsigned long)&tlsinit;
+	bmk_curoff = (unsigned long)&current - (unsigned long)&tlsinit;
 	__asm__ __volatile__("" ::: "memory");
 
 	/*

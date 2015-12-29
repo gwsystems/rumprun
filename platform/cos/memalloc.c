@@ -226,7 +226,7 @@ bmk_memalloc(unsigned long nbytes, unsigned long align, enum bmk_memwho who)
 		return NULL;
 	if (align < MINALIGN)
 		align = MINALIGN;
-	
+
 	/* need at least this many bytes plus header to satisfy alignment */
 	allocbytes = nbytes + ((sizeof(*op) + (align-1)) & ~(align-1));
 
