@@ -37,8 +37,6 @@ int
 rumpuser_malloc(size_t len, int alignment, void **retval)
 {
 
-	bmk_printf("rumpuser_malloc, len needed: %d\n", len);
-
 	/*
 	 * If we are allocating precisely a page-sized chunk
 	 * (the common case), use the underlying page allocator directly.
@@ -72,7 +70,6 @@ void
 rumpuser_free(void *buf, size_t buflen)
 {
 
-	bmk_printf("rumpuser_free\n");
 
 	if (buflen == bmk_pagesize)
 		bmk_pgfree_one(buf);

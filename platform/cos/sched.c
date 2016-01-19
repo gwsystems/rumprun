@@ -106,7 +106,7 @@ struct bmk_thread {
 	capid_t cos_thdcap; // thdcap_t == capid_t
 };
 
-//__thread struct bmk_thread *bmk_current;
+__thread struct bmk_thread *bmk_current;
 
 void
 set_cos_thdcap(struct bmk_thread *thread, capid_t value)
@@ -471,6 +471,7 @@ inittcb(struct bmk_tcb *tcb, void *tlsarea, unsigned long tlssize)
 	*(void **)tlsarea = tlsarea;
 	tcb->btcb_tp = (unsigned long)tlsarea;
 	tcb->btcb_tpsize = tlssize;
+	bmk_printf("inittcb: tlssize: %lu\n", tlssize);
 #endif
 }
 
@@ -524,11 +525,11 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 	/* RG
 	 * We want to edit this function to make bmk_current = thread we are passing in
 	 * for the new thread that we just created, not the one currently running
-	 * We can do this by seting the value in tlsarea[0] = thread*
+	 * We can do this by seting the value in tlsarea[0] = thread
 	 */
 	if(((struct bmk_thread **)tlsarea)[0] == thread) while(1);
 	initcurrent(tlsarea, thread);
-	if(((struct bmk_thread **)tlsarea)[0] != thread) while(1);
+	//if(((struct bmk_thread **)tlsarea)[0] != thread) while(1);
 	/* For further testing, call tls_set and tls_get */
 
 	/*
@@ -752,28 +753,31 @@ bmk_sched_init(void)
 	bmk_printf("SCHED: bmk_sched_init\n");
 	unsigned long tlsinit;
 	struct bmk_tcb tcbinit;
-	struct bmk_thread *current;
 
 	inittcb(&tcbinit, &tlsinit, 0);
-	bmk_platform_cpu_sched_settls(&tcbinit);
-
-	/* RG addition for compiler issues */
-	current = bmk_current;
+	/* Replace as cos_thd_mod call */
+	//bmk_platform_cpu_sched_settls(&tcbinit);
+	crcalls.rump_tls_init((&tcbinit)->btcb_tp, boot_thd);
 
 	/*
 	 * Not sure if the membars are necessary, but better to be
 	 * Marvin the Paranoid Paradroid than get eaten by 999
 	 */
 	__asm__ __volatile__("" ::: "memory");
-	bmk_curoff = (unsigned long)&current - (unsigned long)&tlsinit;
+	bmk_printf("SCHED: &bmk_current: %lu\n", (unsigned long)&bmk_current);
+	bmk_printf("SCHED: &tlsinit: %lu\n", (unsigned long)&tlsinit);
+	bmk_curoff = (unsigned long)&bmk_current - (unsigned long)&tlsinit;
 	__asm__ __volatile__("" ::: "memory");
 
+	bmk_printf("SCHED: bmk_curoff: %ld\n", bmk_curoff);
 	/*
 	 * Set TLS back to 0 so that it's easier to catch someone trying
 	 * to use it until we get TLS really initialized.
 	 */
 	tcbinit.btcb_tp = 0;
-	bmk_platform_cpu_sched_settls(&tcbinit);
+	/* Replace as cos_thd_mod call */
+	//bmk_platform_cpu_sched_settls(&tcbinit);
+	crcalls.rump_tls_init((&tcbinit)->btcb_tp, boot_thd);
 }
 
 void __attribute__((noreturn))

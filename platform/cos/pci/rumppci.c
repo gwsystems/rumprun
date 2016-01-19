@@ -27,6 +27,7 @@
 #include <bmk/kernel.h>
 
 #include <bmk-core/pgalloc.h>
+#include <bmk-core/printf.h>
 
 #include "pci_user.h"
 
@@ -51,12 +52,16 @@ int
 rumpcomp_pci_confread(unsigned bus, unsigned dev, unsigned fun, int reg,
 	unsigned int *value)
 {
+	bmk_printf("rumpcomp_pci_confread: 55\n");
 	uint32_t addr;
 	unsigned int data;
 
 	addr = makeaddr(bus, dev, fun, reg);
+	bmk_printf("addr: %p\n", (void *)addr);
 	outl(PCI_CONF_ADDR, addr);
+	bmk_printf("rumpcomp_pci_confread: 62\n");
 	data = inl(PCI_CONF_DATA);
+	bmk_printf("rumpcomp_pci_confread: 64\n");
 
 	*value = data;
 	return 0;

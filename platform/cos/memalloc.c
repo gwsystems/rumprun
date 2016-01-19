@@ -163,7 +163,6 @@ static void botch(const char *);
 static void
 botch(const char *s)
 {
-	bmk_printf("botch is being called\n");
 	struct iovec iov[3];
 
 	iov[0].iov_base	= "\nassertion botched: ";
@@ -194,7 +193,6 @@ void
 bmk_memalloc_init(void)
 {
 
-	bmk_printf("bmk_memalloc_init is being called\n");
 
 	unsigned amt;
 	int bucket;
@@ -214,7 +212,6 @@ bmk_memalloc_init(void)
 void *
 bmk_memalloc(unsigned long nbytes, unsigned long align, enum bmk_memwho who)
 {
-	bmk_printf("bmk_memalloc is being called\n");
   	union overhead *op;
 	void *rv;
 	unsigned long allocbytes;
@@ -303,7 +300,6 @@ bmk_memalloc(unsigned long nbytes, unsigned long align, enum bmk_memwho who)
 void *
 bmk_xmalloc_bmk(unsigned long howmuch)
 {
-	bmk_printf("bmk_xmalloc_bmk is being called\n");
 	void *rv;
 
 	rv = bmk_memalloc(howmuch, 0, BMK_MEMWHO_WIREDBMK);
@@ -315,7 +311,6 @@ bmk_xmalloc_bmk(unsigned long howmuch)
 void *
 bmk_memcalloc(unsigned long n, unsigned long size, enum bmk_memwho who)
 {
-	bmk_printf("bmk_memcalloc is being called\n");
 	void *v;
 	unsigned long tot = n * size;
 
@@ -384,7 +379,6 @@ morecore(int bucket)
 void
 bmk_memfree(void *cp, enum bmk_memwho who)
 {
-	bmk_printf("bmk_memfree is being called\n");
 	long size;
 	union overhead *op;
 	unsigned long alignpad;
@@ -450,7 +444,6 @@ bmk_memfree(void *cp, enum bmk_memwho who)
 void *
 bmk_memrealloc_user(void *cp, unsigned long nbytes)
 {
-	bmk_printf("bmk_memrealloc_user is being called\n");
 	union overhead *op;
   	unsigned long size;
 	unsigned long alignpad;
@@ -493,7 +486,6 @@ bmk_memrealloc_user(void *cp, unsigned long nbytes)
 void
 mstats(const char *s)
 {
-	bmk_printf("mstats is being called\n");
   	int i, j;
   	union overhead *p;
   	int totfree = 0,
@@ -535,7 +527,6 @@ mstats(const char *s)
 static void *
 testalloc(void)
 {
-	bmk_printf("testalloc is being called\n");
 	void *v, *nv;
 	size_t size1, size2, align;
 

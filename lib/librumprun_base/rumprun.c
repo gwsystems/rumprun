@@ -119,6 +119,7 @@ rumprun_boot(char *cmdline)
 	rumprun_lwp_init();
 	bmk_printf("exiting rumprun_lwp_init\n");
 	_netbsd_userlevel_init();
+	bmk_printf("Exiting _netbsd_userlevel_init\n");
 
 	/* print tmpfs result only after we bootstrapped userspace */
 	if (tmpfserrno == 0) {
@@ -126,6 +127,8 @@ rumprun_boot(char *cmdline)
 	} else {
 		warnx("FAILED: mount tmpfs on /tmp: %s", strerror(tmpfserrno));
 	}
+
+	bmk_printf("rumprun_boot: 131\n");
 
 	rump_init_server("tcp://0:12345");
 

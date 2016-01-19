@@ -87,8 +87,6 @@ static void
 map_alloc(void *virt, unsigned long nr_pages)
 {
 
-	bmk_printf("map_alloc is being called\n");
-
 	PAGES_TO_MAPOPVARS(virt, nr_pages);
 
 	if (curr_idx == end_idx) {
@@ -104,8 +102,6 @@ map_alloc(void *virt, unsigned long nr_pages)
 static void
 map_free(void *virt, unsigned long nr_pages)
 {
-
-	bmk_printf("map_free is being called\n");
 
 	PAGES_TO_MAPOPVARS(virt, nr_pages);
 
@@ -151,8 +147,6 @@ static chunk_head_t  *free_tail;
 static void
 print_allocation(void *start, int nr_pages)
 {
-	bmk_printf("print_allocation is being called\n");
-
 	unsigned long pfn_start = va_to_pg(start);
 	int count;
 
@@ -174,8 +168,6 @@ print_allocation(void *start, int nr_pages)
 static void
 print_chunks(void *start, int nr_pages)
 {
-
-	bmk_printf("print_chunks is being called\n");
 
 	char chunks[MAXCHUNKS+1], current='A';
 	int order, count;
@@ -222,7 +214,6 @@ bmk_pgalloc_loadmem(unsigned long min, unsigned long max)
 	chunk_tail_t *ct;
 	unsigned int i;
 
-	bmk_printf("bmk_pgalloc_loadmem is being called\n");
 
 	if (called)
 		bmk_platform_halt("bmk_pgalloc_loadmem called more than once");
@@ -296,7 +287,6 @@ bmk_pgalloc(int order)
 	chunk_tail_t            *spare_ct;
 	int i;
 
-	bmk_printf("bmk_pgalloc is being called\n");
 
 	/* Find smallest order which can satisfy the request. */
 	for (i = order; i < FREELIST_SIZE; i++) {
@@ -344,7 +334,6 @@ bmk_pgfree(void *pointer, int order)
 	chunk_tail_t *freed_ct;
 	unsigned long mask;
 
-	bmk_printf("bmk_pgfree is being called\n");
 
 	/* First free the chunk */
 	map_free(pointer, 1UL << order);

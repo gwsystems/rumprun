@@ -235,6 +235,9 @@ rumprun_lwp_init(void)
 	bmk_sched_set_hook(schedhook);
 
 	meoff = (uintptr_t)&me - (uintptr_t)tcb;
+	bmk_printf("_lwp.c: meoff: %d\n", (int)meoff);
+	bmk_printf("_lwp.c: me: %p\n", me);
+	bmk_printf("_lwp.c: &me: %p\n", &me);
 	assignme(tcb, &mainthread);
 	mainthread.rl_thread = bmk_sched_init_mainlwp(&mainthread);
 

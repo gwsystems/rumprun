@@ -80,7 +80,6 @@ bmk_printf(const char *fmt, ...)
 int
 bmk_snprintf(char *bf, unsigned long size, const char *fmt, ...)
 {
-	bmk_printf("bmk_snprintf:\n");
 
 	int ret;
 	va_list arg_ptr;
@@ -136,15 +135,11 @@ bmk_cpu_sched_create(struct bmk_thread *thread, struct bmk_tcb *tcb,
 	bmk_printf("bmk_cpu_sched_create is being called\n");
 
 	crcalls.rump_cpu_sched_create(thread, tcb, f, arg, stack_base, stack_size);
-	bmk_printf("bmk_cpu_sched_create has been called\n");
 }
 
 char *
 bmk_strcpy(char *d, const char *s)
 {
-	bmk_printf("bmk_strcpy is being called\n");
-	bmk_printf("TODO: implement with composite's strcpy instead\n");
-
 	char *orig = d;
 
 	while ((*d++ = *s++) != '\0')
@@ -158,7 +153,6 @@ bmk_cpu_sched_switch_viathd(struct bmk_thread *prev, struct bmk_thread *next)
 	bmk_printf("SCHED: bmk_cpu_sched_switch_viathd is being called\n");
 
 	crcalls.rump_cpu_sched_switch_viathd(prev, next);
-	bmk_printf("SCHED: bmk_cpu_sched_switch_viathd has been called\n");
 }
 
 bmk_time_t
@@ -189,7 +183,6 @@ bmk_platform_halt(const char *panicstring)
 int
 bmk_strcmp(const char *a, const char *b)
 {
-	bmk_printf("bmk_strcmp is being called.\n");
 
 	int rv;
 
@@ -217,7 +210,6 @@ print_trace (void)
 void *
 bmk_memset(void *b, int c, unsigned long n)
 {
-	bmk_printf("bmk_memset is being called.\n");
 	unsigned char *v = b;
 
 	while (n--)
@@ -233,7 +225,6 @@ bmk_memset(void *b, int c, unsigned long n)
 void *
 bmk_memcpy(void *d, const void *src, unsigned long n)
 {
-	bmk_printf("bmk_memcpy is being called.\n");
 
 	void *ret;
 
@@ -262,7 +253,6 @@ bmk_vprintf(const char *fmt, va_list ap)
 char *
 bmk_strncpy(char *d, const char *s, unsigned long n)
 {
-	bmk_printf("bmk_strncpy is being called.\n");
 
 	char *rv;
 
