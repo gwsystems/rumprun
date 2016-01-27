@@ -32,6 +32,5 @@
 int *
 __errno(void)
 {
-	bmk_printf("__errno\n");
 	return bmk_sched_geterrno();
 }

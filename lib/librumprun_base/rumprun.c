@@ -125,26 +125,29 @@ rumprun_boot(char *cmdline)
 	if (tmpfserrno == 0) {
 		fprintf(stderr, "mounted tmpfs on /tmp\n");
 	} else {
-		warnx("FAILED: mount tmpfs on /tmp: %s", strerror(tmpfserrno));
+		warnx("FAILED: mount tmpfs on /tmp: %s\n", strerror(tmpfserrno));
 	}
-
-	bmk_printf("rumprun_boot: 131\n");
 
 	rump_init_server("tcp://0:12345");
 
 	// RG: not calling _rumprun_config as I don't want to deal
 	// with taking out json stuff as of right now. TODO
-	bmk_printf("skipping over _rumprun_config(cmdline). TODO - see if this has an impact");
+	bmk_printf("skipping over _rumprun_config(cmdline). TODO - see if this has an impact\n");
 	//_rumprun_config(cmdline);
 
 	/*
 	 * give all threads a chance to run, and ensure that the main
 	 * thread has gone through a context switch
 	 */
+	bmk_printf("sched_yield is called\n");
 	sched_yield();
+	bmk_printf("sched_yield is exiting\n");
 
+	bmk_printf("Rumprun.c: 146\n");
 	pthread_mutex_init(&w_mtx, NULL);
+	bmk_printf("Rumprun.c: 148\n");
 	pthread_cond_init(&w_cv, NULL);
+	bmk_printf("Rumprun.c: 150\n");
 }
 
 /*
@@ -185,7 +188,13 @@ static void *
 mainbouncer(void *arg)
 {
 	struct rumprunner *rr = arg;
-	const char *progname = rr->rr_argv[0];
+	/*
+	 * RG: Removing program name for now...WE JUST WANT TO GET TO MAIN.. *CRAZY LAUGH*
+	 * Please remember to put it back in..
+	 */
+	//const char *progname = rr->rr_argv[0];
+	fprintf(stderr, "FIX PROGNAME\n");
+	const char *progname = "hello";
 	int rv;
 
 	rump_pub_lwproc_rfork(RUMP_RFFDG);

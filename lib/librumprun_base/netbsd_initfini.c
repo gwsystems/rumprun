@@ -72,6 +72,7 @@ runinit(void)
 
 	bmk_printf("__init_array_start: %p\n", __init_array_start);
 	bmk_printf("__init_array_end: %p\n", __init_array_end);
+
 	for (fn = __init_array_start; fn < __init_array_end; fn++) {
 		bmk_printf("fn: %p\n", fn);
 		(*fn)();
@@ -122,7 +123,7 @@ _netbsd_userlevel_init(void)
 	bmk_assert(rv < (int)sizeof(ssbuf));
 	environ = initial_env;
 
-	bmk_printf("Calling runinit");
+	bmk_printf("Calling runinit\n");
 	runinit();
 	bmk_printf("Exiting runinit");
 

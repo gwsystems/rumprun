@@ -120,15 +120,35 @@ rumpuser_getparam(const char *name, void *buf, size_t buflen)
 	return rv;
 }
 
+/* RG, asm to use for randomness */
+#define rdtscll(val) __asm__ __volatile__("rdtsc" : "=A" (val))
 /* ok, this isn't really random, but let's make-believe */
 int
 rumpuser_getrandom(void *buf, size_t buflen, int flags, size_t *retp)
 {
 
+	unsigned long long i;
+	char c;
 	bmk_printf("rumpuser_getrandom\n");
+	rdtscll(i);
+	bmk_printf("Testing: %c\n", (char)i);
+	rdtscll(i);
+	bmk_printf("Testing: %c\n", (char)i);
+	rdtscll(i);
+	bmk_printf("Testing: %c\n", (char)i);
 
 	unsigned char *rndbuf;
-for (*retp = 0, rndbuf = buf; *retp < buflen; (*retp)++) { *rndbuf++ = bmk_platform_clock_monotonic() & 0xff; }
+/*
+ * Replacing the original with a different way to create randomness. We will use rdtscll from the Composite
+ * side.
+ */
+//for (*retp = 0, rndbuf = buf; *retp < buflen; (*retp)++) { *rndbuf++ = bmk_platform_clock_monotonic() & 0xff; }
+for (*retp = 0, rndbuf = buf; *retp < buflen; (*retp)++) {
+	rdtscll(i);
+	c = (char)i & 0xff;
+	bmk_printf("Testing: %c\n", c);
+	*rndbuf++ = c;
+}
 
 	return 0;
 }
@@ -146,7 +166,6 @@ void
 rumpuser_seterrno(int err)
 {
 
-	bmk_printf("rumpuser_seterrno\n");
 	int *threrr = bmk_sched_geterrno();
 	*threrr = err;
 }
