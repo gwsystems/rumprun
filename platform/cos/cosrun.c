@@ -28,6 +28,8 @@ struct cos_rumpcalls crcalls;
 
 void* _GLOBAL_OFFSET_TABLE_ = (void *) 0x1337BEEF;
 
+int bmk_spldepth = 1;
+
 
 /* Prototypes */
 
@@ -60,6 +62,9 @@ void bmk_cpu_sched_create(struct bmk_thread *thread, struct bmk_tcb *tcb, void (
 char * bmk_strcpy(char *d, const char *s);
 void bmk_platform_splx(unsigned long);
 void bmk_cpu_sched_switch_viathd(struct bmk_thread *prev, struct bmk_thread *next);
+
+int bmk_cpu_intr_init(int intr);
+void bmk_cpu_intr_ack(void);
 /* Prototype Definitions */
 
 void
@@ -94,7 +99,6 @@ bmk_snprintf(char *bf, unsigned long size, const char *fmt, ...)
 void
 bmk_platform_cpu_sched_settls(struct bmk_tcb *next)
 {
-	bmk_printf("bmk_platform_cpu_sched_settls is being called / ignored\n");
 	return;
 }
 
@@ -132,8 +136,6 @@ bmk_cpu_sched_create(struct bmk_thread *thread, struct bmk_tcb *tcb,
 	 * later on *initcurrent*, We want to assign thdcap_t within the
 	 * thread that is being passed in.
 	 * */
-	bmk_printf("bmk_cpu_sched_create is being called\n");
-
 	crcalls.rump_cpu_sched_create(thread, tcb, f, arg, stack_base, stack_size);
 }
 
@@ -150,8 +152,6 @@ bmk_strcpy(char *d, const char *s)
 void
 bmk_cpu_sched_switch_viathd(struct bmk_thread *prev, struct bmk_thread *next)
 {
-	bmk_printf("SCHED: bmk_cpu_sched_switch_viathd is being called\n");
-
 	crcalls.rump_cpu_sched_switch_viathd(prev, next);
 }
 
@@ -261,6 +261,19 @@ bmk_strncpy(char *d, const char *s, unsigned long n)
 	return rv;
 }
 
+int
+bmk_cpu_intr_init(int intr)
+{
+	bmk_printf("\nbmk_cpu_intr_init is being called\n\n");
+	return 0;
+}
+
+void
+bmk_cpu_intr_ack(void)
+{
+	bmk_printf("IGNORING BMK_CPU_INTR_ACK\n");
+}
+
 /* RG:
  * This simply returns 0 within the hw implementation.
  * The xen implementation uses this to begin bio
@@ -270,14 +283,6 @@ int
 rumprun_platform_rumpuser_init(void)
 {
 	bmk_printf("rumprun_platform_rumpuser_init is being called.\n");
-	return 0;
-}
-
-int
-bmk_isr_init(int (*func)(void *), void *arg, int intr)
-{
-	bmk_printf("bmk_isr_init is being called.\n");
-	while(1);
 	return 0;
 }
 

@@ -497,5 +497,7 @@ rumpuser_curlwpop(int enum_rumplwpop, struct lwp *l)
 struct lwp *
 rumpuser_curlwp(void)
 {
+	bmk_printf("rumpuser_curlwp is being called\n");
+	bmk_printf("current_lwp: %p\n", current_lwp);
 	return current_lwp;
 }

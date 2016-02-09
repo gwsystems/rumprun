@@ -129,14 +129,6 @@ rumpuser_getrandom(void *buf, size_t buflen, int flags, size_t *retp)
 
 	unsigned long long i;
 	char c;
-	bmk_printf("rumpuser_getrandom\n");
-	rdtscll(i);
-	bmk_printf("Testing: %c\n", (char)i);
-	rdtscll(i);
-	bmk_printf("Testing: %c\n", (char)i);
-	rdtscll(i);
-	bmk_printf("Testing: %c\n", (char)i);
-
 	unsigned char *rndbuf;
 /*
  * Replacing the original with a different way to create randomness. We will use rdtscll from the Composite
@@ -146,7 +138,6 @@ rumpuser_getrandom(void *buf, size_t buflen, int flags, size_t *retp)
 for (*retp = 0, rndbuf = buf; *retp < buflen; (*retp)++) {
 	rdtscll(i);
 	c = (char)i & 0xff;
-	bmk_printf("Testing: %c\n", c);
 	*rndbuf++ = c;
 }
 
