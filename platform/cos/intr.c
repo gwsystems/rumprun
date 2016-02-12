@@ -33,6 +33,11 @@
 
 #include <bmk-rumpuser/rumpuser.h>
 
+/* This will get us by soem of the interupts for the time being
+ * as well as the fact that this has an amzing name
+ */
+#define BMK_SCREW_INTERRUPT_ROUTING
+
 #ifdef BMK_SCREW_INTERRUPT_ROUTING
 #define BMK_INTRLEVS 1
 #else
@@ -52,13 +57,16 @@ static unsigned int isr_todo;
 static unsigned int isr_lowest = sizeof(isr_todo)*8;
 
 static struct bmk_thread *isr_thread;
+struct bmk_thread *isr_thd;
 
 /* thread context we use to deliver interrupts to the rump kernel */
 
 static void
 isr(void *arg)
 {
+	bmk_printf("\n !!! ISR !!! \n\n");
 	int i, didwork;
+	bmk_printf("\n !!! cmon !!! \n\n");
 
         rumpuser__hyp.hyp_schedule();
         rumpuser__hyp.hyp_lwproc_newlwp(0);
@@ -116,6 +124,8 @@ isr(void *arg)
 int
 bmk_isr_init(int (*func)(void *), void *arg, int intr)
 {
+	bmk_printf("\n !!! BMK_ISR_INIT !!! \n\n");
+
 	struct intrhand *ih;
 	int error;
 
@@ -143,6 +153,8 @@ void
 bmk_isr(int which)
 {
 
+	bmk_printf("\n BMK_ISR \n\n");
+
 	/* schedule the interrupt handler */
 	isr_todo |= 1<<which;
 	bmk_sched_wake(isr_thread);
@@ -158,11 +170,10 @@ bmk_intr_init(void)
 		SLIST_INIT(&isr_ih[i]);
 	}
 
-	bmk_printf("intr.c: 161\n");
-
 	isr_thread = bmk_sched_create("isrthr", NULL, 0, isr, NULL, NULL, 0);
+	isr_thd = isr_thread;
 
-	bmk_printf("intr.c: 165\n");
+	bmk_printf("isr_thread: %p\n", isr_thread);
 
 	if (!isr_thread)
 		return BMK_EGENERIC;

@@ -265,6 +265,7 @@ int
 bmk_cpu_intr_init(int intr)
 {
 	bmk_printf("\nbmk_cpu_intr_init is being called\n\n");
+	while(1);
 	return 0;
 }
 

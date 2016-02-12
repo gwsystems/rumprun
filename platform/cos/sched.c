@@ -109,6 +109,16 @@ struct bmk_thread {
 
 __thread struct bmk_thread *bmk_current;
 
+/* RG For debugging...*/
+
+char *
+get_name(struct bmk_thread *thread)
+{
+	return thread->bt_name;
+}
+
+/* ****************** */
+
 void
 set_cos_thdcap(struct bmk_thread *thread, capid_t value)
 {
@@ -311,18 +321,13 @@ static void
 sched_switch(struct bmk_thread *prev, struct bmk_thread *next)
 {
 
-	bmk_printf("sched_switch: 314\n");
 	bmk_assert(next->bt_flags & THR_RUNNING);
-	bmk_printf("sched_switch: 316\n");
 	bmk_assert((next->bt_flags & THR_QMASK) == 0);
-	bmk_printf("sched_switch: 318\n");
 
-	bmk_printf("sched_switch: 320\n");
 	if (scheduler_hook)
 		scheduler_hook(prev->bt_cookie, next->bt_cookie);
-	bmk_printf("sched_switch: 323\n");
 	bmk_platform_cpu_sched_settls(&next->bt_tcb);
-	bmk_printf("sched_switch: 325\n");
+	bmk_printf("sched_switch: 320\n");
 	bmk_cpu_sched_switch_viathd(prev, next);
 }
 
@@ -377,53 +382,56 @@ schedule(void)
 			}
 		}
 
+		bmk_printf("schedule: 385\n");
 		if ((next = TAILQ_FIRST(&runq)) != NULL) {
+			bmk_printf("schedule: 387\n");
+			bmk_printf("schedule: next: %s\n", next->bt_name);
 			bmk_assert(next->bt_flags & THR_RUNQ);
 			bmk_assert((next->bt_flags & THR_DEAD) == 0);
 			break;
 		}
 
 		/* nothing to run.  enable interrupts and sleep. */
-		bmk_printf("schedule: 381\n");
+		bmk_printf("schedule: 394\n");
 		bmk_platform_block(waketime);
-		bmk_printf("schedule: 383\n");
+		bmk_printf("schedule: 397\n");
 	}
 	/* now we're committed to letting "next" run next */
-	bmk_printf("schedule: 386\n");
+	bmk_printf("schedule: 400\n");
 	setflags(prev, 0, THR_RUNNING);
 
-	bmk_printf("schedule: 389\n");
+	bmk_printf("schedule: 403\n");
 	TAILQ_REMOVE(&runq, next, bt_schedq);
-	bmk_printf("schedule: 391\n");
+	bmk_printf("schedule: 405\n");
 	setflags(next, THR_RUNNING, THR_RUNQ);
-	bmk_printf("schedule: 393\n");
+	bmk_printf("schedule: 407\n");
 	bmk_platform_splx(flags);
-	bmk_printf("schedule: 395\n");
+	bmk_printf("schedule: 409\n");
 
 	/*
 	 * No switch can happen if:
 	 *  + timeout expired while we were in here
 	 *  + interrupt handler woke us up before anything else was scheduled
 	 */
-	bmk_printf("schedule: 402\n");
-	bmk_printf("prev: %p\n", prev);
-	bmk_printf("next: %p\n", next);
+	bmk_printf("schedule: 416\n");
+	bmk_printf("schedule: prev: %s\n", prev->bt_name);
+	bmk_printf("schedule: next: %s\n", next->bt_name);
 	if (prev != next) {
+		bmk_printf("schedule: 420 blaze it\n");
 		sched_switch(prev, next);
 	}
-	bmk_printf("schedule: 406\n");
+	bmk_printf("schedule: 423, after switch\n");
 
 	/*
 	 * Reaper.  This always runs in the context of the first "non-virgin"
 	 * thread that was scheduled after the current thread decided to exit.
 	 */
-	bmk_printf("schedule: 412\n");
 	while ((thread = TAILQ_FIRST(&zombieq)) != NULL) {
 		TAILQ_REMOVE(&zombieq, thread, bt_threadq);
-		bmk_printf("schedule: 415\n");
+		bmk_printf("schedule: 431\n");
 		if ((thread->bt_flags & THR_EXTSTACK) == 0)
 			stackfree(thread);
-		bmk_printf("schedule: 418\n");
+		bmk_printf("schedule: 434\n");
 		bmk_memfree(thread, BMK_MEMWHO_WIREDBMK);
 	}
 }
@@ -488,7 +496,6 @@ initcurrent(void *tcb, struct bmk_thread *value)
 	*dst = value;
 }
 
-char thdname[NAME_MAXLEN];
 
 struct bmk_thread *
 bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
@@ -505,9 +512,6 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 
 	bmk_memset(thread, 0, sizeof(*thread));
 	bmk_strncpy(thread->bt_name, name, sizeof(thread->bt_name)-1);
-
-	/* FIXME: this is lazy, I know */
-	bmk_strncpy(thdname, name, sizeof(thdname)-1);
 
 	if (!stack_base) {
 		bmk_assert(stack_size == 0);
@@ -771,6 +775,7 @@ bmk_sched_init(void)
 /* RG */
 extern struct bmk_thread *glob_prev;
 extern struct bmk_thread *glob_next;
+extern struct bmk_thread *isr_thd;
 int bmk_isr(int which);
 /* ---- */
 
@@ -797,9 +802,13 @@ bmk_sched_startmain(void (*mainfun)(void *), void *arg)
 	setflags(mainthread, THR_RUNNING, THR_RUNQ);
 	sched_switch(&initthread, mainthread);
 
+	bmk_intr_init();
+	bmk_printf("bmk_intr_init done\n");
+
 	while(1) {
 		bmk_isr(0);
-		sched_switch(glob_prev, glob_next);
+		bmk_cpu_sched_switch_viathd(glob_prev, glob_next);
+		//bmk_cpu_sched_switch_viathd(glob_prev, isr_thd);
 	}
 
 	bmk_platform_halt("bmk_sched_init unreachable");
