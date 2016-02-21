@@ -158,9 +158,13 @@ bmk_cpu_sched_switch_viathd(struct bmk_thread *prev, struct bmk_thread *next)
 bmk_time_t
 bmk_platform_clock_monotonic(void)
 {
+	bmk_time_t cur_time;
 	bmk_printf("bmk_platform_clock_monotonic is being called.\n");
 
-	return 0;
+	/* bmk_time_t is just a long long */
+	cur_time = (bmk_time_t)crcalls.rump_cpu_clock_now();
+
+	return cur_time;
 }
 
 bmk_time_t
