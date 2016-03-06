@@ -113,6 +113,7 @@ isr(void *arg)
 int
 bmk_isr_init(int (*func)(void *), void *arg, int intr)
 {
+	bmk_printf("\nBMK_ISR_INIT is being called\n\n");
 	struct intrhand *ih;
 	int error;
 
@@ -141,8 +142,11 @@ bmk_isr(int which)
 {
 
 	/* schedule the interrupt handler */
+	bmk_printf("which: %d\n", which);
+
 	isr_todo |= 1<<which;
 	bmk_sched_wake(isr_thread);
+	while(1);
 }
 
 int

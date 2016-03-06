@@ -38,6 +38,7 @@ rumpuser_clock_gettime(int which, int64_t *sec, long *nsec)
 {
 
 	bmk_printf("rumpuser_clock_gettime\n");
+	bmk_printf("which: %d\n", which);
 
 	bmk_time_t time;
 
@@ -60,9 +61,6 @@ rumpuser_clock_gettime(int which, int64_t *sec, long *nsec)
 int
 rumpuser_clock_sleep(int enum_rumpclock, int64_t sec, long nsec)
 {
-
-	bmk_printf("rumpuser_clock_sleep\n");
-
 	enum rumpclock rclk = enum_rumpclock;
 	bmk_time_t deadline = 0;
 	int nlocks;

@@ -30,6 +30,7 @@ void* _GLOBAL_OFFSET_TABLE_ = (void *) 0x1337BEEF;
 
 int bmk_spldepth = 1;
 
+#define rdtscll(val) __asm__ __volatile__("rdtsc" : "=A" (val))
 
 /* Prototypes */
 
@@ -105,7 +106,6 @@ bmk_platform_cpu_sched_settls(struct bmk_tcb *next)
 unsigned long
 bmk_platform_splhigh(void)
 {
-	bmk_printf("bmk_platform_splhigh is being called/ignored\n");
 //	while(1);
 	return 0;
 }
@@ -113,14 +113,16 @@ bmk_platform_splhigh(void)
 void
 bmk_platform_block(bmk_time_t until)
 {
-	bmk_printf("bmk_platform_block is being called\n");
-	while(1);
+	long long nxtime = 0;
+
+	while(nxtime < until) rdtscll(nxtime);
+
+	return;
 }
 
 void
 bmk_platform_splx(unsigned long x)
 {
-	bmk_printf("bmk_platform_splx is being called/ignored\n");
 	//while(1);
 }
 
@@ -159,7 +161,6 @@ bmk_time_t
 bmk_platform_clock_monotonic(void)
 {
 	bmk_time_t cur_time;
-	bmk_printf("bmk_platform_clock_monotonic is being called.\n");
 
 	/* bmk_time_t is just a long long */
 	cur_time = (bmk_time_t)crcalls.rump_cpu_clock_now();

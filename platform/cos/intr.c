@@ -33,9 +33,6 @@
 
 #include <bmk-rumpuser/rumpuser.h>
 
-/* This will get us by soem of the interupts for the time being
- * as well as the fact that this has an amzing name
- */
 #define BMK_SCREW_INTERRUPT_ROUTING
 
 #ifdef BMK_SCREW_INTERRUPT_ROUTING
@@ -64,9 +61,7 @@ struct bmk_thread *isr_thd;
 static void
 isr(void *arg)
 {
-	bmk_printf("\n !!! ISR !!! \n\n");
 	int i, didwork;
-	bmk_printf("\n !!! cmon !!! \n\n");
 
         rumpuser__hyp.hyp_schedule();
         rumpuser__hyp.hyp_lwproc_newlwp(0);
@@ -76,7 +71,6 @@ isr(void *arg)
 	for (;;) {
 		splhigh();
 		if (isr_todo) {
-			bmk_printf("Within isr\n");
 			unsigned int isrcopy;
 			int nlocks = 1;
 
@@ -105,11 +99,11 @@ isr(void *arg)
 				}
 			}
 			rumpkern_unsched(&nlocks, NULL);
-			bmk_printf("IGNORING BMK_CPU_INTR_ACK()\n");
+			//bmk_printf("IGNORING BMK_CPU_INTR_ACK()\n");
 			//bmk_cpu_intr_ack();
 
 			if (!didwork) {
-				bmk_printf("stray interrupt\n");
+			//	bmk_printf("stray interrupt\n");
 			}
 		} else {
 			/* no interrupts left. block until the next one. */
@@ -124,7 +118,6 @@ isr(void *arg)
 int
 bmk_isr_init(int (*func)(void *), void *arg, int intr)
 {
-	bmk_printf("\n !!! BMK_ISR_INIT !!! \n\n");
 
 	struct intrhand *ih;
 	int error;
@@ -153,8 +146,6 @@ void
 bmk_isr(int which)
 {
 
-	bmk_printf("\n BMK_ISR \n\n");
-
 	/* schedule the interrupt handler */
 	isr_todo |= 1<<which;
 	bmk_sched_wake(isr_thread);
@@ -163,7 +154,6 @@ bmk_isr(int which)
 int
 bmk_intr_init(void)
 {
-	bmk_printf("bmk_intr_init\n");
 	int i;
 
 	for (i = 0; i < BMK_INTRLEVS; i++) {
@@ -173,7 +163,6 @@ bmk_intr_init(void)
 	isr_thread = bmk_sched_create("isrthr", NULL, 0, isr, NULL, NULL, 0);
 	isr_thd = isr_thread;
 
-	bmk_printf("isr_thread: %p\n", isr_thread);
 
 	if (!isr_thread)
 		return BMK_EGENERIC;

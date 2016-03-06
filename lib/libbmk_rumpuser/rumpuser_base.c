@@ -67,7 +67,7 @@ int
 rumpuser_getparam(const char *name, void *buf, size_t buflen)
 {
 
-	bmk_printf("rumpuser_getparam: %s\n", name);
+	//bmk_printf("rumpuser_getparam: %s\n", name);
 
 	int rv = 0;
 

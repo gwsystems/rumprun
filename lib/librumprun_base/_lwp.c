@@ -81,7 +81,7 @@ static ptrdiff_t meoff;
 static void
 assignme(void *tcb, struct rumprun_lwp *value)
 {
-	bmk_printf("_lwp.c: assignme\n");
+	//bmk_printf("_lwp.c: assignme\n");
 
 	struct rumprun_lwp **dst = (void *)((uintptr_t)tcb + meoff);
 
@@ -91,7 +91,7 @@ assignme(void *tcb, struct rumprun_lwp *value)
 int
 _lwp_ctl(int ctl, struct lwpctl **data)
 {
-	bmk_printf("_lwp.c: _lwp_ctl\n");
+	//bmk_printf("_lwp.c: _lwp_ctl\n");
 
 	*data = (struct lwpctl *)&me->rl_lwpctl;
 	return 0;
@@ -102,7 +102,7 @@ rumprun_makelwp(void (*start)(void *), void *arg, void *private,
 	void *stack_base, size_t stack_size, unsigned long flag, lwpid_t *lid)
 {
 
-	bmk_printf("_lwp.c: rumprun_makelwp\n");
+	//bmk_printf("_lwp.c: rumprun_makelwp\n");
 
 	struct rumprun_lwp *rl;
 	struct lwp *curlwp, *newlwp;
@@ -141,7 +141,7 @@ static void
 rumprun_makelwp_tramp(void *arg)
 {
 
-	bmk_printf("_lwp.c: rumprun_makelwp_tramp\n");
+	//bmk_printf("_lwp.c: rumprun_makelwp_tramp\n");
 
 	rump_pub_lwproc_switch(arg);
 	(me->rl_start)(me->rl_arg);
@@ -151,7 +151,7 @@ static struct rumprun_lwp *
 lwpid2rl(lwpid_t lid)
 {
 
-	bmk_printf("_lwp.c: lwpid2rl\n");
+	//bmk_printf("_lwp.c: lwpid2rl\n");
 
 	struct rumprun_lwp *rl;
 
@@ -168,7 +168,7 @@ int
 _lwp_unpark(lwpid_t lid, const void *hint)
 {
 
-	bmk_printf("_lwp.c: _lwp_unpark\n");
+	//bmk_printf("_lwp.c: _lwp_unpark\n");
 
 	struct rumprun_lwp *rl;
 
@@ -183,7 +183,7 @@ _lwp_unpark(lwpid_t lid, const void *hint)
 ssize_t
 _lwp_unpark_all(const lwpid_t *targets, size_t ntargets, const void *hint)
 {
-	bmk_printf("_lwp.c: _lwp_unpark_all\n");
+	//bmk_printf("_lwp.c: _lwp_unpark_all\n");
 
 	ssize_t rv;
 
@@ -208,7 +208,7 @@ static void
 schedhook(void *prevcookie, void *nextcookie)
 {
 
-	bmk_printf("_lwp.c: schedhook\n");
+	//bmk_printf("_lwp.c: schedhook\n");
 
 	struct rumprun_lwp *prev, *next;
 
@@ -228,16 +228,16 @@ void
 rumprun_lwp_init(void)
 {
 
-	bmk_printf("_lwp.c: rumprun_lwp_init\n");
+	//bmk_printf("_lwp.c: rumprun_lwp_init\n");
 
 	void *tcb = bmk_sched_gettcb();
 
 	bmk_sched_set_hook(schedhook);
 
 	meoff = (uintptr_t)&me - (uintptr_t)tcb;
-	bmk_printf("_lwp.c: meoff: %d\n", (int)meoff);
-	bmk_printf("_lwp.c: me: %p\n", me);
-	bmk_printf("_lwp.c: &me: %p\n", &me);
+	//bmk_printf("_lwp.c: meoff: %d\n", (int)meoff);
+	//bmk_printf("_lwp.c: me: %p\n", me);
+	//bmk_printf("_lwp.c: &me: %p\n", &me);
 	assignme(tcb, &mainthread);
 	mainthread.rl_thread = bmk_sched_init_mainlwp(&mainthread);
 
@@ -249,7 +249,7 @@ _lwp_park(clockid_t clock_id, int flags, const struct timespec *ts,
 	lwpid_t unpark, const void *hint, const void *unparkhint)
 {
 
-	bmk_printf("_lwp.c: _lwp_park\n");
+	//bmk_printf("_lwp.c: _lwp_park\n");
 
 	int rv;
 
@@ -287,7 +287,7 @@ int
 _lwp_exit(void)
 {
 
-	bmk_printf("_lwp.c: _lwp_exit\n");
+	//bmk_printf("_lwp.c: _lwp_exit\n");
 
 	me->rl_lwpctl.lc_curcpu = LWPCTL_CPU_EXITED;
 	rump_pub_lwproc_releaselwp();
@@ -305,7 +305,7 @@ int
 _lwp_continue(lwpid_t lid)
 {
 
-	bmk_printf("_lwp.c: _lwp_continue\n");
+	//bmk_printf("_lwp.c: _lwp_continue\n");
 
 	struct rumprun_lwp *rl;
 
@@ -320,7 +320,7 @@ _lwp_continue(lwpid_t lid)
 int
 _lwp_suspend(lwpid_t lid)
 {
-	bmk_printf("_lwp.c: _lwp_suspend\n");
+	//bmk_printf("_lwp.c: _lwp_suspend\n");
 
 	struct rumprun_lwp *rl;
 
@@ -335,7 +335,7 @@ _lwp_suspend(lwpid_t lid)
 int
 _lwp_wakeup(lwpid_t lid)
 {
-	bmk_printf("_lwp.c: _lwp_wakeup\n");
+	//bmk_printf("_lwp.c: _lwp_wakeup\n");
 
 	struct rumprun_lwp *rl;
 
@@ -349,7 +349,7 @@ _lwp_wakeup(lwpid_t lid)
 int
 _lwp_setname(lwpid_t lid, const char *name)
 {
-	bmk_printf("_lwp.c: _lwp_setname\n");
+	//bmk_printf("_lwp.c: _lwp_setname\n");
 
 	struct rumprun_lwp *rl;
 
@@ -364,7 +364,7 @@ lwpid_t
 _lwp_self(void)
 {
 
-	bmk_printf("_lwp.c: _lwp_self\n");
+	//bmk_printf("_lwp.c: _lwp_self\n");
 
 	return me->rl_lwpid;
 }
@@ -375,7 +375,7 @@ int
 _sys_sched_yield(void)
 {
 
-	bmk_printf("_lwp.c: _sys_sched_yield\n");
+	//bmk_printf("_lwp.c: _sys_sched_yield\n");
 
 	bmk_sched_yield();
 	return 0;
@@ -386,7 +386,7 @@ struct tls_tcb *
 _rtld_tls_allocate(void)
 {
 
-	bmk_printf("_lwp.c: _rtld_tls_allocate\n");
+	//bmk_printf("_lwp.c: _rtld_tls_allocate\n");
 
 	return bmk_sched_tls_alloc();
 }
@@ -394,7 +394,7 @@ _rtld_tls_allocate(void)
 void
 _rtld_tls_free(struct tls_tcb *arg)
 {
-	bmk_printf("_lwp.c: _rtld_tls_free\n");
+	//bmk_printf("_lwp.c: _rtld_tls_free\n");
 
 	return bmk_sched_tls_free(arg);
 }
@@ -403,7 +403,7 @@ void *
 _lwp_getprivate(void)
 {
 
-	bmk_printf("_lwp.c: _lwp_getprivate\n");
+	//bmk_printf("_lwp.c: _lwp_getprivate\n");
 
 	return bmk_sched_gettcb();
 }
@@ -416,7 +416,7 @@ void __dead
 _lwpabort(void)
 {
 
-	bmk_printf("_lwp.c: _lwpabort\n");
+	//bmk_printf("_lwp.c: _lwpabort\n");
 
 	printf("_lwpabort() called\n");
 	_exit(1);

@@ -239,12 +239,6 @@ timeq_sorted_insert(struct bmk_thread *thread)
 	}
 
 	/* case3: last in queue with greatest current timeout */
-	//bmk_printf("\n--------------------------------------------------\n");
-	//bmk_printf("TIMEQ_SORTED_INSERT: PUT THIS ASSERTION BACK IN: 240\n");
-	//bmk_printf("\n--------------------------------------------------\n");
-	/* Removing for sake of PROGRESS :D
-	 * This is an awful idea. MAKE SURE TO PUT THIS BACK LATER.
-	 */
 	bmk_assert(TAILQ_LAST(&timeq, threadqueue)->bt_wakeup_time
 	    < thread->bt_wakeup_time);
 	TAILQ_INSERT_TAIL(&timeq, thread, bt_schedq);
@@ -327,7 +321,6 @@ sched_switch(struct bmk_thread *prev, struct bmk_thread *next)
 	if (scheduler_hook)
 		scheduler_hook(prev->bt_cookie, next->bt_cookie);
 	bmk_platform_cpu_sched_settls(&next->bt_tcb);
-	bmk_printf("sched_switch: 320\n");
 	bmk_cpu_sched_switch_viathd(prev, next);
 }
 
@@ -336,14 +329,10 @@ schedule(void)
 {
 
 
-	bmk_printf("\n -------- \n");
-	bmk_printf("\n SCHEDULE BELOW\n");
-	bmk_printf("\n -------- \n");
 	struct bmk_thread *prev, *next, *thread;
 	unsigned long flags;
 
 	prev = bmk_current;
-	bmk_printf("schedule: 335\n");
 
 	flags = bmk_platform_splhigh();
 	if (flags) {
@@ -362,9 +351,8 @@ schedule(void)
 		 * first one which will not be woked up.
 		 */
 		while ((thread = TAILQ_FIRST(&timeq)) != NULL) {
-			bmk_printf("schedule: 353\n");
+
 			if (thread->bt_wakeup_time <= curtime) {
-				bmk_printf("schedule: 355\n");
 				/*
 				 * move thread to runqueue.
 				 * threads will run in inverse order of timeout
@@ -372,55 +360,37 @@ schedule(void)
 				 */
 				thread->bt_flags |= THR_TIMEDOUT;
 				bmk_sched_wake(thread);
-				bmk_printf("schedule: 364\n");
 			} else {
-				bmk_printf("schedule: 366\n");
 				if (thread->bt_wakeup_time < waketime)
 					waketime = thread->bt_wakeup_time;
-				bmk_printf("schedule: 369\n");
 				break;
 			}
 		}
 
-		bmk_printf("schedule: 385\n");
 		if ((next = TAILQ_FIRST(&runq)) != NULL) {
-			bmk_printf("schedule: 387\n");
-			bmk_printf("schedule: next: %s\n", next->bt_name);
 			bmk_assert(next->bt_flags & THR_RUNQ);
 			bmk_assert((next->bt_flags & THR_DEAD) == 0);
 			break;
 		}
 
 		/* nothing to run.  enable interrupts and sleep. */
-		bmk_printf("schedule: 394\n");
 		bmk_platform_block(waketime);
-		bmk_printf("schedule: 397\n");
 	}
 	/* now we're committed to letting "next" run next */
-	bmk_printf("schedule: 400\n");
 	setflags(prev, 0, THR_RUNNING);
 
-	bmk_printf("schedule: 403\n");
 	TAILQ_REMOVE(&runq, next, bt_schedq);
-	bmk_printf("schedule: 405\n");
 	setflags(next, THR_RUNNING, THR_RUNQ);
-	bmk_printf("schedule: 407\n");
 	bmk_platform_splx(flags);
-	bmk_printf("schedule: 409\n");
 
 	/*
 	 * No switch can happen if:
 	 *  + timeout expired while we were in here
 	 *  + interrupt handler woke us up before anything else was scheduled
 	 */
-	bmk_printf("schedule: 416\n");
-	bmk_printf("schedule: prev: %s\n", prev->bt_name);
-	bmk_printf("schedule: next: %s\n", next->bt_name);
 	if (prev != next) {
-		bmk_printf("schedule: 420 blaze it\n");
 		sched_switch(prev, next);
 	}
-	bmk_printf("schedule: 423, after switch\n");
 
 	/*
 	 * Reaper.  This always runs in the context of the first "non-virgin"
@@ -428,10 +398,8 @@ schedule(void)
 	 */
 	while ((thread = TAILQ_FIRST(&zombieq)) != NULL) {
 		TAILQ_REMOVE(&zombieq, thread, bt_threadq);
-		bmk_printf("schedule: 431\n");
 		if ((thread->bt_flags & THR_EXTSTACK) == 0)
 			stackfree(thread);
-		bmk_printf("schedule: 434\n");
 		bmk_memfree(thread, BMK_MEMWHO_WIREDBMK);
 	}
 }
@@ -573,7 +541,6 @@ bmk_sched_create(const char *name, void *cookie, int joinable,
 
 	tlsarea = bmk_sched_tls_alloc();
 
-	bmk_printf("tlsarea: %p\n", tlsarea);
 
 	ret = bmk_sched_create_withtls(name, cookie, joinable, f, data,
 	    	stack_base, stack_size, tlsarea);
@@ -855,11 +822,9 @@ bmk_sched_yield(void)
 
 	struct bmk_thread *thread = bmk_current;
 	int flags;
-	bmk_printf("bmk_sched_yield: 818\n");
 
 	bmk_assert(thread->bt_flags & THR_RUNNING);
 
-	bmk_printf("bmk_sched_yield: 822\n");
 
 	/* make schedulable and re-insert into runqueue */
 	flags = bmk_platform_splhigh();

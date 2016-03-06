@@ -87,6 +87,10 @@ rumpcomp_pci_irq_map(unsigned bus, unsigned device, unsigned fun,
 	int intrline, unsigned cookie)
 {
 
+	bmk_printf("rumpcomp_pci_irq_map\n");
+	bmk_printf("rumpcomp_pci_irq_map: intrline: %d\n", intrline);
+	bmk_printf("rumpcomp_pci_irq_map: cookie: %u\n", cookie);
+	bmk_printf("rumpcomp_pci_irq_map: fun: %p\n", fun);
 	if (cookie > BMK_MAXINTR)
 		return BMK_EGENERIC;
 
@@ -98,6 +102,7 @@ void *
 rumpcomp_pci_irq_establish(unsigned cookie, int (*handler)(void *), void *data)
 {
 
+	bmk_printf("rumpcomp_pci_irq_establish\n");
 	if (bmk_isr_init(handler, data, intrs[cookie]) == 0)
 		return &intrs[cookie];
 	else
