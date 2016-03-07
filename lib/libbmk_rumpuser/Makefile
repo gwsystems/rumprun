@@ -15,7 +15,7 @@ SRCS+=		rumpuser_synch.c
 
 # RG: These bottom two are used by the PAWS application
 SRCS+=    	rumpuser_fs.c
-# SRCS+=    	backing.o
+SRCS+=    	backing.o
 
 SRCS+=		rumpuser_stubs.c
 

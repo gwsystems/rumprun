@@ -6,84 +6,82 @@
 #include <bmk-core/printf.h>
 #include <assert.h>
 
-//extern char _binary_backing_img_start;
-//extern char _binary_backing_img_end;
+// Supplied from backing.o file
+extern char _binary_backing_img_start;
+extern char _binary_backing_img_end;
 
-//#define PAWS_SIZE (&_binary_backing_img_end - &_binary_backing_img_start)
-//char *paws = &_binary_backing_img_start;
+#define PAWS_SIZE (&_binary_backing_img_end - &_binary_backing_img_start)
+char *paws = &_binary_backing_img_start;
 
-#define PAWS_SIZE 0
-char *paws = NULL;
+//#define PAWS_SIZE 0
+//char *paws = NULL;
 
-int
+	int
 rumpuser_getfileinfo(const char *name, uint64_t *size, int *type)
 {
-  int rv;
+	int rv;
 
-  if(bmk_strcmp(name, "paws") == 0)
-  {
-    *size = (uint64_t)PAWS_SIZE;
-    *type = RUMPUSER_FT_BLK;
-    rv = 0;
-  } else {
-    rv = BMK_ENOSYS;
-  }
+	bmk_printf("rumpuser_getfileinfo\n");
 
-  return rv;
+	if(bmk_strcmp(name, "paws") == 0) {
+		*size = (uint64_t)PAWS_SIZE;
+		*type = RUMPUSER_FT_BLK;
+		rv = 0;
+	} else {
+		rv = BMK_ENOSYS;
+	}
+
+	return rv;
 }
 
-int
+	int
 rumpuser_open(const char *name, int mode, int *fdp)
 {
-  int rv;
+	int rv;
 
-  if(bmk_strcmp(name, "paws") == 0)
-  {
-    *fdp = 0;
-    rv = 0;
-  } else {
-    rv = BMK_ENOSYS;
-  }
+	if(bmk_strcmp(name, "paws") == 0) {
+		*fdp = 0;
+		rv = 0;
+	} else {
+		rv = BMK_ENOSYS;
+	}
 
-  return rv;
+	return rv;
 }
 
 int
 rumpuser_close(int fd) {
-  bmk_printf("rumpuser close is being called"); 
-  bmk_memset(&paws, 0, sizeof(paws));
-  return 0;
+
+	bmk_memset(&paws, 0, sizeof(paws));
+	return 0;
 }
 
-void
+	void
 rumpuser_bio(int fd, int op, void *data, size_t dlen, int64_t off,
-    rump_biodone_fn biodone, void *donearg)
+		rump_biodone_fn biodone, void *donearg)
 {
 
-  size_t rv;
-  int error;
-  size_t pawssize = (size_t)PAWS_SIZE;
-  rv = 0; // The amount that is sucessfully read or written
-  error = 0;
+	size_t rv;
+	int error;
+	size_t pawssize = (size_t)PAWS_SIZE;
+	char *returnstr;
+	rv = 0; // The amount that is sucessfully read or written
+	error = 0;
 
-  assert(donearg != NULL);
-  assert(data != NULL);
-  assert(off <= PAWS_SIZE);
+	assert(donearg != NULL);
+	assert(data != NULL);
+	assert(off <= PAWS_SIZE);
 
-  if(op & RUMPUSER_BIO_READ)
-  {
-    assert(pawssize >= dlen);
-    char *returnstr = bmk_memcpy(data, paws + off, dlen); // &paws[off]
-    assert(returnstr != NULL);
-    rv = dlen;
-  }
-  else if(op & RUMPUSER_BIO_WRITE || op & RUMPUSER_BIO_SYNC)
-  {
-    assert(pawssize >= dlen);
-    char *returnstr = bmk_memcpy(paws + off, data, dlen);
-    assert(returnstr != NULL);
-    rv = dlen;
-  }
+	assert(pawssize >= dlen);
 
-  biodone(donearg, rv, error);
+	if(op & RUMPUSER_BIO_READ)
+		returnstr = bmk_memcpy(data, paws + off, dlen); // &paws[off]
+
+	else if(op & RUMPUSER_BIO_WRITE || op & RUMPUSER_BIO_SYNC)
+		returnstr = bmk_memcpy(paws + off, data, dlen);
+
+	assert(returnstr != NULL);
+	rv = dlen;
+
+	biodone(donearg, rv, error);
 }
