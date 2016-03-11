@@ -119,6 +119,10 @@ int
 bmk_isr_init(int (*func)(void *), void *arg, int intr)
 {
 
+	bmk_printf("!!! bmk_isr_init !!!\n");
+	bmk_printf("!!! bmk_isr_init !!!\n");
+	bmk_printf("!!! bmk_isr_init !!!\n");
+
 	struct intrhand *ih;
 	int error;
 
