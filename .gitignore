@@ -25,3 +25,5 @@ platform/*/tests/hello/hellopp
 platform/*/tests/wopr/wopr
 
 app-tools/rumprun-*
+.prevbuild
+app-tools/i486-*
