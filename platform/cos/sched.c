@@ -775,7 +775,6 @@ bmk_sched_startmain(void (*mainfun)(void *), void *arg)
 	while(1) {
 		bmk_isr(0);
 		bmk_cpu_sched_switch_viathd(glob_prev, glob_next);
-		//bmk_cpu_sched_switch_viathd(glob_prev, isr_thd);
 	}
 
 	bmk_platform_halt("bmk_sched_init unreachable");
