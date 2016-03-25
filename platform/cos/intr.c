@@ -119,9 +119,7 @@ int
 bmk_isr_init(int (*func)(void *), void *arg, int intr)
 {
 
-	bmk_printf("!!! bmk_isr_init !!!\n");
-	bmk_printf("!!! bmk_isr_init !!!\n");
-	bmk_printf("!!! bmk_isr_init !!!\n");
+	bmk_printf("%s:%d func: %x arg: %x intr: %d\n", __func__, __LINE__, (unsigned)func, (unsigned)arg, intr);
 
 	struct intrhand *ih;
 	int error;
@@ -133,12 +131,14 @@ bmk_isr_init(int (*func)(void *), void *arg, int intr)
 	if (!ih)
 		return BMK_ENOMEM;
 
+	bmk_printf("%s:%d\n", __func__, __LINE__);
 	if ((error = bmk_cpu_intr_init(intr)) != 0) {
 		bmk_memfree(ih, BMK_MEMWHO_WIREDBMK);
 		return error;
 	}
 	ih->ih_fun = func;
 	ih->ih_arg = arg;
+	bmk_printf("%s:%d\n", __func__, __LINE__);
 	SLIST_INSERT_HEAD(&isr_ih[intr % BMK_INTRLEVS], ih, ih_entries);
 	if ((unsigned)intr < isr_lowest)
 		isr_lowest = intr;
@@ -149,6 +149,7 @@ bmk_isr_init(int (*func)(void *), void *arg, int intr)
 void
 bmk_isr(int which)
 {
+	bmk_printf("%s:>%d\n", __func__, which);
 
 	/* schedule the interrupt handler */
 	isr_todo |= 1<<which;
@@ -163,6 +164,7 @@ bmk_intr_init(void)
 	for (i = 0; i < BMK_INTRLEVS; i++) {
 		SLIST_INIT(&isr_ih[i]);
 	}
+	bmk_printf("%s:%d\n", __func__, __LINE__);
 
 	isr_thread = bmk_sched_create("isrthr", NULL, 0, isr, NULL, NULL, 0);
 	isr_thd = isr_thread;
@@ -170,5 +172,6 @@ bmk_intr_init(void)
 
 	if (!isr_thread)
 		return BMK_EGENERIC;
+	bmk_printf("%s:%d\n", __func__, __LINE__);
 	return 0;
 }

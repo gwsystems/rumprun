@@ -30,16 +30,18 @@
 #include <bmk-core/printf.h>
 
 #include "pci_user.h"
+extern void *bmk_va2pa(void *addr);
 
 #define PCI_CONF_ADDR 0xcf8
 #define PCI_CONF_DATA 0xcfc
 
-int
-rumpcomp_pci_iospace_init(void)
-{
-
-	return 0;
-}
+//int
+//rumpcomp_pci_iospace_init(void)
+//{
+//	bmk_printf("%s:%d\n", __func__, __LINE__);
+//
+//	return 0;
+//}
 
 static uint32_t
 makeaddr(unsigned bus, unsigned dev, unsigned fun, int reg)
@@ -52,16 +54,12 @@ int
 rumpcomp_pci_confread(unsigned bus, unsigned dev, unsigned fun, int reg,
 	unsigned int *value)
 {
-	bmk_printf("rumpcomp_pci_confread: 55\n");
 	uint32_t addr;
 	unsigned int data;
 
 	addr = makeaddr(bus, dev, fun, reg);
-	bmk_printf("addr: %p\n", (void *)addr);
 	outl(PCI_CONF_ADDR, addr);
-	bmk_printf("rumpcomp_pci_confread: 62\n");
 	data = inl(PCI_CONF_DATA);
-	bmk_printf("rumpcomp_pci_confread: 64\n");
 
 	*value = data;
 	return 0;
@@ -87,13 +85,13 @@ rumpcomp_pci_irq_map(unsigned bus, unsigned device, unsigned fun,
 	int intrline, unsigned cookie)
 {
 
-	bmk_printf("rumpcomp_pci_irq_map\n");
-	bmk_printf("rumpcomp_pci_irq_map: intrline: %d\n", intrline);
-	bmk_printf("rumpcomp_pci_irq_map: cookie: %u\n", cookie);
-	bmk_printf("rumpcomp_pci_irq_map: fun: %p\n", fun);
+	bmk_printf("%s:%d - cookie: %x fun: %x device: %x intrline: %x bus: %x\n", 
+			__func__, __LINE__, 
+			cookie, fun, device, intrline, bus);
 	if (cookie > BMK_MAXINTR)
 		return BMK_EGENERIC;
 
+	bmk_printf("%s:%d\n", __func__, __LINE__);
 	intrs[cookie] = intrline;
 	return 0;
 }
@@ -102,7 +100,8 @@ void *
 rumpcomp_pci_irq_establish(unsigned cookie, int (*handler)(void *), void *data)
 {
 
-	bmk_printf("rumpcomp_pci_irq_establish\n");
+	bmk_printf("%s:%d - cookie: %x handler: %x data: %x\n", __func__, __LINE__, 
+			cookie, handler, data);
 	if (bmk_isr_init(handler, data, intrs[cookie]) == 0)
 		return &intrs[cookie];
 	else
@@ -117,27 +116,45 @@ rumpcomp_pci_irq_establish(unsigned cookie, int (*handler)(void *), void *data)
 void *
 rumpcomp_pci_map(unsigned long addr, unsigned long len)
 {
+	bmk_printf("%s:%d\n", __func__, __LINE__);
+	bmk_printf("%s: 0x%x:%lu\n", __func__, addr, len);
+	void *mem;
+	int i;
 
-	return (void *)addr;
+        for (i = 0; len >> (i + PAGE_SHIFT); i++)
+                continue;
+
+
+	mem = bmk_pgalloc(i);
+	if (!mem)
+		return (void *)NULL;
+
+	bmk_printf("%s: 0x%x:%lu\n", __func__, (int)mem, (int)i);
+
+	return (void *)mem;
 }
 
 int
 rumpcomp_pci_dmalloc(size_t size, size_t align,
 	unsigned long *pap, unsigned long *vap)
 {
+	bmk_printf("%s:%d\n", __func__, __LINE__);
 	void *mem;
 	int i;
 
         for (i = 0; size >> (i + PAGE_SHIFT); i++)
                 continue;
 
+
 	mem = bmk_pgalloc(i);
 	if (!mem)
 		return BMK_ENOMEM;
+	bmk_printf("%s: 0x%x:%lu\n", __func__, (int)mem, (int)i);
 
-	*pap = (unsigned long)mem;
+	//*pap = (unsigned long)mem;
+	*pap = (unsigned long)bmk_va2pa(mem);
 	*vap = (unsigned long)mem;
-
+	bmk_printf("%s: 0x%x-0x%x\n", __func__, *pap, *vap);
 	return 0;
 }
 
@@ -146,26 +163,35 @@ rumpcomp_pci_dmamem_map(struct rumpcomp_pci_dmaseg *dss, size_t nseg,
 	size_t totlen, void **vap)
 {
 
+	bmk_printf("%s:%d - dss[0].ds_pa:%x dss[0].ds_len:%d dss[0].ds_vacookie:%x\n", __func__, __LINE__, dss[0].ds_pa, dss[0].ds_len, dss[0].ds_vacookie);
+	bmk_printf("%s:%d - nseg:%d totlen:%d\n", __func__, __LINE__, nseg, totlen);
+	bmk_printf("%s:%d\n", __func__, __LINE__);
 	if (nseg > 1)
 		return 1;
 
 	*vap = (void *)dss[0].ds_vacookie;
+	bmk_printf("%s: 0x%x\n", __func__, (int)*vap);
 	return 0;
 }
 
-void
-rumpcomp_pci_dmafree(unsigned long mem, size_t size)
-{
-	int i;
-
-        for (i = 0; size >> (i + PAGE_SHIFT); i++)
-                continue;
-	bmk_pgfree((void *)mem, i);
-}
+//void
+//rumpcomp_pci_dmafree(unsigned long mem, size_t size)
+//{
+//
+//	bmk_printf("%s:%d\n", __func__, __LINE__);
+//	int i;
+//
+//        for (i = 0; size >> (i + PAGE_SHIFT); i++)
+//                continue;
+//	bmk_pgfree((void *)mem, i);
+//}
 
 unsigned long
 rumpcomp_pci_virt_to_mach(void *virt)
 {
 
-	return (unsigned long)virt;
+	bmk_printf("%s:%d\n", __func__, __LINE__);
+	bmk_printf("%s: 0x%x:0x%x\n", __func__, (int)virt, (int)bmk_va2pa(virt));
+	return (unsigned long)bmk_va2pa(virt);
+	//return (unsigned long)(virt);
 }

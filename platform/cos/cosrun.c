@@ -68,6 +68,7 @@ int bmk_cpu_intr_init(int intr);
 void bmk_cpu_intr_ack(void);
 /* Prototype Definitions */
 
+extern void *bmk_va2pa(void *addr);
 void
 bmk_printf(const char *fmt, ...)
 {
@@ -81,6 +82,12 @@ bmk_printf(const char *fmt, ...)
 	crcalls.rump_cos_print(s, ret);
 
 	return;
+}
+
+void*
+bmk_va2pa(void *addr)
+{
+	return crcalls.rump_va2pa(addr);
 }
 
 int
@@ -265,12 +272,17 @@ bmk_strncpy(char *d, const char *s, unsigned long n)
 
 	return rv;
 }
+//int pic2mask = 0xff;
+//#define PIC2_DATA	0xa1
 
 int
 bmk_cpu_intr_init(int intr)
 {
-	bmk_printf("\nbmk_cpu_intr_init is being called\n\n");
-	while(1);
+	bmk_printf("\nbmk_cpu_intr_init is being called: %d\n\n", intr);
+//	while(1);
+
+//	pic2mask &= ~(1<<(intr-8));
+//	outb(PIC2_DATA, pic2mask);
 	return 0;
 }
 
