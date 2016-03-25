@@ -120,9 +120,13 @@ bmk_platform_splhigh(void)
 void
 bmk_platform_block(bmk_time_t until)
 {
-	long long nxtime = 0;
+	bmk_time_t now = 0;
 
-	while(nxtime < until) rdtscll(nxtime);
+	/* Returned if called too late */
+	now = bmk_platform_clock_monotonic();
+	if(until < now) return;
+
+	while(bmk_platform_clock_monotonic() < until);
 
 	return;
 }

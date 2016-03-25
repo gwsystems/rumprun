@@ -239,8 +239,13 @@ timeq_sorted_insert(struct bmk_thread *thread)
 	}
 
 	/* case3: last in queue with greatest current timeout */
+
+	/*
+	 * RG we needed to make this <= not just < because of the granularity at which
+	 * we give wiakup times
+	 */
 	bmk_assert(TAILQ_LAST(&timeq, threadqueue)->bt_wakeup_time
-	    < thread->bt_wakeup_time);
+	    <= thread->bt_wakeup_time);
 	TAILQ_INSERT_TAIL(&timeq, thread, bt_schedq);
 }
 
@@ -775,7 +780,6 @@ bmk_sched_startmain(void (*mainfun)(void *), void *arg)
 	while(1) {
 		bmk_isr(0);
 		bmk_cpu_sched_switch_viathd(glob_prev, glob_next);
-		//bmk_cpu_sched_switch_viathd(glob_prev, isr_thd);
 	}
 
 	bmk_platform_halt("bmk_sched_init unreachable");
