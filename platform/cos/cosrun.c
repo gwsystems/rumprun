@@ -69,6 +69,7 @@ void bmk_cpu_intr_ack(void);
 /* Prototype Definitions */
 
 extern void *bmk_va2pa(void *addr);
+extern void *bmk_pa2va(void *addr, unsigned long len);
 void
 bmk_printf(const char *fmt, ...)
 {
@@ -88,6 +89,12 @@ void*
 bmk_va2pa(void *addr)
 {
 	return crcalls.rump_va2pa(addr);
+}
+
+void*
+bmk_pa2va(void *addr, unsigned long len)
+{
+	return crcalls.rump_pa2va(addr, len);
 }
 
 int

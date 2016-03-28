@@ -31,17 +31,18 @@
 
 #include "pci_user.h"
 extern void *bmk_va2pa(void *addr);
+extern void *bmk_pa2va(void *addr, unsigned long len);
 
 #define PCI_CONF_ADDR 0xcf8
 #define PCI_CONF_DATA 0xcfc
 
-//int
-//rumpcomp_pci_iospace_init(void)
-//{
-//	bmk_printf("%s:%d\n", __func__, __LINE__);
-//
-//	return 0;
-//}
+int
+rumpcomp_pci_iospace_init(void)
+{
+	bmk_printf("%s:%d\n", __func__, __LINE__);
+
+	return 0;
+}
 
 static uint32_t
 makeaddr(unsigned bus, unsigned dev, unsigned fun, int reg)
@@ -118,6 +119,7 @@ rumpcomp_pci_map(unsigned long addr, unsigned long len)
 {
 	bmk_printf("%s:%d\n", __func__, __LINE__);
 	bmk_printf("%s: 0x%x:%lu\n", __func__, addr, len);
+#if 0
 	void *mem;
 	int i;
 
@@ -132,6 +134,8 @@ rumpcomp_pci_map(unsigned long addr, unsigned long len)
 	bmk_printf("%s: 0x%x:%lu\n", __func__, (int)mem, (int)i);
 
 	return (void *)mem;
+#endif
+	return (void *)bmk_pa2va((void *)addr, len);
 }
 
 int
@@ -174,17 +178,17 @@ rumpcomp_pci_dmamem_map(struct rumpcomp_pci_dmaseg *dss, size_t nseg,
 	return 0;
 }
 
-//void
-//rumpcomp_pci_dmafree(unsigned long mem, size_t size)
-//{
-//
-//	bmk_printf("%s:%d\n", __func__, __LINE__);
-//	int i;
-//
-//        for (i = 0; size >> (i + PAGE_SHIFT); i++)
-//                continue;
-//	bmk_pgfree((void *)mem, i);
-//}
+void
+rumpcomp_pci_dmafree(unsigned long mem, size_t size)
+{
+
+	bmk_printf("%s:%d\n", __func__, __LINE__);
+	int i;
+
+        for (i = 0; size >> (i + PAGE_SHIFT); i++)
+                continue;
+	bmk_pgfree((void *)mem, i);
+}
 
 unsigned long
 rumpcomp_pci_virt_to_mach(void *virt)
