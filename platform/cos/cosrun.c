@@ -2,7 +2,6 @@
 #include <bmk-core/types.h>
 #include <bmk-core/null.h>
 #include <bmk-core/core.h>
-#include <bmk-core/jsmn.h>
 #include <bmk-core/sched.h>
 #include <execinfo.h>
 //#include <bmk/kernel.h>
@@ -312,18 +311,5 @@ int
 rumprun_platform_rumpuser_init(void)
 {
 	bmk_printf("rumprun_platform_rumpuser_init is being called.\n");
-	return 0;
-}
-
-void
-jsmn_init(jsmn_parser *parser)
-{
-	bmk_printf("jsmn_init unimplemented");
-}
-
-jsmnerr_t
-jsmn_parse(jsmn_parser *parser, const char *js, unsigned long len, jsmntok_t *tokens, unsigned int num_tokens)
-{
-	bmk_printf("jsmn_parse unimplemented");
 	return 0;
 }

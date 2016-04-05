@@ -44,7 +44,7 @@ LDFLAGS_BAKE+=	-L$(abspath rump/lib)
 
 include arch/${MACHINE}/Makefile.inc
 
-OBJS_BMK = sched.o init.o memalloc.o pgalloc.o intr.o
+OBJS_BMK = sched.o init.o memalloc.o pgalloc.o intr.o jsmn.o
 
 OBJS= ${OBJS_APP} ${OBJS_BMK}
 

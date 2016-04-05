@@ -766,6 +766,11 @@ bmk_sched_startmain(void (*mainfun)(void *), void *arg)
 	if (mainthread == NULL)
 		bmk_platform_halt("failed to create main thread");
 
+	/* FIXME: Remove when we put timer intterupts back in, put down below */
+	bmk_intr_init();
+	bmk_printf("bmk_intr_init done\n");
+
+
 	/*
 	 * Manually switch to mainthread without going through
 	 * bmk_sched (avoids confusion with bmk_current).
@@ -774,8 +779,9 @@ bmk_sched_startmain(void (*mainfun)(void *), void *arg)
 	setflags(mainthread, THR_RUNNING, THR_RUNQ);
 	sched_switch(&initthread, mainthread);
 
-	bmk_intr_init();
-	bmk_printf("bmk_intr_init done\n");
+	/* RG: Moved to before first sched_switch as we never get here, we don't have timer interrupts */
+	//bmk_intr_init();
+	//bmk_printf("bmk_intr_init done\n");
 
 	while(1) {
 		bmk_isr(0);
