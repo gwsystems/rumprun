@@ -80,9 +80,7 @@ rumprun_boot(char *cmdline)
 {
 	bmk_printf("rumprun_boot\n");
 
-	/* RG: Testing to see if gs was set correctly
-	 * ...there was much more testing
-	 */
+	/* RG: Testing to see if gs was set correctly  */
 	bmk_printf("\n\nbmk_current: %p\n", bmk_current);
 	/* End of testing */
 
@@ -128,12 +126,16 @@ rumprun_boot(char *cmdline)
 		warnx("FAILED: mount tmpfs on /tmp: %s\n", strerror(tmpfserrno));
 	}
 
+	bmk_printf("Setting up rump server\n");
 	rump_init_server("tcp://0:12345");
+	bmk_printf("Done setting up rump server\n");
 
 	// RG: not calling _rumprun_config as I don't want to deal
 	// with taking out json stuff as of right now. TODO
-	bmk_printf("skipping over _rumprun_config(cmdline). TODO - see if this has an impact\n");
-	//_rumprun_config(cmdline);
+	//bmk_printf("skipping over _rumprun_config(cmdline). TODO - see if this has an impact\n");
+	bmk_printf("Parsing cmdline\n");
+	_rumprun_config(cmdline);
+	bmk_printf("Done parsing cmdline\n");
 
 	/*
 	 * give all threads a chance to run, and ensure that the main
