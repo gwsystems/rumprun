@@ -7,11 +7,11 @@
 #include <assert.h>
 
 // Supplied from backing.o file
-extern char _binary_backing_img_start;
-extern char _binary_backing_img_end;
+extern char _binary_data_iso_start;
+extern char _binary_data_iso_end;
 
-#define PAWS_SIZE (&_binary_backing_img_end - &_binary_backing_img_start)
-char *paws = &_binary_backing_img_start;
+#define PAWS_SIZE (&_binary_data_iso_end - &_binary_data_iso_start)
+char *paws = &_binary_data_iso_start;
 
 //#define PAWS_SIZE 0
 //char *paws = NULL;
@@ -31,12 +31,19 @@ rumpuser_getfileinfo(const char *name, uint64_t *size, int *type)
 		rv = BMK_ENOSYS;
 	}
 
+	bmk_printf("name: %s\n", name);
+	bmk_printf("size: %d\n", *size);
+	bmk_printf("type: %d\n", *type);
+
 	return rv;
 }
 
 	int
 rumpuser_open(const char *name, int mode, int *fdp)
 {
+
+	bmk_printf("rumpuser_open\n");
+
 	int rv;
 
 	if(bmk_strcmp(name, "paws") == 0) {
@@ -52,6 +59,7 @@ rumpuser_open(const char *name, int mode, int *fdp)
 int
 rumpuser_close(int fd) {
 
+	bmk_printf("rumpuser_close\n");
 	bmk_memset(&paws, 0, sizeof(paws));
 	return 0;
 }
@@ -61,6 +69,7 @@ rumpuser_bio(int fd, int op, void *data, size_t dlen, int64_t off,
 		rump_biodone_fn biodone, void *donearg)
 {
 
+	bmk_printf("rumpuser_bio\n");
 	size_t rv;
 	int error;
 	size_t pawssize = (size_t)PAWS_SIZE;

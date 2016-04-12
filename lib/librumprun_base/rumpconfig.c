@@ -369,6 +369,11 @@ mount_cd9660(const char *fstype, const char *dev, const char *mp)
 {
 	struct iso_args mntargs = { .fspec = dev };
 
+	bmk_printf("Mounting cd9660\n");
+	bmk_printf("fstype: %s\n", fstype);
+	bmk_printf("dev: %s\n", dev);
+	bmk_printf("mp: %s\n", mp);
+
 	if (mount(MOUNT_CD9660,
 	    mp, MNT_RDONLY, &mntargs, sizeof(mntargs)) == -1)
 		err(1, "rumprun_config: mount_cd9660 failed");

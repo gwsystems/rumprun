@@ -91,6 +91,7 @@ rumprun_boot(char *cmdline)
 		.ta_root_mode = 01777,
 	};
 	int tmpfserrno;
+	int puberrno;
 
 	rump_boot_setsigmodel(RUMP_SIGMODEL_IGNORE);
 	bmk_printf("Entering rump_init\n");
@@ -130,9 +131,11 @@ rumprun_boot(char *cmdline)
 	rump_init_server("tcp://0:12345");
 	bmk_printf("Done setting up rump server\n");
 
-	// RG: not calling _rumprun_config as I don't want to deal
-	// with taking out json stuff as of right now. TODO
-	//bmk_printf("skipping over _rumprun_config(cmdline). TODO - see if this has an impact\n");
+	bmk_printf("Make /dev/paws device\n");
+	puberrno = rump_pub_etfs_register("/dev/paws", "paws", RUMP_ETFS_BLK);
+	if(puberrno)
+		bmk_printf("rump_pub_etfs_register failed: %d\n", puberrno);
+
 	bmk_printf("Parsing cmdline\n");
 	_rumprun_config(cmdline);
 	bmk_printf("Done parsing cmdline\n");

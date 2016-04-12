@@ -416,6 +416,7 @@ parse_blkspec ()
 	image=${spec%,*}
 	image=$(readlink -f ${image})
 	mountpoint=$(echo ${spec} | sed -n 's/.*,\(.*\)/\1/p')
+
 	[ -n "$image" ] || usage
 	[ -f "$image" ] || die File $image does not exist
 
@@ -687,6 +688,8 @@ run_qemu ()
 		${qemucmd} -append "${json_coma}" 1>/dev/null 2>&1 &
 		echo qemu:$!
 	fi
+
+	echo $qemucmd
 }
 
 bake_iso ()
