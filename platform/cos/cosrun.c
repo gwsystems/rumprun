@@ -299,7 +299,16 @@ bmk_cpu_intr_init(int intr)
 void
 bmk_cpu_intr_ack(void)
 {
-	bmk_printf("IGNORING BMK_CPU_INTR_ACK\n");
+	bmk_printf("BMK_CPU_INTR_ACK\n");
+        /*
+         * ACK interrupts on PIC
+         */
+        __asm__ __volatile(
+            "movb $0x20, %%al\n"
+            "outb %%al, $0xa0\n"
+            "outb %%al, $0x20\n"
+            ::: "al");
+
 }
 
 /* RG:
