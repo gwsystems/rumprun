@@ -99,10 +99,10 @@ rumprun_boot(char *cmdline)
 	bmk_printf("Exit rump_init\n");
 
 	/* mount /tmp before we let any userspace bits run */
-	bmk_printf("Mounting filesystem\n");
+	bmk_printf("Mounting temporary filesystem\n");
 	rump_sys_mount(MOUNT_TMPFS, "/tmp", 0, &ta, sizeof(ta));
 	tmpfserrno = errno;
-	bmk_printf("Done Mounting filesystem\n");
+	bmk_printf("Done Mounting temporary filesystem\n");
 
 	/*
 	 * XXX: _netbsd_userlevel_init() should technically be called

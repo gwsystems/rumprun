@@ -194,8 +194,8 @@ unsigned long
 rumpcomp_pci_virt_to_mach(void *virt)
 {
 
-	bmk_printf("%s:%d\n", __func__, __LINE__);
-	bmk_printf("%s: 0x%x:0x%x\n", __func__, (int)virt, (int)bmk_va2pa(virt));
+	//bmk_printf("%s:%d\n", __func__, __LINE__);
+	//bmk_printf("%s: 0x%x:0x%x\n", __func__, (int)virt, (int)bmk_va2pa(virt));
 	return (unsigned long)bmk_va2pa(virt);
 	//return (unsigned long)(virt);
 }

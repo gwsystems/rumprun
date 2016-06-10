@@ -21,8 +21,6 @@ rumpuser_getfileinfo(const char *name, uint64_t *size, int *type)
 {
 	int rv;
 
-	bmk_printf("rumpuser_getfileinfo\n");
-
 	if(bmk_strcmp(name, "paws") == 0) {
 		*size = (uint64_t)PAWS_SIZE;
 		*type = RUMPUSER_FT_BLK;
@@ -31,18 +29,12 @@ rumpuser_getfileinfo(const char *name, uint64_t *size, int *type)
 		rv = BMK_ENOSYS;
 	}
 
-	bmk_printf("name: %s\n", name);
-	bmk_printf("size: %d\n", *size);
-	bmk_printf("type: %d\n", *type);
-
 	return rv;
 }
 
 	int
 rumpuser_open(const char *name, int mode, int *fdp)
 {
-
-	bmk_printf("rumpuser_open\n");
 
 	int rv;
 
@@ -59,7 +51,6 @@ rumpuser_open(const char *name, int mode, int *fdp)
 int
 rumpuser_close(int fd) {
 
-	bmk_printf("rumpuser_close\n");
 	bmk_memset(&paws, 0, sizeof(paws));
 	return 0;
 }
@@ -69,7 +60,6 @@ rumpuser_bio(int fd, int op, void *data, size_t dlen, int64_t off,
 		rump_biodone_fn biodone, void *donearg)
 {
 
-	bmk_printf("rumpuser_bio\n");
 	size_t rv;
 	int error;
 	size_t pawssize = (size_t)PAWS_SIZE;
