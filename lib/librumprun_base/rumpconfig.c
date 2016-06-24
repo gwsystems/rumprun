@@ -166,8 +166,8 @@ config_ipv4(const char *ifname, const char *method,
 		bmk_printf("config_ipv4: 166\n");
 		if ((rv = rump_pub_netconfig_ipv4_ifaddr_cidr(ifname,
 		    addr, atoi(mask))) != 0) {
-			bmk_printf("config_ipv4: 169\n");
-			bmk_printf("ifconfig \"%s\" for \"%s/%s\" failed",
+			bmk_printf("config_ipv4: 169 rv: %d\n", rv);
+			bmk_printf("ifconfig \"%s\" for \"%s/%s\" failed\n",
 			    ifname, addr, mask);
 			errx(1, "ifconfig \"%s\" for \"%s/%s\" failed",
 			    ifname, addr, mask);
@@ -225,11 +225,7 @@ handle_net(jsmntok_t *t, int left, char *data)
 	int rv;
 	static int configured;
 
-	bmk_printf("handle_net: 215\n");
-
 	T_CHECKTYPE(t, data, JSMN_OBJECT, __func__);
-
-	bmk_printf("handle_net: 219\n");
 
 	/* we expect straight key-value pairs (at least for now) */
 	objsize = t->size;
@@ -237,17 +233,13 @@ handle_net(jsmntok_t *t, int left, char *data)
 		return -1;
 	}
 	t++;
-	bmk_printf("handle_net: 229\n");
 
 	if (configured) {
-		bmk_printf("handle_net: 232\n");
 		errx(1, "currently only 1 \"net\" configuration is supported");
 	}
 
 	ifname = cloner = type = method = NULL;
 	addr = mask = gw = NULL;
-
-	bmk_printf("handle_net: 239\n");
 
 	for (i = 0; i < objsize; i++, t+=2) {
 		const char *valuestr;
@@ -287,18 +279,15 @@ handle_net(jsmntok_t *t, int left, char *data)
 		}
 	}
 
-	bmk_printf("handle_net: 279\n");
 	bmk_printf("ifname: %s\n", ifname);
 	bmk_printf("method: %s\n", method);
 	bmk_printf("type: %s\n", type);
 
 	if (!ifname || !type || !method) {
-		bmk_printf("handle_net: 285\n");
 		errx(1, "net cfg missing vital data, not configuring");
 	}
 
 	if (cloner) {
-		bmk_printf("handle_net: 290\n");
 		if ((rv = rump_pub_netconfig_ifcreate(ifname)) != 0) {
 			errx(1, "rumprun_config: ifcreate %s failed: %d",
 			    ifname, rv);
@@ -313,7 +302,6 @@ handle_net(jsmntok_t *t, int left, char *data)
 		errx(1, "network type \"%s\" not supported", type);
 	}
 
-	bmk_printf("handle_net: 305\n");
 
 	return 2*objsize + 1;
 }
