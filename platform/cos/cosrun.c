@@ -199,7 +199,9 @@ bmk_platform_halt(const char *panicstring)
 	bmk_printf("bmk_platform_halt is being called.\n");
 	bmk_printf("It's message is: ");
 	bmk_printf(panicstring);
-	while(1);
+	crcalls.rump_platform_exit();
+
+	while (1) ;
 }
 
 int
