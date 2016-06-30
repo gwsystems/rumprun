@@ -1,0 +1,3219 @@
+~/research/rump2cos/apps ~/research/rump2cos/rumprun/platform/cos
+~/research/rump2cos/rumprun/platform/cos
+~/research/rump2cos/apps/paws ~/research/rump2cos/rumprun/platform/cos
+rm ./tools/backing.o
+cd ../../rumprun/platform/cos; make clean;
+make[1]: Entering directory `/home/lucasbaier/research/rump2cos/rumprun/platform/cos'
+rm -f /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-configure /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-make /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-gmake /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-toolchain.cmake /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-recipe.s /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-gcc /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-g++ /home/lucasbaier/research/rump2cos/rumprun/app-tools/specs-compile_or_ferment /home/lucasbaier/research/rump2cos/rumprun/app-tools/specs-stub /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-ar /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-as /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-cpp /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-ld /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-nm /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-objcopy /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-objdump /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-ranlib /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-readelf /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-size /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-strings /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-strip /home/lucasbaier/research/rump2cos/rumprun/app-tools/rumprun-cos-specs-bake
+( cd /home/lucasbaier/research/rump2cos/rumprun/platform/cos/../../lib/librumprun_base && /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/rumpmake MAKEOBJDIR=cos cleandir )
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/cos && rm -f librumprun_base.a   rumprun.o parseargs.o rumpconfig.o malloc.o netbsd_initfini.o signals.o syscall_mman.o syscall_misc.o __errno.o _lwp.o libc_stubs.o sysproxy.o rumprun.o.tmp parseargs.o.tmp rumpconfig.o.tmp malloc.o.tmp netbsd_initfini.o.tmp signals.o.tmp syscall_mman.o.tmp syscall_misc.o.tmp __errno.o.tmp _lwp.o.tmp libc_stubs.o.tmp sysproxy.o.tmp || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base && rm -f librumprun_base.a   rumprun.o parseargs.o rumpconfig.o malloc.o netbsd_initfini.o signals.o syscall_mman.o syscall_misc.o __errno.o _lwp.o libc_stubs.o sysproxy.o rumprun.o.tmp parseargs.o.tmp rumpconfig.o.tmp malloc.o.tmp netbsd_initfini.o.tmp signals.o.tmp syscall_mman.o.tmp syscall_misc.o.tmp __errno.o.tmp _lwp.o.tmp libc_stubs.o.tmp sysproxy.o.tmp || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/cos && rm -f librumprun_base_p.a    || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base && rm -f librumprun_base_p.a    || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/cos && rm -f librumprun_base_g.a    || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base && rm -f librumprun_base_g.a    || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/cos && rm -f librumprun_base_pic.a   || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base && rm -f librumprun_base_pic.a   || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/cos && rm -f llib-lrumprun_base.ln  rumprun.ln parseargs.ln rumpconfig.ln malloc.ln netbsd_initfini.ln signals.ln syscall_mman.ln syscall_misc.ln __errno.ln _lwp.ln libc_stubs.ln sysproxy.ln || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base && rm -f llib-lrumprun_base.ln  rumprun.ln parseargs.ln rumpconfig.ln malloc.ln netbsd_initfini.ln signals.ln syscall_mman.ln syscall_misc.ln __errno.ln _lwp.ln libc_stubs.ln sysproxy.ln || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/cos && rm -f librumprun_base.so..map   a.out [Ee]rrs mklog core *.core || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base && rm -f librumprun_base.so..map   a.out [Ee]rrs mklog core *.core || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/cos && rm -f .depend __errno.d _lwp.d libc_stubs.d malloc.d netbsd_initfini.d parseargs.d rumpconfig.d rumprun.d signals.d syscall_misc.d syscall_mman.d sysproxy.d __errno.d.tmp _lwp.d.tmp libc_stubs.d.tmp malloc.d.tmp netbsd_initfini.d.tmp parseargs.d.tmp rumpconfig.d.tmp rumprun.d.tmp signals.d.tmp syscall_misc.d.tmp syscall_mman.d.tmp sysproxy.d.tmp /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/tags  || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base && rm -f .depend __errno.d _lwp.d libc_stubs.d malloc.d netbsd_initfini.d parseargs.d rumpconfig.d rumprun.d signals.d syscall_misc.d syscall_mman.d sysproxy.d __errno.d.tmp _lwp.d.tmp libc_stubs.d.tmp malloc.d.tmp netbsd_initfini.d.tmp parseargs.d.tmp rumpconfig.d.tmp rumprun.d.tmp signals.d.tmp syscall_misc.d.tmp syscall_mman.d.tmp sysproxy.d.tmp /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/tags  || true) 
+( cd /home/lucasbaier/research/rump2cos/rumprun/platform/cos/../../lib/libbmk_core && /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/rumpmake MAKEOBJDIR=cos cleandir )
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_core && rm -f libbmk_core.a   init.o bmk_string.o jsmn.o memalloc.o pgalloc.o sched.o subr_prf.o strtoul.o cpu_sched_switch.o cpu_sched.o init.o.tmp bmk_string.o.tmp jsmn.o.tmp memalloc.o.tmp pgalloc.o.tmp sched.o.tmp subr_prf.o.tmp strtoul.o.tmp cpu_sched_switch.o.tmp cpu_sched.o.tmp || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_core && rm -f libbmk_core_p.a    || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_core && rm -f libbmk_core_g.a    || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_core && rm -f libbmk_core_pic.a   || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_core && rm -f llib-lbmk_core.ln  init.ln bmk_string.ln jsmn.ln memalloc.ln pgalloc.ln sched.ln subr_prf.ln strtoul.ln cpu_sched.ln || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_core && rm -f libbmk_core.so..map   a.out [Ee]rrs mklog core *.core || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_core && rm -f .depend bmk_string.d cpu_sched.d cpu_sched_switch.d init.d jsmn.d memalloc.d pgalloc.d sched.d strtoul.d subr_prf.d bmk_string.d.tmp cpu_sched.d.tmp cpu_sched_switch.d.tmp init.d.tmp jsmn.d.tmp memalloc.d.tmp pgalloc.d.tmp sched.d.tmp strtoul.d.tmp subr_prf.d.tmp /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_core/tags  || true) 
+( cd /home/lucasbaier/research/rump2cos/rumprun/platform/cos/../../lib/libbmk_rumpuser && /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/rumpmake MAKEOBJDIR=cos cleandir )
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/cos && rm -f libbmk_rumpuser.a   rumpuser_base.o rumpuser_clock.o rumpuser_cons.o rumpuser_mem.o rumpuser_synch.o rumpuser_fs.o backing.o rumpuser_stubs.o rumpuser_base.o.tmp rumpuser_clock.o.tmp rumpuser_cons.o.tmp rumpuser_mem.o.tmp rumpuser_synch.o.tmp rumpuser_fs.o.tmp backing.o.tmp rumpuser_stubs.o.tmp || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser && rm -f libbmk_rumpuser.a   rumpuser_base.o rumpuser_clock.o rumpuser_cons.o rumpuser_mem.o rumpuser_synch.o rumpuser_fs.o backing.o rumpuser_stubs.o rumpuser_base.o.tmp rumpuser_clock.o.tmp rumpuser_cons.o.tmp rumpuser_mem.o.tmp rumpuser_synch.o.tmp rumpuser_fs.o.tmp backing.o.tmp rumpuser_stubs.o.tmp || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/cos && rm -f libbmk_rumpuser_p.a    || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser && rm -f libbmk_rumpuser_p.a    || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/cos && rm -f libbmk_rumpuser_g.a    || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser && rm -f libbmk_rumpuser_g.a    || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/cos && rm -f libbmk_rumpuser_pic.a   || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser && rm -f libbmk_rumpuser_pic.a   || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/cos && rm -f llib-lbmk_rumpuser.ln  rumpuser_base.ln rumpuser_clock.ln rumpuser_cons.ln rumpuser_mem.ln rumpuser_synch.ln rumpuser_fs.ln rumpuser_stubs.ln || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser && rm -f llib-lbmk_rumpuser.ln  rumpuser_base.ln rumpuser_clock.ln rumpuser_cons.ln rumpuser_mem.ln rumpuser_synch.ln rumpuser_fs.ln rumpuser_stubs.ln || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/cos && rm -f libbmk_rumpuser.so..map   a.out [Ee]rrs mklog core *.core || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser && rm -f libbmk_rumpuser.so..map   a.out [Ee]rrs mklog core *.core || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/cos && rm -f .depend rumpuser_base.d rumpuser_clock.d rumpuser_cons.d rumpuser_fs.d rumpuser_mem.d rumpuser_stubs.d rumpuser_synch.d rumpuser_base.d.tmp rumpuser_clock.d.tmp rumpuser_cons.d.tmp rumpuser_fs.d.tmp rumpuser_mem.d.tmp rumpuser_stubs.d.tmp rumpuser_synch.d.tmp /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/tags  || true) 
+(cd /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser && rm -f .depend rumpuser_base.d rumpuser_clock.d rumpuser_cons.d rumpuser_fs.d rumpuser_mem.d rumpuser_stubs.d rumpuser_synch.d rumpuser_base.d.tmp rumpuser_clock.d.tmp rumpuser_cons.d.tmp rumpuser_fs.d.tmp rumpuser_mem.d.tmp rumpuser_stubs.d.tmp rumpuser_synch.d.tmp /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/tags  || true) 
+rm -f /home/lucasbaier/research/rump2cos/rumprun/platform/pseudolinkstubs.c /home/lucasbaier/research/rump2cos/rumprun/platform/pseudolinkstubs.o
+rm -f  sched.o init.o memalloc.o pgalloc.o intr.o jsmn.o include/bmk/machine buildtest
+make[1]: Leaving directory `/home/lucasbaier/research/rump2cos/rumprun/platform/cos'
+data.iso is not a block special device.
+Proceed anyway? (y,n) Discarding device blocks:        done                            
+Filesystem label=
+OS type: Linux
+Block size=1024 (log=0)
+Fragment size=1024 (log=0)
+Stride=0 blocks, Stripe width=0 blocks
+64 inodes, 512 blocks
+25 blocks (4.88%) reserved for the super user
+First data block=1
+Maximum filesystem blocks=524288
+1 block group
+8192 blocks per group, 8192 fragments per group
+64 inodes per group
+
+Allocating group tables: 0/1   done                            
+Writing inode tables: 0/1   done                            
+Writing superblocks and filesystem accounting information: 0/1   done
+
+>>
+>> Your git submodules are out-of-date
+>> Forgot to run "git submodule update" after pull?
+>> (sleeping for 5s, press ctrl-C to abort)
+>>
+>> ! ! ! ! !>>
+>> NOTICE: Not a buildrump.sh-based git repo in /home/lucasbaier/research/rump2cos/rumprun/src-netbsd
+>> Cannot verify repository version.  Proceeding ...
+>>
+Tool  CC                : /usr/bin/cc
+Tool  AR                : /usr/bin/ar
+Tool  NM                : /usr/bin/nm
+Tool  OBJCOPY           : /usr/bin/objcopy
+Tool  AS                : /usr/bin/as
+Tool  CXX               : /usr/bin/c++
+Tool  LD                : /usr/bin/ld
+Tool  OBJDUMP           : /usr/bin/objdump
+Tool  RANLIB            : /usr/bin/ranlib
+Tool  READELF           : /usr/bin/readelf
+Tool  SIZE              : /usr/bin/size
+Tool  STRINGS           : /usr/bin/strings
+Tool  STRIP             : /usr/bin/strip
+Cmd   SRCDIR            : /home/lucasbaier/research/rump2cos/rumprun/src-netbsd
+Cmd   DESTDIR           : /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rump
+Cmd   OBJDIR            : /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumpobj
+Cmd   BRTOOLDIR         : /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools
+Cmd   DBG               : -O2 -g
+Cmd   make -j[num]      : -j 4
+Cmd   RUMPKERN_ONLY     : yes
+Cmd   CPPFLAGS          : -D__NetBSD__
+Probe CPPFLAGS          : -Ulinux -U__linux -U__linux__ -U__gnu_linux__
+Probe RUMP_VIRTIF       : no
+Probe CWARNFLAGS        : -Wno-format
+Probe CFLAGS            : -U_FORTIFY_SOURCE
+Probe RUMP_LDSCRIPT     : no
+Probe _BUILDRUMP_CXX    : yes
+>> Build environment (from shell)
+Env   BUILDRUMP_CPPFLAGS: 
+Env   BUILDRUMP_CFLAGS  : 
+Env   BUILDRUMP_AFLAGS  : 
+Env   BUILDRUMP_LDFLAGS : 
+===> build.sh command:    ./build.sh -m i386 -u -D /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest -w /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/rumpmake -T /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools -j 4 -N2 -E -Z S -V EXTERNAL_TOOLCHAIN=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools -V TOOLCHAIN_MISSING=yes -V TOOLS_BUILDRUMP=yes -V MKGROFF=no -V MKLINT=no -V MKZFS=no -V MKDYNAMICROOT=no -V TOPRUMP=/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump -V MAKECONF=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/mk.conf -V MAKEOBJDIR=${.CURDIR:C,^(/home/lucasbaier/research/rump2cos/rumprun/src-netbsd|/home/lucasbaier/research/rump2cos/rumprun/buildrump.sh),/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumpobj,} -V BUILDRUMP_STAGE=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest -V MKPIC=no -V RUMP_CURLWP=hypercall -V RUMP_KERNEL_IS_LIBC=1 -V BUILDRUMP_SYSROOT=yes makewrapper
+===> build.sh started:    Wed Jun 29 13:59:22 EDT 2016
+===> NetBSD version:      7.99.17
+===> MACHINE:             i386
+===> MACHINE_ARCH:        i386
+===> Build platform:      Linux 3.16.0-30-generic i686
+===> HOST_SH:             /bin/sh
+===> MAKECONF file:       /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/mk.conf
+===> TOOLDIR path:        /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools
+===> DESTDIR path:        /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest
+===> RELEASEDIR path:     
+===> Updated makewrapper: /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/rumpmake
+===> build.sh ended:      Wed Jun 29 13:59:22 EDT 2016
+===> Summary of results:
+	 build.sh command:    ./build.sh -m i386 -u -D /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest -w /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/rumpmake -T /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools -j 4 -N2 -E -Z S -V EXTERNAL_TOOLCHAIN=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools -V TOOLCHAIN_MISSING=yes -V TOOLS_BUILDRUMP=yes -V MKGROFF=no -V MKLINT=no -V MKZFS=no -V MKDYNAMICROOT=no -V TOPRUMP=/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump -V MAKECONF=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/mk.conf -V MAKEOBJDIR=${.CURDIR:C,^(/home/lucasbaier/research/rump2cos/rumprun/src-netbsd|/home/lucasbaier/research/rump2cos/rumprun/buildrump.sh),/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumpobj,} -V BUILDRUMP_STAGE=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest -V MKPIC=no -V RUMP_CURLWP=hypercall -V RUMP_KERNEL_IS_LIBC=1 -V BUILDRUMP_SYSROOT=yes makewrapper
+	 build.sh started:    Wed Jun 29 13:59:22 EDT 2016
+	 NetBSD version:      7.99.17
+	 MACHINE:             i386
+	 MACHINE_ARCH:        i386
+	 Build platform:      Linux 3.16.0-30-generic i686
+	 HOST_SH:             /bin/sh
+	 MAKECONF file:       /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/mk.conf
+	 TOOLDIR path:        /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools
+	 DESTDIR path:        /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest
+	 RELEASEDIR path:     
+	 Updated makewrapper: /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/rumpmake
+	 build.sh ended:      Wed Jun 29 13:59:22 EDT 2016
+===> .
+===> build.sh command:    ./build.sh -m i386 -u -D /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumpobj/dest.stage -w /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/_buildrumpsh-rumpmake -T /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools -j 4 -N2 -E -Z S -V EXTERNAL_TOOLCHAIN=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools -V TOOLCHAIN_MISSING=yes -V TOOLS_BUILDRUMP=yes -V MKGROFF=no -V MKLINT=no -V MKZFS=no -V MKDYNAMICROOT=no -V TOPRUMP=/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump -V MAKECONF=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/mk.conf -V MAKEOBJDIR=${.CURDIR:C,^(/home/lucasbaier/research/rump2cos/rumprun/src-netbsd|/home/lucasbaier/research/rump2cos/rumprun/buildrump.sh),/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumpobj,} -V BUILDRUMP_STAGE=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumpobj/dest.stage -V MKPIC=no -V RUMP_CURLWP=hypercall -V RUMP_KERNEL_IS_LIBC=1 -V BUILDRUMP_SYSROOT=yes tools
+===> build.sh started:    Wed Jun 29 13:59:22 EDT 2016
+===> NetBSD version:      7.99.17
+===> MACHINE:             i386
+===> MACHINE_ARCH:        i386
+===> Build platform:      Linux 3.16.0-30-generic i686
+===> HOST_SH:             /bin/sh
+===> MAKECONF file:       /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/mk.conf
+===> TOOLDIR path:        /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools
+===> DESTDIR path:        /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumpobj/dest.stage
+===> RELEASEDIR path:     
+===> Updated makewrapper: /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/_buildrumpsh-rumpmake
+--- obj-tools ---
+obj ===> tools
+--- obj-host-mkdep ---
+--- obj-compat ---
+--- obj-binstall ---
+--- obj-host-mkdep ---
+obj ===> tools/host-mkdep
+--- obj-compat ---
+obj ===> tools/compat
+--- obj-binstall ---
+obj ===> tools/binstall
+--- obj-host-mkdep ---
+--- obj ---
+--- obj-binstall ---
+--- obj ---
+--- obj-compat ---
+--- obj ---
+--- obj-mktemp ---
+obj ===> tools/mktemp
+--- obj ---
+--- obj-sed ---
+obj ===> tools/sed
+--- obj ---
+--- obj-genassym ---
+--- obj-cat ---
+--- obj-rpcgen ---
+--- obj-join ---
+--- obj-genassym ---
+obj ===> tools/genassym
+--- obj-cat ---
+obj ===> tools/cat
+--- obj-rpcgen ---
+obj ===> tools/rpcgen
+--- obj-join ---
+obj ===> tools/join
+--- obj-genassym ---
+--- obj ---
+--- obj-lorder ---
+--- obj-join ---
+--- obj ---
+--- obj-cat ---
+--- obj ---
+--- obj-rpcgen ---
+--- obj ---
+--- obj-lorder ---
+obj ===> tools/lorder
+--- obj-m4 ---
+--- obj-mkdep ---
+--- obj-m4 ---
+obj ===> tools/m4
+--- obj-tsort ---
+--- obj-mkdep ---
+obj ===> tools/mkdep
+--- obj-tsort ---
+obj ===> tools/tsort
+--- obj-lorder ---
+--- obj ---
+--- obj-mkdep ---
+--- obj ---
+--- obj-m4 ---
+--- obj ---
+--- obj-tsort ---
+--- obj ---
+--- obj-yacc ---
+obj ===> tools/yacc
+--- obj ---
+--- obj-awk ---
+obj ===> tools/awk
+--- obj ---
+--- obj-lex ---
+--- obj-stat ---
+--- obj-lex ---
+obj ===> tools/lex
+--- obj-stat ---
+obj ===> tools/stat
+--- obj ---
+--- obj-lex ---
+--- obj ---
+--- obj-config ---
+--- obj-mandoc ---
+--- obj-config ---
+obj ===> tools/config
+--- obj-mandoc ---
+obj ===> tools/mandoc
+--- obj-config ---
+--- obj ---
+--- obj-mandoc ---
+--- obj ---
+--- obj ---
+--- build_install ---
+dependall-host-mkdep ===> .	(with: dependall-compat dependall-binstall)
+dependall ===> host-mkdep
+--- dependall ---
+dependall ===> compat
+--- dependall ---
+dependall ===> binstall
+--- dependall ---
+install-host-mkdep ===> .	(with: install-compat install-binstall)
+install ===> compat
+--- includes ---
+install ===> binstall
+install ===> host-mkdep
+dependall-mktemp ===> .
+dependall ===> mktemp
+--- dependall ---
+install-mktemp ===> .
+install ===> mktemp
+dependall-sed ===> .
+dependall ===> sed
+--- dependall ---
+install-sed ===> .
+install ===> sed
+dependall-genassym ===> .	(with: dependall-cat dependall-rpcgen dependall-join dependall-lorder dependall-m4 dependall-mkdep dependall-tsort)
+dependall ===> cat
+--- dependall ---
+dependall ===> rpcgen
+--- dependall ---
+dependall ===> join
+--- dependall ---
+dependall ===> lorder
+--- dependall ---
+dependall ===> m4
+--- dependall ---
+dependall ===> mkdep
+--- dependall ---
+dependall ===> tsort
+--- dependall ---
+dependall ===> genassym
+--- dependall ---
+install-genassym ===> .	(with: install-cat install-rpcgen install-join install-lorder install-m4 install-mkdep install-tsort)
+install ===> cat
+install ===> rpcgen
+install ===> join
+install ===> lorder
+install ===> m4
+install ===> mkdep
+install ===> tsort
+install ===> genassym
+dependall-yacc ===> .
+dependall ===> yacc
+--- dependall ---
+install-yacc ===> .
+install ===> yacc
+dependall-awk ===> .
+dependall ===> awk
+--- dependall ---
+install-awk ===> .
+install ===> awk
+dependall-lex ===> .	(with: dependall-stat)
+dependall ===> stat
+--- dependall ---
+dependall ===> lex
+--- dependall ---
+install-lex ===> .	(with: install-stat)
+install ===> stat
+install ===> lex
+dependall-config ===> .	(with: dependall-mandoc)
+dependall ===> mandoc
+--- dependall ---
+dependall ===> config
+--- dependall ---
+install-config ===> .	(with: install-mandoc)
+install ===> mandoc
+install ===> config
+===> Tools built to /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools
+===> build.sh ended:      Wed Jun 29 13:59:23 EDT 2016
+===> Summary of results:
+	 build.sh command:    ./build.sh -m i386 -u -D /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumpobj/dest.stage -w /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/_buildrumpsh-rumpmake -T /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools -j 4 -N2 -E -Z S -V EXTERNAL_TOOLCHAIN=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools -V TOOLCHAIN_MISSING=yes -V TOOLS_BUILDRUMP=yes -V MKGROFF=no -V MKLINT=no -V MKZFS=no -V MKDYNAMICROOT=no -V TOPRUMP=/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump -V MAKECONF=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/mk.conf -V MAKEOBJDIR=${.CURDIR:C,^(/home/lucasbaier/research/rump2cos/rumprun/src-netbsd|/home/lucasbaier/research/rump2cos/rumprun/buildrump.sh),/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumpobj,} -V BUILDRUMP_STAGE=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumpobj/dest.stage -V MKPIC=no -V RUMP_CURLWP=hypercall -V RUMP_KERNEL_IS_LIBC=1 -V BUILDRUMP_SYSROOT=yes tools
+	 build.sh started:    Wed Jun 29 13:59:22 EDT 2016
+	 NetBSD version:      7.99.17
+	 MACHINE:             i386
+	 MACHINE_ARCH:        i386
+	 Build platform:      Linux 3.16.0-30-generic i686
+	 HOST_SH:             /bin/sh
+	 MAKECONF file:       /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/mk.conf
+	 TOOLDIR path:        /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools
+	 DESTDIR path:        /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumpobj/dest.stage
+	 RELEASEDIR path:     
+	 Updated makewrapper: /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/_buildrumpsh-rumpmake
+	 Tools built to /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools
+	 build.sh ended:      Wed Jun 29 13:59:23 EDT 2016
+===> .
+>> buildrump.sh ran successfully
+>>
+>> Now that we have the appropriate tools, perfoming
+>> further setup for rumprun build
+>>
+>>
+>> NOTICE: Not a buildrump.sh-based git repo in /home/lucasbaier/research/rump2cos/rumprun/src-netbsd
+>> Cannot verify repository version.  Proceeding ...
+>>
+>> Build environment (from shell)
+Env   BUILDRUMP_CPPFLAGS: 
+Env   BUILDRUMP_CFLAGS  : 
+Env   BUILDRUMP_AFLAGS  : 
+Env   BUILDRUMP_LDFLAGS : 
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libsys_linux ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/buildrump.sh/brlib ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libsys_linux ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libsys_linux
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/buildrump.sh/brlib ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/buildrump.sh/brlib
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump ---
+--- obj-include ---
+--- obj-librump ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/buildrump.sh/brlib ---
+--- obj-libnetconfig ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump ---
+--- obj-include ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/include
+--- obj-librump ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/librump
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/buildrump.sh/brlib ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/buildrump.sh/brlib/libnetconfig
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump ---
+--- obj-include ---
+--- obj-rump ---
+--- obj-librump ---
+--- obj-rumpkern ---
+--- obj-include ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/include/rump
+--- obj-librump ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/librump/rumpkern
+--- obj-dev ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev
+--- obj-lib ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib
+--- obj-libaudio ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libsys_linux ---
+--- obj ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libaudio
+--- obj-libbpf ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/buildrump.sh/brlib ---
+--- obj ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libbpf
+--- obj-fs ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs
+--- obj-lib ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib
+--- obj-libcd9660 ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libcd9660
+--- obj-dev ---
+--- obj-libaudio ---
+--- obj ---
+--- obj-libcgd ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libcgd
+--- obj-libbpf ---
+--- obj ---
+--- obj-libdisk ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libdisk
+--- obj-librump ---
+--- obj ---
+--- obj-fs ---
+--- obj ---
+--- obj-librump ---
+--- obj-rumpdev ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/librump/rumpdev
+--- obj-fs ---
+--- obj-libefs ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libefs
+--- obj-dev ---
+--- obj-libcgd ---
+--- obj ---
+--- obj-libdm ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libdm
+--- obj-libdisk ---
+--- obj ---
+--- obj-libdrvctl ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libdrvctl
+--- obj-librump ---
+--- obj ---
+--- obj-rumpnet ---
+--- obj-fs ---
+--- obj ---
+--- obj-librump ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/librump/rumpnet
+--- obj-fs ---
+--- obj-libext2fs ---
+--- obj-dev ---
+--- obj-libdm ---
+--- obj ---
+--- obj-fs ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libext2fs
+--- obj-dev ---
+--- obj-libfss ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libfss
+--- obj-libdrvctl ---
+--- obj ---
+--- obj-libmd ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libmd
+--- obj-fs ---
+--- obj ---
+--- obj-librump ---
+--- obj ---
+--- obj-dev ---
+--- obj-libfss ---
+--- obj ---
+--- obj-fs ---
+--- obj-libfdesc ---
+--- obj-librump ---
+--- obj-rumpvfs ---
+--- obj-fs ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libfdesc
+--- obj-dev ---
+--- obj-libnetsmb ---
+--- obj-librump ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/librump/rumpvfs
+--- obj-dev ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libnetsmb
+--- obj-libmd ---
+--- obj ---
+--- obj-libpad ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpad
+--- obj-fs ---
+--- obj ---
+--- obj-libffs ---
+--- obj-dev ---
+--- obj-libnetsmb ---
+--- obj ---
+--- obj-fs ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libffs
+--- obj-dev ---
+--- obj-libpud ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpud
+--- obj-libpad ---
+--- obj ---
+--- obj-libputter ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libputter
+--- obj-librump ---
+--- obj ---
+--- obj-kern ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern
+--- obj-lib ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib
+--- obj-libcrypto ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libcrypto
+--- obj-dev ---
+--- obj-libpud ---
+--- obj ---
+--- obj-libraidframe ---
+--- obj-fs ---
+--- obj ---
+--- obj-dev ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libraidframe
+--- obj-fs ---
+--- obj-libhfs ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libhfs
+--- obj-dev ---
+--- obj-libputter ---
+--- obj ---
+--- obj-librnd ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/librnd
+--- obj-kern ---
+--- obj ---
+--- obj-libsysproxy ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libsysproxy
+--- obj-fs ---
+--- obj ---
+--- obj-libkernfs ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libkernfs
+--- obj-dev ---
+--- obj ---
+--- obj-libscsipi ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libscsipi
+--- obj-libraidframe ---
+--- obj ---
+--- obj-libsysmon ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libsysmon
+--- obj-kern ---
+--- obj ---
+--- obj-libtty ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libtty
+--- obj-fs ---
+--- obj ---
+--- obj-liblfs ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/liblfs
+--- obj-dev ---
+--- obj-libscsipi ---
+--- obj ---
+--- obj-libvnd ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvnd
+--- obj-libsysmon ---
+--- obj ---
+--- obj-libwscons ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libwscons
+--- obj-kern ---
+--- obj ---
+--- obj-libz ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libz
+--- obj-dev ---
+--- obj-libvnd ---
+--- obj ---
+--- obj-fs ---
+--- obj ---
+--- obj-libmfs ---
+--- obj-dev ---
+--- obj-libopencrypto ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libopencrypto
+--- obj-fs ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libmfs
+--- obj-dev ---
+--- obj-libwscons ---
+--- obj ---
+--- obj-libubt ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libubt
+--- obj-kern ---
+--- obj ---
+--- obj-libsljit ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libsljit
+--- obj-dev ---
+--- obj-libopencrypto ---
+--- obj ---
+--- obj-fs ---
+--- obj ---
+--- obj-libmsdos ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libmsdos
+--- obj-dev ---
+--- obj-libucom ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libucom
+--- obj-libubt ---
+--- obj ---
+--- obj-libugenhc ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libugenhc
+--- obj-kern ---
+--- obj ---
+--- obj-net ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net
+--- obj-lib ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib
+--- obj-fs ---
+--- obj ---
+--- obj-dev ---
+--- obj-libucom ---
+--- obj ---
+--- obj-fs ---
+--- obj-libnfs ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libnfs
+--- obj-dev ---
+--- obj-libulpt ---
+--- obj-net ---
+--- obj-libagr ---
+--- obj-dev ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libulpt
+--- obj-net ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libagr
+--- obj-dev ---
+--- obj-libugenhc ---
+--- obj ---
+--- obj-libumass ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libumass
+--- obj-fs ---
+--- obj ---
+--- obj-dev ---
+--- obj-libulpt ---
+--- obj ---
+--- obj-libusb ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libusb
+--- obj-fs ---
+--- obj-libnilfs ---
+--- obj-dev ---
+--- obj-libumass ---
+--- obj ---
+--- obj-fs ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libnilfs
+--- obj-net ---
+--- obj ---
+--- obj-share ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/share
+--- obj-net ---
+--- obj-libbridge ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libbridge
+--- obj-share ---
+--- obj-man ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/share/man
+--- obj-man3 ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/share/man/man3
+--- obj ---
+--- obj-man7 ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/share/man/man7
+--- obj-dev ---
+--- obj-libusb ---
+--- obj ---
+--- obj-fs ---
+--- obj ---
+--- obj-libntfs ---
+--- obj-net ---
+--- obj-libnet ---
+--- obj-share ---
+--- obj ---
+--- obj-fs ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libntfs
+--- obj-net ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnet
+--- obj-libbridge ---
+--- obj ---
+--- obj-libnet80211 ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnet80211
+--- obj-libnetbt ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnetbt
+--- obj-fs ---
+--- obj ---
+--- obj-libnull ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libnull
+--- obj-net ---
+--- obj-libnet80211 ---
+--- obj ---
+--- obj-libnetinet ---
+--- obj-libnetbt ---
+--- obj ---
+--- obj-libnetinet ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnetinet
+--- obj-libnetinet6 ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnetinet6
+--- obj-libnet ---
+--- obj ---
+--- obj-libnetmpls ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnetmpls
+--- obj-fs ---
+--- obj ---
+--- obj-libptyfs ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libptyfs
+--- obj-net ---
+--- obj-libnetinet ---
+--- obj ---
+--- obj-libnetinet6 ---
+--- obj ---
+--- obj-libnpf ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnpf
+--- obj-liblocal ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/liblocal
+--- obj-libnetmpls ---
+--- obj ---
+--- obj-libshmif ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libshmif
+--- obj-fs ---
+--- obj ---
+--- obj-libsmbfs ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libsmbfs
+--- obj-net ---
+--- obj-liblocal ---
+--- obj ---
+--- obj-libtap ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libtap
+--- obj-libnpf ---
+--- obj ---
+--- obj-libbpfjit ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libbpfjit
+--- obj-libshmif ---
+--- obj ---
+--- obj-libsockin ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libsockin
+--- obj-fs ---
+--- obj ---
+--- obj-libsyspuffs ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libsyspuffs
+--- obj-net ---
+--- obj-libtap ---
+--- obj ---
+--- obj-fs ---
+--- obj-libsysvbfs ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libsysvbfs
+--- obj-net ---
+--- obj-libbpfjit ---
+--- obj ---
+--- obj-fs ---
+--- obj-libtmpfs ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libtmpfs
+--- obj-net ---
+--- obj-libsockin ---
+--- obj ---
+--- obj-fs ---
+--- obj-libudf ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libudf
+--- obj-libsyspuffs ---
+--- obj ---
+--- obj-libumap ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libumap
+--- obj-libsysvbfs ---
+--- obj ---
+--- obj-libunion ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libunion
+--- obj-libtmpfs ---
+--- obj ---
+--- obj-libv7fs ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libv7fs
+--- obj-libudf ---
+--- obj ---
+--- obj-libnfsserver ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libnfsserver
+--- obj-libumap ---
+--- obj ---
+--- obj-libfifovfs ---
+--- obj-libunion ---
+--- obj ---
+--- obj-libfifovfs ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libfifovfs
+--- obj-liblayervfs ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/liblayervfs
+--- obj-libv7fs ---
+--- obj ---
+--- obj-libaio ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libaio
+--- obj-libnfsserver ---
+--- obj ---
+--- obj-libfifovfs ---
+--- obj ---
+--- obj-liblayervfs ---
+--- obj ---
+--- obj-libaio ---
+--- obj ---
+--- includes-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump ---
+--- includes-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libsys_linux ---
+--- includes-/home/lucasbaier/research/rump2cos/rumprun/buildrump.sh/brlib ---
+--- includes-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump
+--- includes-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libsys_linux ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libsys_linux
+--- includes-/home/lucasbaier/research/rump2cos/rumprun/buildrump.sh/brlib ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/buildrump.sh/brlib
+--- includes-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump ---
+--- includes-include ---
+--- includes-/home/lucasbaier/research/rump2cos/rumprun/buildrump.sh/brlib ---
+--- includes-libnetconfig ---
+--- includes-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump ---
+--- includes-librump ---
+--- includes-include ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/include
+--- includes-librump ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/librump
+--- includes-/home/lucasbaier/research/rump2cos/rumprun/buildrump.sh/brlib ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/buildrump.sh/brlib/libnetconfig
+--- includes-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump ---
+--- includes-rumpkern ---
+--- includes-include ---
+--- includes-rump ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/include/rump
+--- includes-librump ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/librump/rumpkern
+--- includes-include ---
+--- /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumpobj/dest.stage/usr/include/rump ---
+--- includes-dev ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev
+--- includes-lib ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib
+--- includes-libaudio ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libaudio
+--- includes-libbpf ---
+--- includes-fs ---
+--- includes-dev ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libbpf
+--- includes-fs ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs
+--- includes-lib ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib
+--- includes-libcd9660 ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libcd9660
+--- includes-dev ---
+--- includes-libcgd ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libcgd
+--- includes-librump ---
+--- includes-rumpdev ---
+--- includes-dev ---
+--- includes-libdisk ---
+--- includes-librump ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/librump/rumpdev
+--- includes-dev ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libdisk
+--- includes-fs ---
+--- includes-libefs ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libefs
+--- includes-dev ---
+--- includes-libdm ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libdm
+--- includes-librump ---
+--- includes-rumpnet ---
+--- includes-dev ---
+--- includes-libdrvctl ---
+--- includes-librump ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/librump/rumpnet
+--- includes-dev ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libdrvctl
+--- includes-fs ---
+--- includes-libext2fs ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libext2fs
+--- includes-dev ---
+--- includes-libfss ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libfss
+--- includes-libmd ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libmd
+--- includes-librump ---
+--- includes-rumpvfs ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/librump/rumpvfs
+--- includes-fs ---
+--- includes-libfdesc ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libfdesc
+--- includes-dev ---
+--- includes-libnetsmb ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libnetsmb
+--- includes-libpad ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpad
+--- includes-kern ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern
+--- includes-fs ---
+--- includes-libffs ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libffs
+--- includes-kern ---
+--- includes-lib ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib
+--- includes-libcrypto ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libcrypto
+--- includes-dev ---
+--- includes-libpud ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpud
+--- includes-libputter ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libputter
+--- includes-fs ---
+--- includes-libhfs ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libhfs
+--- includes-kern ---
+--- includes-libsysproxy ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libsysproxy
+--- includes-dev ---
+--- includes-libraidframe ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libraidframe
+--- includes-librnd ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/librnd
+--- includes-fs ---
+--- includes-libkernfs ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libkernfs
+--- includes-kern ---
+--- includes-libtty ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libtty
+--- includes-dev ---
+--- includes-libscsipi ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libscsipi
+--- includes-libsysmon ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libsysmon
+--- includes-fs ---
+--- includes-liblfs ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/liblfs
+--- includes-kern ---
+--- includes-libz ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libz
+--- includes-dev ---
+--- includes-libvnd ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvnd
+--- includes-libwscons ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libwscons
+--- includes-fs ---
+--- includes-libmfs ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libmfs
+--- includes-kern ---
+--- includes-libsljit ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libsljit
+--- includes-dev ---
+--- includes-libopencrypto ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libopencrypto
+--- includes-libubt ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libubt
+--- includes-fs ---
+--- includes-libmsdos ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libmsdos
+--- includes-net ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net
+--- includes-lib ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib
+--- includes-libagr ---
+--- includes-dev ---
+--- includes-libucom ---
+--- includes-net ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libagr
+--- includes-dev ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libucom
+--- includes-libugenhc ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libugenhc
+--- includes-fs ---
+--- includes-libnfs ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libnfs
+--- includes-dev ---
+--- includes-libulpt ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libulpt
+--- includes-libumass ---
+--- includes-net ---
+--- includes-libbridge ---
+--- includes-dev ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libumass
+--- includes-net ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libbridge
+--- includes-fs ---
+--- includes-libnilfs ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libnilfs
+--- includes-dev ---
+--- includes-libusb ---
+--- includes-share ---
+--- includes-dev ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libusb
+--- includes-share ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/share
+--- includes-net ---
+--- includes-libnet ---
+--- includes-share ---
+--- includes-man ---
+--- includes-net ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnet
+--- includes-share ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/share/man
+--- includes-man3 ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/share/man/man3
+--- includes-man7 ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/share/man/man7
+--- includes-net ---
+--- includes-libnet80211 ---
+--- includes-fs ---
+--- includes-libntfs ---
+--- includes-net ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnet80211
+--- includes-fs ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libntfs
+--- includes-libnull ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libnull
+--- includes-net ---
+--- includes-libnetbt ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnetbt
+--- includes-fs ---
+--- includes-libptyfs ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libptyfs
+--- includes-net ---
+--- includes-libnetinet ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnetinet
+--- includes-fs ---
+--- includes-libsmbfs ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libsmbfs
+--- includes-libsyspuffs ---
+--- includes-net ---
+--- includes-libnetinet6 ---
+--- includes-fs ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libsyspuffs
+--- includes-net ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnetinet6
+--- includes-libnetmpls ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnetmpls
+--- includes-fs ---
+--- includes-libsysvbfs ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libsysvbfs
+--- includes-net ---
+--- includes-libnpf ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnpf
+--- includes-fs ---
+--- includes-libtmpfs ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libtmpfs
+--- includes-net ---
+--- includes-liblocal ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/liblocal
+--- includes-fs ---
+--- includes-libudf ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libudf
+--- includes-net ---
+--- includes-libshmif ---
+--- includes-fs ---
+--- includes-libumap ---
+--- includes-net ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libshmif
+--- includes-fs ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libumap
+--- includes-net ---
+--- includes-libtap ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libtap
+--- includes-fs ---
+--- includes-libunion ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libunion
+--- includes-net ---
+--- includes-libbpfjit ---
+--- includes-fs ---
+--- includes-libv7fs ---
+--- includes-net ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libbpfjit
+--- includes-fs ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libv7fs
+--- includes-net ---
+--- includes-libsockin ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libsockin
+--- includes-fs ---
+--- includes-libnfsserver ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libnfsserver
+--- includes-libfifovfs ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libfifovfs
+--- includes-liblayervfs ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/liblayervfs
+--- includes-libaio ---
+includes ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libaio
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libsys_linux ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/buildrump.sh/brlib ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libsys_linux ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libsys_linux
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/buildrump.sh/brlib ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/buildrump.sh/brlib
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump ---
+--- dependall-include ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/buildrump.sh/brlib ---
+--- dependall-libnetconfig ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump ---
+--- dependall-librump ---
+--- dependall-include ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/include
+--- dependall-librump ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/librump
+--- dependall-include ---
+--- dependall-rump ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/buildrump.sh/brlib ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/buildrump.sh/brlib/libnetconfig
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump ---
+--- dependall-librump ---
+--- dependall-rumpkern ---
+--- dependall-include ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/include/rump
+--- dependall-librump ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/librump/rumpkern
+--- dependall-include ---
+--- dependall ---
+--- dependall ---
+--- dependall-dev ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev
+--- dependall-lib ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib
+--- dependall-libaudio ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libaudio
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libsys_linux ---
+--- dependall ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/buildrump.sh/brlib ---
+--- dependall ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump ---
+--- dependall ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/buildrump.sh/brlib ---
+--- dependall ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump ---
+--- dependall-fs ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs
+--- dependall-kern ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern
+--- dependall-fs ---
+--- dependall-lib ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib
+--- dependall-kern ---
+--- dependall-lib ---
+--- dependall-librump ---
+--- dependall ---
+--- dependall-kern ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib
+--- dependall-fs ---
+--- dependall-libcd9660 ---
+--- dependall-kern ---
+--- dependall-libcrypto ---
+--- dependall-fs ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libcd9660
+--- dependall-kern ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libcrypto
+--- dependall-dev ---
+--- dependall-libbpf ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libbpf
+--- dependall-kern ---
+--- dependall ---
+--- dependall-fs ---
+--- dependall ---
+--- dependall-dev ---
+--- dependall ---
+--- dependall-fs ---
+--- dependall-libefs ---
+--- dependall-kern ---
+--- dependall-libsysproxy ---
+--- dependall-fs ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libefs
+--- dependall-kern ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libsysproxy
+--- dependall-librump ---
+--- dependall-rumpdev ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/librump/rumpdev
+--- dependall-dev ---
+--- dependall-libcgd ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libcgd
+--- dependall-kern ---
+--- dependall ---
+--- dependall-fs ---
+--- dependall ---
+--- dependall-librump ---
+--- dependall ---
+--- dependall-dev ---
+--- dependall ---
+--- dependall-kern ---
+--- dependall-libtty ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libtty
+--- dependall-fs ---
+--- dependall-libext2fs ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libext2fs
+--- dependall-librump ---
+--- dependall-rumpnet ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/librump/rumpnet
+--- dependall-dev ---
+--- dependall-libdisk ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libdisk
+--- dependall-kern ---
+--- dependall ---
+--- dependall-fs ---
+--- dependall ---
+--- dependall-dev ---
+--- dependall ---
+--- dependall-librump ---
+--- dependall ---
+--- dependall-kern ---
+--- dependall-libz ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libz
+--- dependall-fs ---
+--- dependall-libfdesc ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libfdesc
+--- dependall-dev ---
+--- dependall-libdm ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libdm
+--- dependall-librump ---
+--- dependall-rumpvfs ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/librump/rumpvfs
+--- dependall-kern ---
+--- dependall ---
+--- dependall-fs ---
+--- dependall ---
+--- dependall-dev ---
+--- dependall ---
+--- dependall-librump ---
+--- dependall ---
+--- dependall-kern ---
+--- dependall-libsljit ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libsljit
+--- dependall-fs ---
+--- dependall-libffs ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libffs
+--- dependall-dev ---
+--- dependall-libdrvctl ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libdrvctl
+--- dependall-kern ---
+--- dependall ---
+--- dependall-fs ---
+--- dependall ---
+--- dependall-librump ---
+--- dependall ---
+--- dependall-dev ---
+--- dependall ---
+--- dependall-net ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net
+--- dependall-lib ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib
+--- dependall-libagr ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libagr
+--- dependall-kern ---
+--- dependall ---
+--- dependall ---
+--- dependall-share ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/share
+--- dependall-dev ---
+--- dependall-libfss ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libfss
+--- dependall-share ---
+--- dependall-man ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/share/man
+--- dependall-fs ---
+--- dependall-libhfs ---
+--- dependall-share ---
+--- dependall-man3 ---
+--- dependall-fs ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libhfs
+--- dependall-share ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/share/man/man3
+--- dependall ---
+--- dependall-net ---
+--- dependall ---
+--- dependall-share ---
+--- dependall-man7 ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/share/man/man7
+--- dependall ---
+--- dependall ---
+--- dependall ---
+--- dependall-dev ---
+--- dependall ---
+--- dependall-libmd ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libmd
+--- dependall-fs ---
+--- dependall ---
+--- dependall-net ---
+--- dependall-libbridge ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libbridge
+--- dependall-dev ---
+--- dependall-libnetsmb ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libnetsmb
+--- dependall-libmd ---
+--- dependall ---
+--- dependall-fs ---
+--- dependall-libkernfs ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libkernfs
+--- dependall-net ---
+--- dependall ---
+--- dependall-dev ---
+--- dependall-libnetsmb ---
+--- dependall ---
+--- dependall-libpad ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpad
+--- dependall-fs ---
+--- dependall ---
+--- dependall-net ---
+--- dependall-libnet ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnet
+--- dependall-dev ---
+--- dependall ---
+--- dependall-libpud ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpud
+--- dependall-fs ---
+--- dependall-liblfs ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/liblfs
+--- dependall-dev ---
+--- dependall-libputter ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libputter
+--- dependall-libpud ---
+--- dependall ---
+--- dependall-net ---
+--- dependall ---
+--- dependall-fs ---
+--- dependall ---
+--- dependall-dev ---
+--- dependall-libputter ---
+--- dependall ---
+--- dependall-libraidframe ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libraidframe
+--- dependall-fs ---
+--- dependall-libmfs ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libmfs
+--- dependall-dev ---
+--- dependall-librnd ---
+--- dependall-net ---
+--- dependall-libnet80211 ---
+--- dependall-dev ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/librnd
+--- dependall-net ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnet80211
+--- dependall-dev ---
+--- dependall-libraidframe ---
+--- dependall ---
+--- dependall-fs ---
+--- dependall ---
+--- dependall-dev ---
+--- dependall-librnd ---
+--- dependall ---
+--- dependall-net ---
+--- dependall ---
+--- dependall-fs ---
+--- dependall-libmsdos ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libmsdos
+--- dependall-dev ---
+--- dependall-libscsipi ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libscsipi
+--- dependall-net ---
+--- dependall-libnetbt ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnetbt
+--- dependall-dev ---
+--- dependall-libsysmon ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libsysmon
+--- dependall-fs ---
+--- dependall ---
+--- dependall-dev ---
+--- dependall-libscsipi ---
+--- dependall ---
+--- dependall-net ---
+--- dependall ---
+--- dependall-dev ---
+--- dependall-libsysmon ---
+--- dependall ---
+--- dependall-fs ---
+--- dependall-libnfs ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libnfs
+--- dependall-dev ---
+--- dependall-libvnd ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvnd
+--- dependall-libwscons ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libwscons
+--- dependall-net ---
+--- dependall-libnetinet ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnetinet
+--- dependall-fs ---
+--- dependall ---
+--- dependall-dev ---
+--- dependall-libvnd ---
+--- dependall ---
+--- dependall-libwscons ---
+--- dependall ---
+--- dependall-net ---
+--- dependall ---
+--- dependall-fs ---
+--- dependall-libnilfs ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libnilfs
+--- dependall-dev ---
+--- dependall-libopencrypto ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libopencrypto
+--- dependall-net ---
+--- dependall-libnetinet6 ---
+--- dependall-dev ---
+--- dependall-libubt ---
+--- dependall-net ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnetinet6
+--- dependall-dev ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libubt
+--- dependall-fs ---
+--- dependall ---
+--- dependall-dev ---
+--- dependall-libopencrypto ---
+--- dependall ---
+--- dependall-net ---
+--- dependall ---
+--- dependall-dev ---
+--- dependall-libubt ---
+--- dependall ---
+--- dependall-fs ---
+--- dependall-libntfs ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libntfs
+--- dependall-dev ---
+--- dependall-libucom ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libucom
+--- dependall-net ---
+--- dependall-libnetmpls ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnetmpls
+--- dependall-dev ---
+--- dependall-libugenhc ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libugenhc
+--- dependall-fs ---
+--- dependall ---
+--- dependall-dev ---
+--- dependall-libucom ---
+--- dependall ---
+--- dependall-net ---
+--- dependall ---
+--- dependall-dev ---
+--- dependall-libugenhc ---
+--- dependall ---
+--- dependall-fs ---
+--- dependall-libnull ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libnull
+--- dependall-dev ---
+--- dependall-libulpt ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libulpt
+--- dependall-net ---
+--- dependall-libnpf ---
+--- dependall-dev ---
+--- dependall-libumass ---
+--- dependall-net ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnpf
+--- dependall-dev ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libumass
+--- dependall-fs ---
+--- dependall ---
+--- dependall-dev ---
+--- dependall-libulpt ---
+--- dependall ---
+--- dependall-libumass ---
+--- dependall ---
+--- dependall-net ---
+--- dependall ---
+--- dependall-fs ---
+--- dependall-libptyfs ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libptyfs
+--- dependall-dev ---
+--- dependall-libusb ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libusb
+--- dependall-fs ---
+--- dependall-libsmbfs ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libsmbfs
+--- dependall-net ---
+--- dependall-liblocal ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/liblocal
+--- dependall-fs ---
+--- dependall-libptyfs ---
+--- dependall ---
+--- dependall-dev ---
+--- dependall ---
+--- dependall-fs ---
+--- dependall-libsmbfs ---
+--- dependall ---
+--- dependall-net ---
+--- dependall ---
+--- dependall-fs ---
+--- dependall-libsyspuffs ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libsyspuffs
+--- dependall-dev ---
+--- dependall ---
+--- dependall-fs ---
+--- dependall-libsysvbfs ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libsysvbfs
+--- dependall-dev ---
+--- dependall ---
+--- dependall-fs ---
+--- dependall-libtmpfs ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libtmpfs
+--- dependall-net ---
+--- dependall-libshmif ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libshmif
+--- dependall-fs ---
+--- dependall-libsyspuffs ---
+--- dependall ---
+--- dependall-libsysvbfs ---
+--- dependall ---
+--- dependall-libtmpfs ---
+--- dependall ---
+--- dependall-net ---
+--- dependall ---
+--- dependall-fs ---
+--- dependall-libudf ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libudf
+--- dependall-libumap ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libumap
+--- dependall-libunion ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libunion
+--- dependall-net ---
+--- dependall-libtap ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libtap
+--- dependall-fs ---
+--- dependall-libudf ---
+--- dependall ---
+--- dependall-libumap ---
+--- dependall ---
+--- dependall-libunion ---
+--- dependall ---
+--- dependall-net ---
+--- dependall ---
+--- dependall-fs ---
+--- dependall-libv7fs ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libv7fs
+--- dependall-libnfsserver ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libnfsserver
+--- dependall-libfifovfs ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libfifovfs
+--- dependall-net ---
+--- dependall-libbpfjit ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libbpfjit
+--- dependall-fs ---
+--- dependall-libv7fs ---
+--- dependall ---
+--- dependall-libnfsserver ---
+--- dependall ---
+--- dependall-libfifovfs ---
+--- dependall ---
+--- dependall-net ---
+--- dependall ---
+--- dependall-fs ---
+--- dependall-liblayervfs ---
+--- dependall-libaio ---
+--- dependall-liblayervfs ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/liblayervfs
+--- dependall-libaio ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libaio
+--- dependall-net ---
+--- dependall-libsockin ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libsockin
+--- dependall-fs ---
+--- dependall-liblayervfs ---
+--- dependall ---
+--- dependall-libaio ---
+--- dependall ---
+--- dependall-net ---
+--- dependall ---
+--- dependall-fs ---
+--- dependall ---
+--- dependall-net ---
+--- dependall ---
+--- dependall-fs ---
+--- dependall ---
+--- dependall-net ---
+--- dependall ---
+--- dependall ---
+--- dependall ---
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump ---
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libsys_linux ---
+--- install-/home/lucasbaier/research/rump2cos/rumprun/buildrump.sh/brlib ---
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libsys_linux ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libsys_linux
+--- install-/home/lucasbaier/research/rump2cos/rumprun/buildrump.sh/brlib ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/buildrump.sh/brlib
+--- install-libnetconfig ---
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump ---
+--- install-include ---
+--- install-librump ---
+--- install-/home/lucasbaier/research/rump2cos/rumprun/buildrump.sh/brlib ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/buildrump.sh/brlib/libnetconfig
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump ---
+--- install-include ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/include
+--- install-librump ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/librump
+--- install-include ---
+--- install-rump ---
+--- install-librump ---
+--- install-rumpkern ---
+--- install-include ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/include/rump
+--- install-librump ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/librump/rumpkern
+--- install-dev ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev
+--- install-lib ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib
+--- install-libaudio ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libaudio
+--- install-libbpf ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libbpf
+--- install-fs ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs
+--- install-lib ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib
+--- install-libcd9660 ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libcd9660
+--- install-dev ---
+--- install-libcgd ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libcgd
+--- install-librump ---
+--- install-rumpdev ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/librump/rumpdev
+--- install-dev ---
+--- install-libdisk ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libdisk
+--- install-fs ---
+--- install-libefs ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libefs
+--- install-dev ---
+--- install-libdm ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libdm
+--- install-librump ---
+--- install-rumpnet ---
+--- install-dev ---
+--- install-libdrvctl ---
+--- install-librump ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/librump/rumpnet
+--- install-dev ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libdrvctl
+--- install-fs ---
+--- install-libext2fs ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libext2fs
+--- install-dev ---
+--- install-libfss ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libfss
+--- install-libmd ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libmd
+--- install-librump ---
+--- install-rumpvfs ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/librump/rumpvfs
+--- install-fs ---
+--- install-libfdesc ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libfdesc
+--- install-dev ---
+--- install-libnetsmb ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libnetsmb
+--- install-libpad ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpad
+--- install-fs ---
+--- install-libffs ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libffs
+--- install-kern ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern
+--- install-lib ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib
+--- install-dev ---
+--- install-libpud ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpud
+--- install-kern ---
+--- install-libcrypto ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libcrypto
+--- install-dev ---
+--- install-libputter ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libputter
+--- install-libraidframe ---
+--- install-fs ---
+--- install-libhfs ---
+--- install-dev ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libraidframe
+--- install-fs ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libhfs
+--- install-kern ---
+--- install-libsysproxy ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libsysproxy
+--- install-dev ---
+--- install-librnd ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/librnd
+--- install-fs ---
+--- install-libkernfs ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libkernfs
+--- install-kern ---
+--- install-libtty ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libtty
+--- install-dev ---
+--- install-libscsipi ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libscsipi
+--- install-libsysmon ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libsysmon
+--- install-fs ---
+--- install-liblfs ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/liblfs
+--- install-kern ---
+--- install-libz ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libz
+--- install-dev ---
+--- install-libvnd ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvnd
+--- install-libwscons ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libwscons
+--- install-fs ---
+--- install-libmfs ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libmfs
+--- install-kern ---
+--- install-libsljit ---
+--- install-dev ---
+--- install-libopencrypto ---
+--- install-kern ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/kern/lib/libsljit
+--- install-dev ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libopencrypto
+--- install-net ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net
+--- install-lib ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib
+--- install-libagr ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libagr
+--- install-fs ---
+--- install-libmsdos ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libmsdos
+--- install-share ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/share
+--- install-dev ---
+--- install-libubt ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libubt
+--- install-share ---
+--- install-man ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/share/man
+--- install-man3 ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/share/man/man3
+--- install-man7 ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/share/man/man7
+--- install-dev ---
+--- install-libucom ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libucom
+--- install-net ---
+--- install-libbridge ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libbridge
+--- install-fs ---
+--- install-libnfs ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libnfs
+--- install-dev ---
+--- install-libugenhc ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libugenhc
+--- install-libulpt ---
+--- install-net ---
+--- install-libnet ---
+--- install-dev ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libulpt
+--- install-net ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnet
+--- install-fs ---
+--- install-libnilfs ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libnilfs
+--- install-dev ---
+--- install-libumass ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libumass
+--- install-libusb ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libusb
+--- install-fs ---
+--- install-libntfs ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libntfs
+--- install-libnull ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libnull
+--- install-net ---
+--- install-libnet80211 ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnet80211
+--- install-libnetbt ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnetbt
+--- install-fs ---
+--- install-libptyfs ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libptyfs
+--- install-libsmbfs ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libsmbfs
+--- install-net ---
+--- install-libnetinet ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnetinet
+--- install-libnetinet6 ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnetinet6
+--- install-fs ---
+--- install-libsyspuffs ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libsyspuffs
+--- install-libsysvbfs ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libsysvbfs
+--- install-net ---
+--- install-libnetmpls ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnetmpls
+--- install-libnpf ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libnpf
+--- install-fs ---
+--- install-libtmpfs ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libtmpfs
+--- install-libudf ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libudf
+--- install-net ---
+--- install-liblocal ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/liblocal
+--- install-libshmif ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libshmif
+--- install-fs ---
+--- install-libumap ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libumap
+--- install-net ---
+--- install-libtap ---
+--- install-libbpfjit ---
+--- install-libtap ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libtap
+--- install-libbpfjit ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libbpfjit
+--- install-libsockin ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/net/lib/libsockin
+--- install-fs ---
+--- install-libunion ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libunion
+--- install-libv7fs ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libv7fs
+--- install-libnfsserver ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libnfsserver
+--- install-libfifovfs ---
+--- install-liblayervfs ---
+--- install-libfifovfs ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libfifovfs
+--- install-liblayervfs ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/liblayervfs
+--- install-libaio ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/fs/lib/libaio
+obj ===> apm
+obj ===> ata
+obj ===> bluetooth
+obj ===> dec
+obj ===> dm
+obj ===> dmover
+obj ===> dtv
+obj ===> filemon
+obj ===> hdaudio
+obj ===> hpc
+obj ===> i2c
+obj ===> i2o
+obj ===> ic
+obj ===> ieee1394
+obj ===> ir
+obj ===> isa
+obj ===> microcode
+obj ===> microcode/ral
+obj ===> microcode/rum
+obj ===> microcode/run
+obj ===> microcode/zyd
+obj ===> microcode/radeon
+obj ===> ofw
+obj ===> pci
+obj ===> pckbport
+obj ===> pcmcia
+obj ===> pud
+obj ===> putter
+obj ===> raidframe
+obj ===> sbus
+obj ===> scsipi
+obj ===> sun
+obj ===> tc
+obj ===> usb
+obj ===> vme
+obj ===> wscons
+obj ===> iscsi
+includes ===> apm
+includes ===> ata
+includes ===> bluetooth
+includes ===> dec
+includes ===> dm
+includes ===> dmover
+includes ===> dtv
+includes ===> filemon
+includes ===> hdaudio
+includes ===> hpc
+includes ===> i2c
+includes ===> i2o
+includes ===> ic
+includes ===> ieee1394
+includes ===> ir
+includes ===> isa
+includes ===> microcode
+includes ===> microcode/ral
+includes ===> microcode/rum
+includes ===> microcode/run
+includes ===> microcode/zyd
+includes ===> microcode/radeon
+includes ===> ofw
+includes ===> pci
+includes ===> pckbport
+includes ===> pcmcia
+includes ===> pud
+includes ===> putter
+includes ===> raidframe
+includes ===> sbus
+includes ===> scsipi
+includes ===> sun
+includes ===> tc
+includes ===> usb
+includes ===> vme
+includes ===> wscons
+includes ===> iscsi
+obj ===> adosfs
+obj ===> cd9660
+obj ===> efs
+obj ===> filecorefs
+obj ===> hfs
+obj ===> msdosfs
+obj ===> nilfs
+obj ===> ntfs
+obj ===> ptyfs
+obj ===> puffs
+obj ===> smbfs
+obj ===> sysvbfs
+obj ===> tmpfs
+obj ===> udf
+obj ===> union
+obj ===> v7fs
+includes ===> adosfs
+includes ===> cd9660
+includes ===> efs
+includes ===> filecorefs
+includes ===> hfs
+includes ===> msdosfs
+includes ===> nilfs
+includes ===> ntfs
+includes ===> ptyfs
+includes ===> puffs
+includes ===> smbfs
+includes ===> sysvbfs
+includes ===> tmpfs
+includes ===> udf
+includes ===> union
+includes ===> v7fs
+obj ===> fdesc
+obj ===> fifofs
+obj ===> genfs
+obj ===> kernfs
+obj ===> nullfs
+obj ===> overlay
+obj ===> procfs
+obj ===> specfs
+obj ===> umapfs
+includes ===> fdesc
+includes ===> fifofs
+includes ===> genfs
+includes ===> kernfs
+includes ===> nullfs
+includes ===> overlay
+includes ===> procfs
+includes ===> specfs
+includes ===> umapfs
+obj ===> agr
+obj ===> npf
+includes ===> agr
+includes ===> npf
+obj ===> ffs
+obj ===> lfs
+obj ===> mfs
+obj ===> ufs
+obj ===> ext2fs
+includes ===> ffs
+includes ===> lfs
+includes ===> mfs
+includes ===> ufs
+includes ===> ext2fs
+obj ===> include
+obj ===> include/rump
+obj ===> librump
+obj ===> librump/rumpkern
+obj ===> librump/rumpdev
+obj ===> librump/rumpnet
+obj ===> librump/rumpvfs
+obj ===> dev
+obj ===> dev/lib
+obj ===> dev/lib/libaudio
+obj ===> dev/lib/libbpf
+obj ===> dev/lib/libcgd
+obj ===> dev/lib/libdisk
+obj ===> dev/lib/libdm
+obj ===> dev/lib/libdrvctl
+obj ===> dev/lib/libfss
+obj ===> dev/lib/libmd
+obj ===> dev/lib/libnetsmb
+obj ===> dev/lib/libpad
+obj ===> dev/lib/libpud
+obj ===> dev/lib/libputter
+obj ===> dev/lib/libraidframe
+obj ===> dev/lib/librnd
+obj ===> dev/lib/libscsipi
+obj ===> dev/lib/libsysmon
+obj ===> dev/lib/libvnd
+obj ===> dev/lib/libwscons
+obj ===> dev/lib/libopencrypto
+obj ===> dev/lib/libubt
+obj ===> dev/lib/libucom
+obj ===> dev/lib/libugenhc
+obj ===> dev/lib/libulpt
+obj ===> dev/lib/libumass
+obj ===> dev/lib/libusb
+obj ===> fs
+obj ===> fs/lib
+obj ===> fs/lib/libcd9660
+obj ===> fs/lib/libefs
+obj ===> fs/lib/libext2fs
+obj ===> fs/lib/libfdesc
+obj ===> fs/lib/libffs
+obj ===> fs/lib/libhfs
+obj ===> fs/lib/libkernfs
+obj ===> fs/lib/liblfs
+obj ===> fs/lib/libmfs
+obj ===> fs/lib/libmsdos
+obj ===> fs/lib/libnfs
+obj ===> fs/lib/libnilfs
+obj ===> fs/lib/libntfs
+obj ===> fs/lib/libnull
+obj ===> fs/lib/libptyfs
+obj ===> fs/lib/libsmbfs
+obj ===> fs/lib/libsyspuffs
+obj ===> fs/lib/libsysvbfs
+obj ===> fs/lib/libtmpfs
+obj ===> fs/lib/libudf
+obj ===> fs/lib/libumap
+obj ===> fs/lib/libunion
+obj ===> fs/lib/libv7fs
+obj ===> fs/lib/libnfsserver
+obj ===> fs/lib/libfifovfs
+obj ===> fs/lib/liblayervfs
+obj ===> fs/lib/libaio
+obj ===> kern
+obj ===> kern/lib
+obj ===> kern/lib/libcrypto
+obj ===> kern/lib/libsysproxy
+obj ===> kern/lib/libtty
+obj ===> kern/lib/libz
+obj ===> kern/lib/libsljit
+obj ===> net
+obj ===> net/lib
+obj ===> net/lib/libagr
+obj ===> net/lib/libbridge
+obj ===> net/lib/libnet
+obj ===> net/lib/libnet80211
+obj ===> net/lib/libnetbt
+obj ===> net/lib/libnetinet
+obj ===> net/lib/libnetinet6
+obj ===> net/lib/libnetmpls
+obj ===> net/lib/libnpf
+obj ===> net/lib/liblocal
+obj ===> net/lib/libshmif
+obj ===> net/lib/libtap
+obj ===> net/lib/libbpfjit
+obj ===> net/lib/libsockin
+obj ===> share
+obj ===> share/man
+obj ===> share/man/man3
+obj ===> share/man/man7
+includes ===> include
+includes ===> include/rump
+includes ===> librump
+includes ===> librump/rumpkern
+includes ===> librump/rumpdev
+includes ===> librump/rumpnet
+includes ===> librump/rumpvfs
+includes ===> dev
+includes ===> dev/lib
+includes ===> dev/lib/libaudio
+includes ===> dev/lib/libbpf
+includes ===> dev/lib/libcgd
+includes ===> dev/lib/libdisk
+includes ===> dev/lib/libdm
+includes ===> dev/lib/libdrvctl
+includes ===> dev/lib/libfss
+includes ===> dev/lib/libmd
+includes ===> dev/lib/libnetsmb
+includes ===> dev/lib/libpad
+includes ===> dev/lib/libpud
+includes ===> dev/lib/libputter
+includes ===> dev/lib/libraidframe
+includes ===> dev/lib/librnd
+includes ===> dev/lib/libscsipi
+includes ===> dev/lib/libsysmon
+includes ===> dev/lib/libvnd
+includes ===> dev/lib/libwscons
+includes ===> dev/lib/libopencrypto
+includes ===> dev/lib/libubt
+includes ===> dev/lib/libucom
+includes ===> dev/lib/libugenhc
+includes ===> dev/lib/libulpt
+includes ===> dev/lib/libumass
+includes ===> dev/lib/libusb
+includes ===> fs
+includes ===> fs/lib
+includes ===> fs/lib/libcd9660
+includes ===> fs/lib/libefs
+includes ===> fs/lib/libext2fs
+includes ===> fs/lib/libfdesc
+includes ===> fs/lib/libffs
+includes ===> fs/lib/libhfs
+includes ===> fs/lib/libkernfs
+includes ===> fs/lib/liblfs
+includes ===> fs/lib/libmfs
+includes ===> fs/lib/libmsdos
+includes ===> fs/lib/libnfs
+includes ===> fs/lib/libnilfs
+includes ===> fs/lib/libntfs
+includes ===> fs/lib/libnull
+includes ===> fs/lib/libptyfs
+includes ===> fs/lib/libsmbfs
+includes ===> fs/lib/libsyspuffs
+includes ===> fs/lib/libsysvbfs
+includes ===> fs/lib/libtmpfs
+includes ===> fs/lib/libudf
+includes ===> fs/lib/libumap
+includes ===> fs/lib/libunion
+includes ===> fs/lib/libv7fs
+includes ===> fs/lib/libnfsserver
+includes ===> fs/lib/libfifovfs
+includes ===> fs/lib/liblayervfs
+includes ===> fs/lib/libaio
+includes ===> kern
+includes ===> kern/lib
+includes ===> kern/lib/libcrypto
+includes ===> kern/lib/libsysproxy
+includes ===> kern/lib/libtty
+includes ===> kern/lib/libz
+includes ===> kern/lib/libsljit
+includes ===> net
+includes ===> net/lib
+includes ===> net/lib/libagr
+includes ===> net/lib/libbridge
+includes ===> net/lib/libnet
+includes ===> net/lib/libnet80211
+includes ===> net/lib/libnetbt
+includes ===> net/lib/libnetinet
+includes ===> net/lib/libnetinet6
+includes ===> net/lib/libnetmpls
+includes ===> net/lib/libnpf
+includes ===> net/lib/liblocal
+includes ===> net/lib/libshmif
+includes ===> net/lib/libtap
+includes ===> net/lib/libbpfjit
+includes ===> net/lib/libsockin
+includes ===> share
+includes ===> share/man
+includes ===> share/man/man3
+includes ===> share/man/man7
+>> buildrump.sh ran successfully
+>>
+>> Rump kernel components built.  Proceeding to build
+>> rumprun bits
+>>
+>> installing userspace headers
+obj ===> rpc
+obj ===> ../common/include/prop
+obj ===> ../common/include/ppath
+includes ===> rpc
+includes ===> ../common/include/prop
+includes ===> ../common/include/ppath
+obj ===> arch/i387
+includes ===> arch/i387
+obj ===> include
+obj ===> lib
+includes ===> include
+includes ===> lib
+>> done installing headers
+--- dependall ---
+--- dependall ---
+--- dependall ---
+--- dependall ---
+obj ===> arch/i387
+--- dependall-arch/i387 ---
+dependall ===> arch/i387
+--- dependall ---
+--- dependall ---
+--- install-arch/i387 ---
+install ===> arch/i387
+--- dependall ---
+--- dependall ---
+--- dependall ---
+--- dependall ---
+--- dependall ---
+--- dependall ---
+--- dependall ---
+--- dependall ---
+--- dependall ---
+--- dependall ---
+--- dependall ---
+--- dependall ---
+--- dependall ---
+obj ===> include
+obj ===> lib
+--- dependall-include ---
+--- dependall-lib ---
+--- dependall-include ---
+dependall ===> include
+--- dependall-lib ---
+dependall ===> lib
+--- dependall-include ---
+--- dependall ---
+--- dependall-lib ---
+--- dependall ---
+--- dependall ---
+--- install-include ---
+--- install-lib ---
+--- install-include ---
+install ===> include
+--- install-lib ---
+install ===> lib
+--- dependall ---
+make[1]: Entering directory `/home/lucasbaier/research/rump2cos/rumprun/platform/cos'
+make[1]: Leaving directory `/home/lucasbaier/research/rump2cos/rumprun/platform/cos'
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_iwn ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_pcn ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_wm ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_iwn ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_iwn
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_pcn ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_pcn
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_wm ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_wm
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_iwn ---
+--- obj ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_pcn ---
+--- obj ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_wm ---
+--- obj ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_usbhc ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci ---
+--- obj ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_virtio ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_usbhc ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_usbhc
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_if_vioif ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_virtio ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_virtio
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_ld ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_if_vioif ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_if_vioif
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_ld ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_ld
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_usbhc ---
+--- obj ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_virtio ---
+--- obj ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_viornd ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libaudio_ac97 ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_viornd ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_viornd
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_if_vioif ---
+--- obj ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libaudio_ac97 ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libaudio_ac97
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_ld ---
+--- obj ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_auich ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_eap ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_auich ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_auich
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_eap ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_eap
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libaudio_ac97 ---
+--- obj ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_viornd ---
+--- obj ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_hdaudio ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libhdaudio_hdafg ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_auich ---
+--- obj ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_hdaudio ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_hdaudio
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libhdaudio_hdafg ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libhdaudio_hdafg
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libmiiphy ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_eap ---
+--- obj ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libmiiphy ---
+obj ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libmiiphy
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_hdaudio ---
+--- obj ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libhdaudio_hdafg ---
+--- obj ---
+--- obj-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libmiiphy ---
+--- obj ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_iwn ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_pcn ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_wm ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_iwn ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_iwn
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_pcn ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_pcn
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_wm ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_wm
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_iwn ---
+--- dependall ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci ---
+--- dependall ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_wm ---
+--- dependall ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_pcn ---
+--- dependall ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_usbhc ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_virtio ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_usbhc ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_usbhc
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_if_vioif ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_virtio ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_virtio
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_if_vioif ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_if_vioif
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_ld ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_ld
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_virtio ---
+--- dependall ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_usbhc ---
+--- dependall ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_if_vioif ---
+--- dependall ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_ld ---
+--- dependall ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_viornd ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libaudio_ac97 ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_viornd ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_viornd
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libaudio_ac97 ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libaudio_ac97
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_auich ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_auich
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_eap ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_eap
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libaudio_ac97 ---
+--- dependall ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_viornd ---
+--- dependall ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_auich ---
+--- dependall ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_eap ---
+--- dependall ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_hdaudio ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libhdaudio_hdafg ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_hdaudio ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_hdaudio
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libmiiphy ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libhdaudio_hdafg ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libhdaudio_hdafg
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libmiiphy ---
+dependall ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libmiiphy
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_hdaudio ---
+--- dependall ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libhdaudio_hdafg ---
+--- dependall ---
+--- dependall-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libmiiphy ---
+--- dependall ---
+--- dependall ---
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci ---
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_iwn ---
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_pcn ---
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_wm ---
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_iwn ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_iwn
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_pcn ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_pcn
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_wm ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_if_wm
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_usbhc ---
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_virtio ---
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_if_vioif ---
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_usbhc ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_usbhc
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_virtio ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_virtio
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_ld ---
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_if_vioif ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_if_vioif
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_ld ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_ld
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_viornd ---
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libaudio_ac97 ---
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_auich ---
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_viornd ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libvirtio_viornd
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libaudio_ac97 ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libaudio_ac97
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_auich ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_auich
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_eap ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_eap
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_hdaudio ---
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libhdaudio_hdafg ---
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_hdaudio ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libpci_hdaudio
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libhdaudio_hdafg ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libhdaudio_hdafg
+--- install-/home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libmiiphy ---
+install ===> /home/lucasbaier/research/rump2cos/rumprun/src-netbsd/sys/rump/dev/lib/libmiiphy
+make[1]: Entering directory `/home/lucasbaier/research/rump2cos/rumprun/platform/cos'
+sed </home/lucasbaier/research/rump2cos/rumprun/app-tools/configure.in >/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-configure.tmp -e 's#!CC!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc#g;' -e 's#!CXX!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-c++#g;' -e 's#!APPTOOLS_CC!#/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-gcc#g;' -e 's#!APPTOOLS_CXX!#/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-g++#g;' -e 's#!GNUPLATFORM!#i486-rumprun-netbsdelf#g;' -e 's#!BASE_DIR!#/home/lucasbaier/research/rump2cos/rumprun#g;' -e 's#!APPTOOLS_DIR!#/home/lucasbaier/research/rump2cos/rumprun/app-tools#g;' -e 's#!APPTOOLS_PLATFORM!#cos#g;' -e 's#!CPPFLAGS!#-D__NetBSD__  -Ulinux -U__linux -U__linux__ -U__gnu_linux__#g;' -e 's#!CFLAGS!#-U_FORTIFY_SOURCE#g;' -e 's#!CXXFLAGS!#-U_FORTIFY_SOURCE#g;' -e 's#!OBJS_BAKE!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/cosrun.o#g;' -e 's#!LDFLAGS_BAKE!#-L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/../../lib/librumprun_base/cos -L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/../../lib/libbmk_rumpuser/cos -L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rump/lib#g;' -e 's#!LDSCRIPT_BAKE!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/arch/i386/kern.ldscript#g;'
+if test -x /home/lucasbaier/research/rump2cos/rumprun/app-tools/configure.in; then chmod +x /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-configure.tmp; fi
+mv -f /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-configure.tmp /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-configure
+sed </home/lucasbaier/research/rump2cos/rumprun/app-tools/make.in >/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-make.tmp -e 's#!CC!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc#g;' -e 's#!CXX!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-c++#g;' -e 's#!APPTOOLS_CC!#/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-gcc#g;' -e 's#!APPTOOLS_CXX!#/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-g++#g;' -e 's#!GNUPLATFORM!#i486-rumprun-netbsdelf#g;' -e 's#!BASE_DIR!#/home/lucasbaier/research/rump2cos/rumprun#g;' -e 's#!APPTOOLS_DIR!#/home/lucasbaier/research/rump2cos/rumprun/app-tools#g;' -e 's#!APPTOOLS_PLATFORM!#cos#g;' -e 's#!CPPFLAGS!#-D__NetBSD__  -Ulinux -U__linux -U__linux__ -U__gnu_linux__#g;' -e 's#!CFLAGS!#-U_FORTIFY_SOURCE#g;' -e 's#!CXXFLAGS!#-U_FORTIFY_SOURCE#g;' -e 's#!OBJS_BAKE!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/cosrun.o#g;' -e 's#!LDFLAGS_BAKE!#-L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/../../lib/librumprun_base/cos -L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/../../lib/libbmk_rumpuser/cos -L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rump/lib#g;' -e 's#!LDSCRIPT_BAKE!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/arch/i386/kern.ldscript#g;'
+if test -x /home/lucasbaier/research/rump2cos/rumprun/app-tools/make.in; then chmod +x /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-make.tmp; fi
+mv -f /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-make.tmp /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-make
+sed </home/lucasbaier/research/rump2cos/rumprun/app-tools/gmake.in >/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-gmake.tmp -e 's#!CC!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc#g;' -e 's#!CXX!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-c++#g;' -e 's#!APPTOOLS_CC!#/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-gcc#g;' -e 's#!APPTOOLS_CXX!#/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-g++#g;' -e 's#!GNUPLATFORM!#i486-rumprun-netbsdelf#g;' -e 's#!BASE_DIR!#/home/lucasbaier/research/rump2cos/rumprun#g;' -e 's#!APPTOOLS_DIR!#/home/lucasbaier/research/rump2cos/rumprun/app-tools#g;' -e 's#!APPTOOLS_PLATFORM!#cos#g;' -e 's#!CPPFLAGS!#-D__NetBSD__  -Ulinux -U__linux -U__linux__ -U__gnu_linux__#g;' -e 's#!CFLAGS!#-U_FORTIFY_SOURCE#g;' -e 's#!CXXFLAGS!#-U_FORTIFY_SOURCE#g;' -e 's#!OBJS_BAKE!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/cosrun.o#g;' -e 's#!LDFLAGS_BAKE!#-L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/../../lib/librumprun_base/cos -L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/../../lib/libbmk_rumpuser/cos -L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rump/lib#g;' -e 's#!LDSCRIPT_BAKE!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/arch/i386/kern.ldscript#g;'
+if test -x /home/lucasbaier/research/rump2cos/rumprun/app-tools/gmake.in; then chmod +x /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-gmake.tmp; fi
+mv -f /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-gmake.tmp /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-gmake
+sed </home/lucasbaier/research/rump2cos/rumprun/app-tools/toolchain.cmake.in >/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-toolchain.cmake.tmp -e 's#!CC!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc#g;' -e 's#!CXX!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-c++#g;' -e 's#!APPTOOLS_CC!#/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-gcc#g;' -e 's#!APPTOOLS_CXX!#/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-g++#g;' -e 's#!GNUPLATFORM!#i486-rumprun-netbsdelf#g;' -e 's#!BASE_DIR!#/home/lucasbaier/research/rump2cos/rumprun#g;' -e 's#!APPTOOLS_DIR!#/home/lucasbaier/research/rump2cos/rumprun/app-tools#g;' -e 's#!APPTOOLS_PLATFORM!#cos#g;' -e 's#!CPPFLAGS!#-D__NetBSD__  -Ulinux -U__linux -U__linux__ -U__gnu_linux__#g;' -e 's#!CFLAGS!#-U_FORTIFY_SOURCE#g;' -e 's#!CXXFLAGS!#-U_FORTIFY_SOURCE#g;' -e 's#!OBJS_BAKE!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/cosrun.o#g;' -e 's#!LDFLAGS_BAKE!#-L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/../../lib/librumprun_base/cos -L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/../../lib/libbmk_rumpuser/cos -L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rump/lib#g;' -e 's#!LDSCRIPT_BAKE!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/arch/i386/kern.ldscript#g;'
+if test -x /home/lucasbaier/research/rump2cos/rumprun/app-tools/toolchain.cmake.in; then chmod +x /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-toolchain.cmake.tmp; fi
+mv -f /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-toolchain.cmake.tmp /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-toolchain.cmake
+sed </home/lucasbaier/research/rump2cos/rumprun/app-tools/recipe.s.in >/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-recipe.s.tmp -e 's#!CC!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc#g;' -e 's#!CXX!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-c++#g;' -e 's#!APPTOOLS_CC!#/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-gcc#g;' -e 's#!APPTOOLS_CXX!#/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-g++#g;' -e 's#!GNUPLATFORM!#i486-rumprun-netbsdelf#g;' -e 's#!BASE_DIR!#/home/lucasbaier/research/rump2cos/rumprun#g;' -e 's#!APPTOOLS_DIR!#/home/lucasbaier/research/rump2cos/rumprun/app-tools#g;' -e 's#!APPTOOLS_PLATFORM!#cos#g;' -e 's#!CPPFLAGS!#-D__NetBSD__  -Ulinux -U__linux -U__linux__ -U__gnu_linux__#g;' -e 's#!CFLAGS!#-U_FORTIFY_SOURCE#g;' -e 's#!CXXFLAGS!#-U_FORTIFY_SOURCE#g;' -e 's#!OBJS_BAKE!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/cosrun.o#g;' -e 's#!LDFLAGS_BAKE!#-L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/../../lib/librumprun_base/cos -L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/../../lib/libbmk_rumpuser/cos -L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rump/lib#g;' -e 's#!LDSCRIPT_BAKE!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/arch/i386/kern.ldscript#g;'
+if test -x /home/lucasbaier/research/rump2cos/rumprun/app-tools/recipe.s.in; then chmod +x /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-recipe.s.tmp; fi
+mv -f /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-recipe.s.tmp /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-recipe.s
+sed </home/lucasbaier/research/rump2cos/rumprun/app-tools/cc.in >/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-gcc.tmp -e 's#!CC!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc#g;' -e 's#!CXX!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-c++#g;' -e 's#!APPTOOLS_CC!#/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-gcc#g;' -e 's#!APPTOOLS_CXX!#/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-g++#g;' -e 's#!GNUPLATFORM!#i486-rumprun-netbsdelf#g;' -e 's#!BASE_DIR!#/home/lucasbaier/research/rump2cos/rumprun#g;' -e 's#!APPTOOLS_DIR!#/home/lucasbaier/research/rump2cos/rumprun/app-tools#g;' -e 's#!APPTOOLS_PLATFORM!#cos#g;' -e 's#!CPPFLAGS!#-D__NetBSD__  -Ulinux -U__linux -U__linux__ -U__gnu_linux__#g;' -e 's#!CFLAGS!#-U_FORTIFY_SOURCE#g;' -e 's#!CXXFLAGS!#-U_FORTIFY_SOURCE#g;' -e 's#!OBJS_BAKE!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/cosrun.o#g;' -e 's#!LDFLAGS_BAKE!#-L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/../../lib/librumprun_base/cos -L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/../../lib/libbmk_rumpuser/cos -L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rump/lib#g;' -e 's#!LDSCRIPT_BAKE!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/arch/i386/kern.ldscript#g;'
+if test -x /home/lucasbaier/research/rump2cos/rumprun/app-tools/cc.in; then chmod +x /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-gcc.tmp; fi
+mv -f /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-gcc.tmp /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-gcc
+sed </home/lucasbaier/research/rump2cos/rumprun/app-tools/cc.in >/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-g++.tmp -e 's#!CC!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc#g;' -e 's#!CXX!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-c++#g;' -e 's#!APPTOOLS_CC!#/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-gcc#g;' -e 's#!APPTOOLS_CXX!#/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-g++#g;' -e 's#!GNUPLATFORM!#i486-rumprun-netbsdelf#g;' -e 's#!BASE_DIR!#/home/lucasbaier/research/rump2cos/rumprun#g;' -e 's#!APPTOOLS_DIR!#/home/lucasbaier/research/rump2cos/rumprun/app-tools#g;' -e 's#!APPTOOLS_PLATFORM!#cos#g;' -e 's#!CPPFLAGS!#-D__NetBSD__  -Ulinux -U__linux -U__linux__ -U__gnu_linux__#g;' -e 's#!CFLAGS!#-U_FORTIFY_SOURCE#g;' -e 's#!CXXFLAGS!#-U_FORTIFY_SOURCE#g;' -e 's#!OBJS_BAKE!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/cosrun.o#g;' -e 's#!LDFLAGS_BAKE!#-L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/../../lib/librumprun_base/cos -L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/../../lib/libbmk_rumpuser/cos -L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rump/lib#g;' -e 's#!LDSCRIPT_BAKE!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/arch/i386/kern.ldscript#g;'
+if test -x /home/lucasbaier/research/rump2cos/rumprun/app-tools/cc.in; then chmod +x /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-g++.tmp; fi
+mv -f /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-g++.tmp /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-g++
+sed </home/lucasbaier/research/rump2cos/rumprun/app-tools/specs-compile_or_ferment.in >/home/lucasbaier/research/rump2cos/rumprun/app-tools/specs-compile_or_ferment.tmp -e 's#!CC!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc#g;' -e 's#!CXX!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-c++#g;' -e 's#!APPTOOLS_CC!#/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-gcc#g;' -e 's#!APPTOOLS_CXX!#/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-g++#g;' -e 's#!GNUPLATFORM!#i486-rumprun-netbsdelf#g;' -e 's#!BASE_DIR!#/home/lucasbaier/research/rump2cos/rumprun#g;' -e 's#!APPTOOLS_DIR!#/home/lucasbaier/research/rump2cos/rumprun/app-tools#g;' -e 's#!APPTOOLS_PLATFORM!#cos#g;' -e 's#!CPPFLAGS!#-D__NetBSD__  -Ulinux -U__linux -U__linux__ -U__gnu_linux__#g;' -e 's#!CFLAGS!#-U_FORTIFY_SOURCE#g;' -e 's#!CXXFLAGS!#-U_FORTIFY_SOURCE#g;' -e 's#!OBJS_BAKE!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/cosrun.o#g;' -e 's#!LDFLAGS_BAKE!#-L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/../../lib/librumprun_base/cos -L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/../../lib/libbmk_rumpuser/cos -L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rump/lib#g;' -e 's#!LDSCRIPT_BAKE!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/arch/i386/kern.ldscript#g;'
+if test -x /home/lucasbaier/research/rump2cos/rumprun/app-tools/specs-compile_or_ferment.in; then chmod +x /home/lucasbaier/research/rump2cos/rumprun/app-tools/specs-compile_or_ferment.tmp; fi
+mv -f /home/lucasbaier/research/rump2cos/rumprun/app-tools/specs-compile_or_ferment.tmp /home/lucasbaier/research/rump2cos/rumprun/app-tools/specs-compile_or_ferment
+sed </home/lucasbaier/research/rump2cos/rumprun/app-tools/specs-stub.in >/home/lucasbaier/research/rump2cos/rumprun/app-tools/specs-stub.tmp -e 's#!CC!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc#g;' -e 's#!CXX!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-c++#g;' -e 's#!APPTOOLS_CC!#/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-gcc#g;' -e 's#!APPTOOLS_CXX!#/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-g++#g;' -e 's#!GNUPLATFORM!#i486-rumprun-netbsdelf#g;' -e 's#!BASE_DIR!#/home/lucasbaier/research/rump2cos/rumprun#g;' -e 's#!APPTOOLS_DIR!#/home/lucasbaier/research/rump2cos/rumprun/app-tools#g;' -e 's#!APPTOOLS_PLATFORM!#cos#g;' -e 's#!CPPFLAGS!#-D__NetBSD__  -Ulinux -U__linux -U__linux__ -U__gnu_linux__#g;' -e 's#!CFLAGS!#-U_FORTIFY_SOURCE#g;' -e 's#!CXXFLAGS!#-U_FORTIFY_SOURCE#g;' -e 's#!OBJS_BAKE!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/cosrun.o#g;' -e 's#!LDFLAGS_BAKE!#-L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/../../lib/librumprun_base/cos -L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/../../lib/libbmk_rumpuser/cos -L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rump/lib#g;' -e 's#!LDSCRIPT_BAKE!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/arch/i386/kern.ldscript#g;'
+if test -x /home/lucasbaier/research/rump2cos/rumprun/app-tools/specs-stub.in; then chmod +x /home/lucasbaier/research/rump2cos/rumprun/app-tools/specs-stub.tmp; fi
+mv -f /home/lucasbaier/research/rump2cos/rumprun/app-tools/specs-stub.tmp /home/lucasbaier/research/rump2cos/rumprun/app-tools/specs-stub
+printf '#!/bin/sh\n\nexec %s "${@}"\n' /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-ar >/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-ar.tmp
+chmod +x /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-ar.tmp
+mv -f /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-ar.tmp /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-ar
+printf '#!/bin/sh\n\nexec %s "${@}"\n' /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-as >/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-as.tmp
+chmod +x /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-as.tmp
+mv -f /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-as.tmp /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-as
+printf '#!/bin/sh\n\nexec %s "${@}"\n' /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-cpp >/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-cpp.tmp
+chmod +x /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-cpp.tmp
+mv -f /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-cpp.tmp /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-cpp
+printf '#!/bin/sh\n\nexec %s "${@}"\n' /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-ld >/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-ld.tmp
+chmod +x /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-ld.tmp
+mv -f /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-ld.tmp /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-ld
+printf '#!/bin/sh\n\nexec %s "${@}"\n' /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-nm >/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-nm.tmp
+chmod +x /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-nm.tmp
+mv -f /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-nm.tmp /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-nm
+printf '#!/bin/sh\n\nexec %s "${@}"\n' /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-objcopy >/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-objcopy.tmp
+chmod +x /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-objcopy.tmp
+mv -f /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-objcopy.tmp /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-objcopy
+printf '#!/bin/sh\n\nexec %s "${@}"\n' /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-objdump >/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-objdump.tmp
+chmod +x /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-objdump.tmp
+mv -f /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-objdump.tmp /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-objdump
+printf '#!/bin/sh\n\nexec %s "${@}"\n' /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-ranlib >/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-ranlib.tmp
+chmod +x /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-ranlib.tmp
+mv -f /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-ranlib.tmp /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-ranlib
+printf '#!/bin/sh\n\nexec %s "${@}"\n' /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-readelf >/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-readelf.tmp
+chmod +x /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-readelf.tmp
+mv -f /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-readelf.tmp /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-readelf
+printf '#!/bin/sh\n\nexec %s "${@}"\n' /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-size >/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-size.tmp
+chmod +x /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-size.tmp
+mv -f /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-size.tmp /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-size
+printf '#!/bin/sh\n\nexec %s "${@}"\n' /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-strings >/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-strings.tmp
+chmod +x /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-strings.tmp
+mv -f /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-strings.tmp /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-strings
+printf '#!/bin/sh\n\nexec %s "${@}"\n' /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-strip >/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-strip.tmp
+chmod +x /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-strip.tmp
+mv -f /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-strip.tmp /home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-strip
+sed </home/lucasbaier/research/rump2cos/rumprun/app-tools/cos-specs-bake.in >/home/lucasbaier/research/rump2cos/rumprun/app-tools/rumprun-cos-specs-bake.tmp -e 's#!CC!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc#g;' -e 's#!CXX!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-c++#g;' -e 's#!APPTOOLS_CC!#/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-gcc#g;' -e 's#!APPTOOLS_CXX!#/home/lucasbaier/research/rump2cos/rumprun/app-tools/i486-rumprun-netbsdelf-g++#g;' -e 's#!GNUPLATFORM!#i486-rumprun-netbsdelf#g;' -e 's#!BASE_DIR!#/home/lucasbaier/research/rump2cos/rumprun#g;' -e 's#!APPTOOLS_DIR!#/home/lucasbaier/research/rump2cos/rumprun/app-tools#g;' -e 's#!APPTOOLS_PLATFORM!#cos#g;' -e 's#!CPPFLAGS!#-D__NetBSD__  -Ulinux -U__linux -U__linux__ -U__gnu_linux__#g;' -e 's#!CFLAGS!#-U_FORTIFY_SOURCE#g;' -e 's#!CXXFLAGS!#-U_FORTIFY_SOURCE#g;' -e 's#!OBJS_BAKE!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/cosrun.o#g;' -e 's#!LDFLAGS_BAKE!#-L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/../../lib/librumprun_base/cos -L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/../../lib/libbmk_rumpuser/cos -L/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rump/lib#g;' -e 's#!LDSCRIPT_BAKE!#/home/lucasbaier/research/rump2cos/rumprun/platform/cos/arch/i386/kern.ldscript#g;'
+if test -x /home/lucasbaier/research/rump2cos/rumprun/app-tools/cos-specs-bake.in; then chmod +x /home/lucasbaier/research/rump2cos/rumprun/app-tools/rumprun-cos-specs-bake.tmp; fi
+mv -f /home/lucasbaier/research/rump2cos/rumprun/app-tools/rumprun-cos-specs-bake.tmp /home/lucasbaier/research/rump2cos/rumprun/app-tools/rumprun-cos-specs-bake
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -std=gnu99 -O2 -g -fno-stack-protector -ffreestanding -Wall -Wimplicit -Wmissing-prototypes -Wstrict-prototypes -Wl,-r -Werror -U_FORTIFY_SOURCE -I../../../Composite/src/components/implementation/no_interface/rumpbooter/ -I../../../Composite/src/components/include/ -I../../../Composite/src/kernel/include/shared/ -Iinclude -Irump/includle -I../../include -mno-sse -mno-mmx -march=i686 -Iinclude -Irump/include -I../../include -nostdinc  -c -o sched.o sched.c
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -std=gnu99 -O2 -g -fno-stack-protector -ffreestanding -Wall -Wimplicit -Wmissing-prototypes -Wstrict-prototypes -Wl,-r -Werror -U_FORTIFY_SOURCE -I../../../Composite/src/components/implementation/no_interface/rumpbooter/ -I../../../Composite/src/components/include/ -I../../../Composite/src/kernel/include/shared/ -Iinclude -Irump/includle -I../../include -mno-sse -mno-mmx -march=i686 -Iinclude -Irump/include -I../../include -nostdinc  -c -o init.o init.c
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -std=gnu99 -O2 -g -fno-stack-protector -ffreestanding -Wall -Wimplicit -Wmissing-prototypes -Wstrict-prototypes -Wl,-r -Werror -U_FORTIFY_SOURCE -I../../../Composite/src/components/implementation/no_interface/rumpbooter/ -I../../../Composite/src/components/include/ -I../../../Composite/src/kernel/include/shared/ -Iinclude -Irump/includle -I../../include -mno-sse -mno-mmx -march=i686 -Iinclude -Irump/include -I../../include -nostdinc  -c -o memalloc.o memalloc.c
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -std=gnu99 -O2 -g -fno-stack-protector -ffreestanding -Wall -Wimplicit -Wmissing-prototypes -Wstrict-prototypes -Wl,-r -Werror -U_FORTIFY_SOURCE -I../../../Composite/src/components/implementation/no_interface/rumpbooter/ -I../../../Composite/src/components/include/ -I../../../Composite/src/kernel/include/shared/ -Iinclude -Irump/includle -I../../include -mno-sse -mno-mmx -march=i686 -Iinclude -Irump/include -I../../include -nostdinc  -c -o pgalloc.o pgalloc.c
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -std=gnu99 -O2 -g -fno-stack-protector -ffreestanding -Wall -Wimplicit -Wmissing-prototypes -Wstrict-prototypes -Wl,-r -Werror -U_FORTIFY_SOURCE -I../../../Composite/src/components/implementation/no_interface/rumpbooter/ -I../../../Composite/src/components/include/ -I../../../Composite/src/kernel/include/shared/ -Iinclude -Irump/includle -I../../include -mno-sse -mno-mmx -march=i686 -Iinclude -Irump/include -I../../include -nostdinc  -c -o intr.o intr.c
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -std=gnu99 -O2 -g -fno-stack-protector -ffreestanding -Wall -Wimplicit -Wmissing-prototypes -Wstrict-prototypes -Wl,-r -Werror -U_FORTIFY_SOURCE -I../../../Composite/src/components/implementation/no_interface/rumpbooter/ -I../../../Composite/src/components/include/ -I../../../Composite/src/kernel/include/shared/ -Iinclude -Irump/includle -I../../include -mno-sse -mno-mmx -march=i686 -Iinclude -Irump/include -I../../include -nostdinc  -c -o jsmn.o jsmn.c
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -nostdlib -std=gnu99 -O2 -g -fno-stack-protector -ffreestanding -Wall -Wimplicit -Wmissing-prototypes -Wstrict-prototypes -Wl,-r -Werror -U_FORTIFY_SOURCE -I../../../Composite/src/components/implementation/no_interface/rumpbooter/ -I../../../Composite/src/components/include/ -I../../../Composite/src/kernel/include/shared/ -Iinclude -Irump/includle -I../../include -mno-sse -mno-mmx -march=i686 -o cosrun.o cosrun.c -Wl,-r sched.o init.o memalloc.o pgalloc.o intr.o jsmn.o
+( cd /home/lucasbaier/research/rump2cos/rumprun/platform/cos/../../lib/librumprun_base \
+	    && /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/rumpmake MAKEOBJDIR=cos obj \
+	    && /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/rumpmake MAKEOBJDIR=cos dependall )
+#    create  librumprun_base/__errno.d
+CC=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nbmkdep -f __errno.d.tmp  --   -std=gnu99 -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../../Composite/src/components/implementation/no_interface/rumpbooter -U_FORTIFY_SOURCE   -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest       /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/__errno.c &&  mv __errno.d.tmp __errno.d
+#    create  librumprun_base/_lwp.d
+CC=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nbmkdep -f _lwp.d.tmp  --   -std=gnu99 -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../../Composite/src/components/implementation/no_interface/rumpbooter -U_FORTIFY_SOURCE   -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest       /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/_lwp.c &&  mv _lwp.d.tmp _lwp.d
+#    create  librumprun_base/libc_stubs.d
+CC=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nbmkdep -f libc_stubs.d.tmp  --   -std=gnu99 -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../../Composite/src/components/implementation/no_interface/rumpbooter -U_FORTIFY_SOURCE   -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest       /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/libc_stubs.c &&  mv libc_stubs.d.tmp libc_stubs.d
+#    create  librumprun_base/malloc.d
+CC=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nbmkdep -f malloc.d.tmp  --   -std=gnu99 -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../../Composite/src/components/implementation/no_interface/rumpbooter -U_FORTIFY_SOURCE   -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest       /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/malloc.c &&  mv malloc.d.tmp malloc.d
+#    create  librumprun_base/netbsd_initfini.d
+CC=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nbmkdep -f netbsd_initfini.d.tmp  --   -std=gnu99 -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../../Composite/src/components/implementation/no_interface/rumpbooter -U_FORTIFY_SOURCE   -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest       /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/netbsd_initfini.c &&  mv netbsd_initfini.d.tmp netbsd_initfini.d
+#    create  librumprun_base/parseargs.d
+CC=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nbmkdep -f parseargs.d.tmp  --   -std=gnu99 -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../../Composite/src/components/implementation/no_interface/rumpbooter -U_FORTIFY_SOURCE   -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest       /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/parseargs.c &&  mv parseargs.d.tmp parseargs.d
+#    create  librumprun_base/rumpconfig.d
+CC=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nbmkdep -f rumpconfig.d.tmp  --   -std=gnu99 -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../../Composite/src/components/implementation/no_interface/rumpbooter -U_FORTIFY_SOURCE   -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest       /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/rumpconfig.c &&  mv rumpconfig.d.tmp rumpconfig.d
+#    create  librumprun_base/rumprun.d
+CC=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nbmkdep -f rumprun.d.tmp  --   -std=gnu99 -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../../Composite/src/components/implementation/no_interface/rumpbooter -U_FORTIFY_SOURCE   -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest       /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/rumprun.c &&  mv rumprun.d.tmp rumprun.d
+#    create  librumprun_base/signals.d
+CC=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nbmkdep -f signals.d.tmp  --   -std=gnu99 -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../../Composite/src/components/implementation/no_interface/rumpbooter -U_FORTIFY_SOURCE   -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest       /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/signals.c &&  mv signals.d.tmp signals.d
+#    create  librumprun_base/syscall_misc.d
+CC=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nbmkdep -f syscall_misc.d.tmp  --   -std=gnu99 -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../../Composite/src/components/implementation/no_interface/rumpbooter -U_FORTIFY_SOURCE   -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest       /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/syscall_misc.c &&  mv syscall_misc.d.tmp syscall_misc.d
+#    create  librumprun_base/syscall_mman.d
+CC=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nbmkdep -f syscall_mman.d.tmp  --   -std=gnu99 -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../../Composite/src/components/implementation/no_interface/rumpbooter -U_FORTIFY_SOURCE   -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest       /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/syscall_mman.c &&  mv syscall_mman.d.tmp syscall_mman.d
+#    create  librumprun_base/sysproxy.d
+CC=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nbmkdep -f sysproxy.d.tmp  --   -std=gnu99 -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../../Composite/src/components/implementation/no_interface/rumpbooter -U_FORTIFY_SOURCE   -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest       /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/sysproxy.c &&  mv sysproxy.d.tmp sysproxy.d
+#    create  librumprun_base/.depend
+rm -f .depend
+CC=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nbmkdep -s .o\ .po\ .pico\ .go\ .ln\ .d -d -f .depend __errno.d _lwp.d libc_stubs.d malloc.d netbsd_initfini.d parseargs.d rumpconfig.d rumprun.d signals.d syscall_misc.d syscall_mman.d sysproxy.d
+#   compile  librumprun_base/__errno.o
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -O2 -g -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../../Composite/src/components/implementation/no_interface/rumpbooter -Wall -Wextra -Wno-unused-parameter -Wmissing-prototypes -Wstrict-prototypes -fno-stack-protector -Wl,-r -U_FORTIFY_SOURCE   -std=gnu99   -Werror -Wno-format     -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest   -c    /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/__errno.c -o __errno.o
+#   compile  librumprun_base/_lwp.o
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -O2 -g -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../../Composite/src/components/implementation/no_interface/rumpbooter -Wall -Wextra -Wno-unused-parameter -Wmissing-prototypes -Wstrict-prototypes -fno-stack-protector -Wl,-r -U_FORTIFY_SOURCE   -std=gnu99   -Werror -Wno-format     -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest   -c    /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/_lwp.c -o _lwp.o
+#   compile  librumprun_base/libc_stubs.o
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -O2 -g -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../../Composite/src/components/implementation/no_interface/rumpbooter -Wall -Wextra -Wno-unused-parameter -Wmissing-prototypes -Wstrict-prototypes -fno-stack-protector -Wl,-r -U_FORTIFY_SOURCE   -std=gnu99   -Werror -Wno-format     -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest   -c    /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/libc_stubs.c -o libc_stubs.o
+#   compile  librumprun_base/malloc.o
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -O2 -g -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../../Composite/src/components/implementation/no_interface/rumpbooter -Wall -Wextra -Wno-unused-parameter -Wmissing-prototypes -Wstrict-prototypes -fno-stack-protector -Wl,-r -U_FORTIFY_SOURCE   -std=gnu99   -Werror -Wno-format     -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest   -c    /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/malloc.c -o malloc.o
+#   compile  librumprun_base/netbsd_initfini.o
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -O2 -g -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../../Composite/src/components/implementation/no_interface/rumpbooter -Wall -Wextra -Wno-unused-parameter -Wmissing-prototypes -Wstrict-prototypes -fno-stack-protector -Wl,-r -U_FORTIFY_SOURCE   -std=gnu99   -Werror -Wno-format     -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest   -c    /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/netbsd_initfini.c -o netbsd_initfini.o
+#   compile  librumprun_base/parseargs.o
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -O2 -g -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../../Composite/src/components/implementation/no_interface/rumpbooter -Wall -Wextra -Wno-unused-parameter -Wmissing-prototypes -Wstrict-prototypes -fno-stack-protector -Wl,-r -U_FORTIFY_SOURCE   -std=gnu99   -Werror -Wno-format     -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest   -c    /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/parseargs.c -o parseargs.o
+#   compile  librumprun_base/rumpconfig.o
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -O2 -g -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../../Composite/src/components/implementation/no_interface/rumpbooter -Wall -Wextra -Wno-unused-parameter -Wmissing-prototypes -Wstrict-prototypes -fno-stack-protector -Wl,-r -U_FORTIFY_SOURCE   -std=gnu99   -Werror -Wno-format     -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest   -c    /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/rumpconfig.c -o rumpconfig.o
+#   compile  librumprun_base/rumprun.o
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -O2 -g -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../../Composite/src/components/implementation/no_interface/rumpbooter -Wall -Wextra -Wno-unused-parameter -Wmissing-prototypes -Wstrict-prototypes -fno-stack-protector -Wl,-r -U_FORTIFY_SOURCE   -std=gnu99   -Werror -Wno-format     -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest   -c    /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/rumprun.c -o rumprun.o
+#   compile  librumprun_base/signals.o
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -O2 -g -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../../Composite/src/components/implementation/no_interface/rumpbooter -Wall -Wextra -Wno-unused-parameter -Wmissing-prototypes -Wstrict-prototypes -fno-stack-protector -Wl,-r -U_FORTIFY_SOURCE   -std=gnu99   -Werror -Wno-format     -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest   -c    /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/signals.c -o signals.o
+#   compile  librumprun_base/syscall_misc.o
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -O2 -g -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../../Composite/src/components/implementation/no_interface/rumpbooter -Wall -Wextra -Wno-unused-parameter -Wmissing-prototypes -Wstrict-prototypes -fno-stack-protector -Wl,-r -U_FORTIFY_SOURCE   -std=gnu99   -Werror -Wno-format     -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest   -c    /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/syscall_misc.c -o syscall_misc.o
+#   compile  librumprun_base/syscall_mman.o
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -O2 -g -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../../Composite/src/components/implementation/no_interface/rumpbooter -Wall -Wextra -Wno-unused-parameter -Wmissing-prototypes -Wstrict-prototypes -fno-stack-protector -Wl,-r -U_FORTIFY_SOURCE   -std=gnu99   -Werror -Wno-format     -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest   -c    /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/syscall_mman.c -o syscall_mman.o
+#   compile  librumprun_base/sysproxy.o
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -O2 -g -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../../Composite/src/components/implementation/no_interface/rumpbooter -Wall -Wextra -Wno-unused-parameter -Wmissing-prototypes -Wstrict-prototypes -fno-stack-protector -Wl,-r -U_FORTIFY_SOURCE   -std=gnu99   -Werror -Wno-format     -I/home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest   -c    /home/lucasbaier/research/rump2cos/rumprun/lib/librumprun_base/sysproxy.c -o sysproxy.o
+#     build  librumprun_base/librumprun_base.a
+rm -f librumprun_base.a
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-ar crs librumprun_base.a `NM=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-nm NM=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-nm MKTEMP=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nbmktemp /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nblorder rumprun.o parseargs.o rumpconfig.o malloc.o netbsd_initfini.o signals.o syscall_mman.o syscall_misc.o __errno.o _lwp.o libc_stubs.o sysproxy.o | /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nbtsort -q`
+( cd /home/lucasbaier/research/rump2cos/rumprun/platform/cos/../../lib/libbmk_rumpuser \
+	    && /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/rumpmake MAKEOBJDIR=cos obj \
+	    && /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/rumpmake MAKEOBJDIR=cos dependall )
+#    create  libbmk_rumpuser/rumpuser_base.d
+CC=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nbmkdep -f rumpuser_base.d.tmp  --   -std=gnu99 -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/components/implementation/no_interface/rumpbooter/ -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/kernel/include/shared/ -U_FORTIFY_SOURCE   -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest       /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/rumpuser_base.c &&  mv rumpuser_base.d.tmp rumpuser_base.d
+#    create  libbmk_rumpuser/rumpuser_clock.d
+CC=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nbmkdep -f rumpuser_clock.d.tmp  --   -std=gnu99 -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/components/implementation/no_interface/rumpbooter/ -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/kernel/include/shared/ -U_FORTIFY_SOURCE   -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest       /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/rumpuser_clock.c &&  mv rumpuser_clock.d.tmp rumpuser_clock.d
+#    create  libbmk_rumpuser/rumpuser_cons.d
+CC=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nbmkdep -f rumpuser_cons.d.tmp  --   -std=gnu99 -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/components/implementation/no_interface/rumpbooter/ -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/kernel/include/shared/ -U_FORTIFY_SOURCE   -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest       /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/rumpuser_cons.c &&  mv rumpuser_cons.d.tmp rumpuser_cons.d
+#    create  libbmk_rumpuser/rumpuser_fs.d
+CC=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nbmkdep -f rumpuser_fs.d.tmp  --   -std=gnu99 -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/components/implementation/no_interface/rumpbooter/ -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/kernel/include/shared/ -U_FORTIFY_SOURCE   -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest       /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/rumpuser_fs.c &&  mv rumpuser_fs.d.tmp rumpuser_fs.d
+#    create  libbmk_rumpuser/rumpuser_mem.d
+CC=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nbmkdep -f rumpuser_mem.d.tmp  --   -std=gnu99 -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/components/implementation/no_interface/rumpbooter/ -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/kernel/include/shared/ -U_FORTIFY_SOURCE   -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest       /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/rumpuser_mem.c &&  mv rumpuser_mem.d.tmp rumpuser_mem.d
+#    create  libbmk_rumpuser/rumpuser_stubs.d
+CC=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nbmkdep -f rumpuser_stubs.d.tmp  --   -std=gnu99 -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/components/implementation/no_interface/rumpbooter/ -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/kernel/include/shared/ -U_FORTIFY_SOURCE   -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest       /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/rumpuser_stubs.c &&  mv rumpuser_stubs.d.tmp rumpuser_stubs.d
+#    create  libbmk_rumpuser/rumpuser_synch.d
+CC=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nbmkdep -f rumpuser_synch.d.tmp  --   -std=gnu99 -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/components/implementation/no_interface/rumpbooter/ -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/kernel/include/shared/ -U_FORTIFY_SOURCE   -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest       /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/rumpuser_synch.c &&  mv rumpuser_synch.d.tmp rumpuser_synch.d
+#    create  libbmk_rumpuser/.depend
+rm -f .depend
+CC=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nbmkdep -s .o\ .po\ .pico\ .go\ .ln\ .d -d -f .depend rumpuser_base.d rumpuser_clock.d rumpuser_cons.d rumpuser_fs.d rumpuser_mem.d rumpuser_stubs.d rumpuser_synch.d
+#   compile  libbmk_rumpuser/rumpuser_base.o
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -O2 -g -fno-stack-protector -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/components/implementation/no_interface/rumpbooter/ -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/kernel/include/shared/ -Wall -Wextra -Wno-unused-parameter -Wmissing-prototypes -Wstrict-prototypes -fno-stack-protector -Wl,-r -U_FORTIFY_SOURCE   -std=gnu99   -Werror -Wno-format     -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest   -c    /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/rumpuser_base.c -o rumpuser_base.o
+#   compile  libbmk_rumpuser/rumpuser_clock.o
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -O2 -g -fno-stack-protector -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/components/implementation/no_interface/rumpbooter/ -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/kernel/include/shared/ -Wall -Wextra -Wno-unused-parameter -Wmissing-prototypes -Wstrict-prototypes -fno-stack-protector -Wl,-r -U_FORTIFY_SOURCE   -std=gnu99   -Werror -Wno-format     -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest   -c    /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/rumpuser_clock.c -o rumpuser_clock.o
+#   compile  libbmk_rumpuser/rumpuser_cons.o
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -O2 -g -fno-stack-protector -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/components/implementation/no_interface/rumpbooter/ -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/kernel/include/shared/ -Wall -Wextra -Wno-unused-parameter -Wmissing-prototypes -Wstrict-prototypes -fno-stack-protector -Wl,-r -U_FORTIFY_SOURCE   -std=gnu99   -Werror -Wno-format     -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest   -c    /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/rumpuser_cons.c -o rumpuser_cons.o
+#   compile  libbmk_rumpuser/rumpuser_fs.o
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -O2 -g -fno-stack-protector -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/components/implementation/no_interface/rumpbooter/ -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/kernel/include/shared/ -Wall -Wextra -Wno-unused-parameter -Wmissing-prototypes -Wstrict-prototypes -fno-stack-protector -Wl,-r -U_FORTIFY_SOURCE   -std=gnu99   -Werror -Wno-format     -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest   -c    /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/rumpuser_fs.c -o rumpuser_fs.o
+#   compile  libbmk_rumpuser/rumpuser_mem.o
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -O2 -g -fno-stack-protector -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/components/implementation/no_interface/rumpbooter/ -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/kernel/include/shared/ -Wall -Wextra -Wno-unused-parameter -Wmissing-prototypes -Wstrict-prototypes -fno-stack-protector -Wl,-r -U_FORTIFY_SOURCE   -std=gnu99   -Werror -Wno-format     -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest   -c    /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/rumpuser_mem.c -o rumpuser_mem.o
+#   compile  libbmk_rumpuser/rumpuser_stubs.o
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -O2 -g -fno-stack-protector -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/components/implementation/no_interface/rumpbooter/ -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/kernel/include/shared/ -Wall -Wextra -Wno-unused-parameter -Wmissing-prototypes -Wstrict-prototypes -fno-stack-protector -Wl,-r -U_FORTIFY_SOURCE   -std=gnu99   -Werror -Wno-format     -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest   -c    /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/rumpuser_stubs.c -o rumpuser_stubs.o
+#   compile  libbmk_rumpuser/rumpuser_synch.o
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -O2 -g -fno-stack-protector -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/components/implementation/no_interface/rumpbooter/ -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../../Composite/src/kernel/include/shared/ -Wall -Wextra -Wno-unused-parameter -Wmissing-prototypes -Wstrict-prototypes -fno-stack-protector -Wl,-r -U_FORTIFY_SOURCE   -std=gnu99   -Werror -Wno-format     -I/home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/../../include -D__NetBSD__ -Ulinux -U__linux -U__linux__ -U__gnu_linux__ --sysroot=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/dest   -c    /home/lucasbaier/research/rump2cos/rumprun/lib/libbmk_rumpuser/rumpuser_synch.c -o rumpuser_synch.o
+#     build  libbmk_rumpuser/libbmk_rumpuser.a
+rm -f libbmk_rumpuser.a
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-ar crs libbmk_rumpuser.a `NM=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-nm NM=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-nm MKTEMP=/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nbmktemp /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nblorder rumpuser_base.o rumpuser_clock.o rumpuser_cons.o rumpuser_mem.o rumpuser_synch.o rumpuser_fs.o backing.o rumpuser_stubs.o | /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/nbtsort -q`
+sh ../makepseudolinkstubs.sh /home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-nm /home/lucasbaier/research/rump2cos/rumprun/src-netbsd /home/lucasbaier/research/rump2cos/rumprun/platform/cos/../../lib/librumprun_base/cos/librumprun_base.a /home/lucasbaier/research/rump2cos/rumprun/platform/pseudolinkstubs.c
+/home/lucasbaier/research/rump2cos/rumprun/platform/cos/rumptools/bin/i486--netbsdelf-gcc -std=gnu99 -O2 -g -fno-stack-protector -ffreestanding -Wall -Wimplicit -Wmissing-prototypes -Wstrict-prototypes -Wl,-r -Werror -U_FORTIFY_SOURCE -I../../../Composite/src/components/implementation/no_interface/rumpbooter/ -I../../../Composite/src/components/include/ -I../../../Composite/src/kernel/include/shared/ -Iinclude -Irump/includle -I../../include -mno-sse -mno-mmx -march=i686 -Iinclude -Irump/include -I../../include -nostdinc  -c -o /home/lucasbaier/research/rump2cos/rumprun/platform/pseudolinkstubs.o /home/lucasbaier/research/rump2cos/rumprun/platform/pseudolinkstubs.c
+make[1]: Leaving directory `/home/lucasbaier/research/rump2cos/rumprun/platform/cos'
+
+>>
+>> Built rumprun for cos : i486-rumprun-netbsdelf
+>> cc: i486-rumprun-netbsdelf-gcc
+>>
+>> ./build-rr.sh ran successfully
+# since we are just compiling we need to manually get the recipe.s file from app-tools
+# the app-tools/bake script looks for it.
+# This is kinda an out of place command. It uses the host computer's gcc
+gcc -m32 -c -o recipe.o ../../rumprun/app-tools/i486-rumprun-netbsdelf-recipe.s
+/home/lucasbaier/research/rump2cos/apps/paws/../../rumprun/app-tools/i486-rumprun-netbsdelf-gcc -g3 -m32 -c paws.c paws_mount_ext2.c paws_test.c paws_stubs.c
+#/home/lucasbaier/research/rump2cos/apps/paws/../../rumprun/app-tools/i486-rumprun-netbsdelf-ld -melf_i386 -r -o a.out *.o 
+/home/lucasbaier/research/rump2cos/apps/paws/../../rumprun/app-tools/i486-rumprun-netbsdelf-ld -melf_i386 -r -o paws.out *.o 
+
+=---------------------------------------=
+
+If you compilation fails here,
+comment out lines 93-104 of
+rumprun/app-tools/i486-rumprun-netbsdelf-gcc
+
+=---------------------------------------=
+
+#/home/lucasbaier/research/rump2cos/apps/paws/../../rumprun/app-tools/i486-rumprun-netbsdelf-gcc -m32 -Wl,-r -o paws.out a.out
+#@rm a.out
+/home/lucasbaier/research/rump2cos/apps/paws/../../rumprun/app-tools/rumpbake paws paws.bin paws.out
+# /home/lucasbaier/research/rump2cos/apps/paws/../../rumprun/app-tools/rumprun qemu -i paws.bin
+/home/lucasbaier/research/rump2cos/apps/paws/../../rumprun/app-tools/rumprun -T ../temp qemu -i -M 128 -I if,vioif,'-net tap,script=no,ifname=tap0' -W if,inet,static,10.0.120.101/24 -- paws.bin 
+qemu-system-i386 -net nic,model=virtio -net tap,script=no,ifname=tap0 -no-kvm -m 128 -kernel paws.bin
+~/research/rump2cos/rumprun/platform/cos
+~/research/composite/src/components/implementation/no_interface/rumpbooter ~/research/rump2cos/rumprun/platform/cos
+~/research/rump2cos/rumprun/platform/cos
+~/transfer ~/research/rump2cos/rumprun/platform/cos
+calling ./qemu.sh rumpkernboot.sh
+System memory info from multiboot (end 0xc251f000):
+	Modules:
+	- 0: [02520000, 02967000) : 40800000-40a3d6e0 @ virtual address 40800000, _start = 40a3d6e0.
+	Memory regions:
+	- 0 (Available): [00000000, 0009fc00)
+	- 1 (Reserved ): [0009fc00, 000a0000)
+	- 2 (Reserved ): [000f0000, 00100000)
+	- 3 (Available): [00100000, 2fffe000)
+	  memory available at boot time: 2d697000 (726 MB + 604 KB)
+	- 4 (Reserved ): [2fffe000, 30000000)
+	- 5 (Reserved ): [fffc0000, 100000000)
+	Amount of wasted memory due to layout is 0 MB + 0x0 B
+Initializing virtual memory
+	Setting up initial page directory.
+ACPI initialization
+	Found good RSDP @ c00f09e0
+	Found good HPET @ f03ffb89
+Initializing HPET @ f03ffb89
+	Checksum is OK
+	Addr: 00000000fed00000
+	hpet: fed00000
+	Set HPET @ f0500000
+Setting up the booter component.
+	Capability table and page-table created.
+	Creating 2 booter VM PTEs for PGD @ 0xc0114000 from [c2520000,c2967000) to [40800000,40c47000).
+	Mapping in booter VM.
+	Creating 182 untyped memory PTEs for PGD @ 0xc0114000 from [c2a22000,efffe000) to [60000000,8d5dc000).
+	Mapping in untyped memory.
+	Created boot component structure from page-table and capability-table.
+	Creating initial threads, tcaps, and rcv end-points in boot-component.
+	Boot component initialization complete.
+Enabling timer @ f0500000 with tick granularity 10000 picoseconds
+Upcall into boot component at ip 0x40a3d6e0
+------------------[ Kernel boot complete ]------------------
+Hypervisor:vkernel START
+Hypervisor:vkernel initializing
+VM 0 Initialization Start
+	Forking VM
+	Copying required capabilities
+	Creating other required initial capabilities
+	Mapping in Booter component Virtual memory
+Timer calibrated:
+	CPU cycles per HPET tick: 21
+	HPET ticks in 1000 us: 100000
+	Creating shared memory region from 20000000 size 200000
+	Allocating/Partitioning Untyped memory
+VM 0 Init DONE
+VM 1 Initialization Start
+	Forking VM
+	Copying required capabilities
+	Creating other required initial capabilities
+	Mapping in Booter component Virtual memory
+	Mapping shared memory region from 20000000 size 100000
+	Allocating/Partitioning Untyped memory
+VM 1 Init DONE
+VM 2 Initialization Start
+	Forking VM
+	Copying required capabilities
+	Creating other required initial capabilities
+	Mapping in Booter component Virtual memory
+	Mapping shared memory region from 20000000 size 100000
+	Allocating/Partitioning Untyped memory
+VM 2 Init DONE
+Setting up Cross VM (between vm0 and other vms) communication channels
+Starting Timer/Scheduler Thread
+	2170 cycles per microsecond
+0: Micro Booter started.
+
+Rump Sched Test Start
+In rumptest_thd_fn
+thdid: 12008
+fetching thd id
+
+Rump Sched Test Start
+In rumptest_thd_fn
+thdid: 20200
+fetching thd id
+thdid, is now: 14
+switching back to old thread
+switched back to old thread, thdid: 14
+0: ---------------------------
+0: switchto 53 @ ffffffef
+0: 	New thread 15 with argument 0, capid 0
+0: switchto 54 @ ffffffef
+0: 	New thread 16 with argument 1, capid 1
+0: switchto 55 @ ffffffef
+switched back to old thread, thdid: 12008
+
+Rump Sched Test End
+
+RumpKernel Boot Start.
+FIX ME: bmk_memsize: 65011712
+
+Setting up arcv for hw irq
+
+Rump Sched Test End
+
+RumpKernel Boot Start.
+FIX ME: bmk_memsize: 65011712
+
+Setting up arcv for hw irq
+0: 	New thread 17 with argument 2, capid 2
+0: switchto 56 @ ffffffef
+0: 	New thread 47 with argument 3, capid 3
+0: switchto 57 @ ffffffef
+0: 	New thread 48 with argument 4, capid 4
+0: test done
+0: ---------------------------
+Json File:
+{,"net":{,"if":"vioif0","type":"inet","method":"static","addr":"10.0.120.101","mask":"24",},"cmdline":"paws.bin",},cos_run, rump_vmid: 1
+Json File:
+{,"net":{,"if":"vioif0","type":"inet","method":"static","addr":"10.0.120.101","mask":"24",},"cmdline":"paws.bin",},cos_run, rump_vmid: 2
+bmk_sched_init done
+bmk_memalloc_init done
+bmk_sched_init done
+bmk_memalloc_init done
+first page: 40c47000
+Looking to get 8193 pages
+first page: 40c47000
+Looking to get 8193 pages
+max: 42c48000
+alloc_bitmap: 0x40c48000, 1
+bitmap_size: 36864
+returned from bmk_pgalloc_loadmem
+rump_vmid; 1
+max: 42c48000
+cmdline: 
+{,"net":{,"if":"vioif0","type":"inet","method":"static","addr":"10.0.120.101","mask":"24",},"cmdline":"paws.bin",},rump_vmid: 1
+rumprun_boot
+
+
+bmk_current: 0x40c53010
+Entering rump_init
+rump_init, vmid: 1
+rumpuser_init
+rumprun_platform_rumpuser_init is being called.
+alloc_bitmap: 0x40c48000, 1
+bitmap_size: 36864
+returned from bmk_pgalloc_loadmem
+rump_vmid; 2
+bmk_intr_init:175
+bmk_intr_init done
+cmdline: 
+{,"net":{,"if":"vioif0","type":"inet","method":"static","addr":"10.0.120.101","mask":"24",},"cmdline":"paws.bin",},rump_vmid: 2
+rumprun_boot
+
+
+bmk_current: 0x40c53010
+bmk_platform_clock_epochoffset is being called.
+Copyright (c) 1996, 1997, 1998, 1bmk_intr_init:175
+bmk_intr_init done
+Entering rump_init
+rump_init, vmid: 2
+rumpuser_init
+rumprun_platform_rumpuser_init is being called.
+999, 2000, 2001, 2002, 2003, 2004, 2005,
+    2006, 2007, 2008, 2009, 2010, 2011, 2012bmk_platform_clock_epochoffset is being called.
+, 2013, 2014, 2015
+    The NetBSD Foundation, Inc.  All rights reserved.
+Copyright (Copyright (c) 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005,
+    2006, 2007c) 1982, 1986, 1989, 1991, 1993
+    The Regents of the University of California.  All rights res, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+    The NetBSD Foundation, Inc.  All rightserved.
+
+NetBSD 7.99.17 (RUMP-ROAST)
+ reserved.
+Copyright (c) 1982, 1986, 1989, 1991, 1993
+    Thte Regents of the University of California.  All rights reserved.
+
+NetBSD 7.99.otal memory = 31616 KB
+17 (RUMP-ROAST)
+total memory = 31616 KB
+timecounter: Timecounters tick every 10.000 msec
+timecounter: Timecounter "clockinterrupt" frequency 100 Hz quality 0
+timecounter: Timecounters tick every 10.000 msec
+cpu0 at thinair0: rump virtual cpu
+timecounter: Timecounter "clockinterrupt" frequency 100 Hz quality 0
+cpu0 at thinair0: rump virtual cpu
+root file system type: rumpfs
+kern.module.path=/stand/i386/7.99.17/modules
+root file system type: rumpfs
+kern.module.path=/stand/i386/7.99.17/modules
+0: Average THD SWTCH (Total: 443282801 / Iterations: 100000 ): 4432
+0: ---------------------------
+0: ---------------------------
+0: ---------------------------
+0: ---------------------------
+0: 40c47000: Page allocation
+0: SUCCESS: Allocated and zeroed 2048 pages.
+0: ---------------------------
+0: ---------------------------
+0: Creating threads, and async end-points.
+0: --> sending
+0: --> Back in the asnder.
+--> sending
+0: Asynchronous event thread handler.
+<-- rcving...
+0: <-- pending 2, thdid 0, rcving 0, cycles 0
+<-- rcving...
+0: <-- pending 1, thdid 0, rcving 0, cycles 0
+<-- rcving...
+0: --> Back in the asnder.
+--> receiving to get notifications
+0: --> pending 0, thdid 112, rcving 1, cycles 0
+0: Async end-point test successful.
+Test done.
+0: ---------------------------
+----- Hello! Greetings from the tap source code! -----
+----- Attempting to make cnic device node /dev/cnic -----
+----- Hello! Greetings from the tap source code! -----
+----- Attempting to make cnic device node /dev/cnic -----
+mainbus0 (root)
+rumpcomp_pci_iospace_init:42
+pci0 at mainbus0 bus 0
+pci0: i/o space, memory space enabled, rd/line, rd/mult, wr/inv ok
+mainbus0 (root)
+rumpcomp_pci_iospace_init:42
+vendor 8086 producpci0 at mainbus0 bus 0
+pci0: i/o t 1237 (host bridge, revision 0x02) at pci0 dev 0 function 0 not configured
+vspace, memory space enabled, rd/line, rd/mult, wr/inv ok
+endor 8086 product 7000 (ISA bridge) at pci0 dev 1 function 0 not configured
+vendor 8086 product 7010 (IDE mass storage, interface 0x80) at pci0 vendor 8086 product 1237 (host bridge, revision 0x02) at pci0 dev 0 fundev 1 function 1 not configured
+vendor 8086 product 7113 (miscellaneous bridge, rection 0 not configured
+vendor 8086 product 7000 (ISA bridge) at pci0 dev 1 funvision 0x03) at pci0 dev 1 function 3 not configured
+ction 0 not configured
+vendor 8086 product 7010 (IDE mass storage, interface 0x80) at pci0 dev 1 functionvendor 1013 product 00b8 (VGA display) at pci0 dev 2 function 0 not configured
+ 1 not configured
+vendor 8086 product 7113 (miscellaneous wm0 at pci0 dev 3 bridge, revision 0x03) at pci0 dev 1 function 3 not configured
+function 0: Intel i82540EM 1000BASE-T Ethernet (rev. 0x03)
+rumpcomp_pci_map:120
+rumpcomp_pci_map: 0xfebc0000:131072
+cos_hw_map:887 - pa: febc0000 fva: 42c4a000 len: 131072.. size: 131072
+cos_hw_map:897 - size: 126976 pa: febc1000
+vendor 1013 product 00b8 (VGA display) at pci0 decos_hw_map:910 - va: 42c4b000 size: 122880 pa: febc2000
+cos_hw_map:910 - va: 42c4c000 size: 118784 pa: febc3000
+cos_hw_map:910 - va: 42c4d000 size: 114688 pa: febc4000
+cos_hw_map:910 - va: 42c4e000 size: 110592 pa: febc5000
+cos_hw_map:910 - va: 42c4f000 size: 106496 pa: febc6000
+cos_hw_map:910 - va: 42c50000 size: 102400 pa: febc7000
+cos_hw_map:910 - va: 42c51000 size: 98304 pa: febc8000
+v 2 function 0 not configured
+cos_hw_map:910 - va: 42c52000 size: 94208 pa: febc9000
+cos_hw_map:910 - va: 42c53000 size: 90112 pa: febca000
+cos_hw_map:910 - va: 42c54000 size: 86016 pa: febcb000
+cos_hw_map:910 - va: 42c55000 size: 81920 pa: febcc000
+cos_hw_map:910 - va: 42c56000 size: 77824 pa: febcd000
+cos_hw_map:910 - va: 42c57000 size: 73728 pa: febce000
+cos_hw_map:910 - va: 42c58000 size: 69632 pa: febcf000
+cos_hw_map:910 - va: 42c59000 size: 65536 pa: febd0000
+wm0 at pci0 dev 3 function cos_hw_map:910 - va: 42c5a000 size: 61440 pa: febd1000
+cos_hw_map:910 - va: 42c5b000 size: 57344 pa: febd2000
+cos_hw_map:910 - va: 42c5c000 size: 53248 pa: febd3000
+cos_hw_map:910 - va: 42c5d000 size: 49152 pa: febd4000
+cos_hw_map:910 - va: 42c5e000 size: 45056 pa: febd5000
+cos_hw_map:910 - va: 42c5f000 size: 40960 pa: febd6000
+cos_hw_map:910 - va: 42c60000 size: 36864 pa: febd7000
+cos_hw_map:910 - va: 42c61000 size: 32768 pa: febd8000
+0: Intel i82540EM 1000BASE-T Ethernet (rev. 0x03)
+cos_hw_map:910 - va: 42c62000 size: 28672 pa: febd9000
+cos_hw_map:910 - va: 42c63000 size: 24576 pa: febda000
+cos_hw_map:910 - va: 42c64000 size: 20480 pa: febdb000
+cos_hw_map:910 - va: 42c65000 size: 16384 pa: febdc000
+cos_hw_map:910 - va: 42c66000 size: 12288 pa: febdd000
+cos_hw_map:910 - va: 42c67000 size: 8192 pa: febde000
+cos_hw_map:910 - va: 42c68000 size: 4096 pa: febdf000
+rumpcomp_pci_map:120
+rumpcomp_pci_map: 0xfebc0000:131072
+cos_hw_map:887 - pa: febc0000 fva: 42c4a000 len: 131072.. size: 131072
+cos_hw_map:910 - va: 42c69000 size: 0 pa: febe0000
+cos_hw_map:897 - size: 126976 pa: febc1000
+cos_hw_map:910 - va: 42c4b000 size: 122880 pa: febc2000
+cos_hw_map:910 - va: 42c4c000 size: 118784 pa: febc3000
+cos_hw_map:910 - va: 42c4d000 size: 114688 pa: febc4000
+cos_hw_map:910 - va: 42c4e000 size: 110592 pa: febc5000
+cos_hw_map:910 - va: 42c4f000 size: 106496 pa: febc6000
+cos_hw_map:910 - va: 42c50000 size: 102400 pa: febc7000
+rumpcomp_pci_irq_map:90 - cookie: 1 fun: 0 device: 3 intrline: b bus: 0
+rumpcomp_pci_irq_map:95
+rumpcomp_pci_irq_establish:104 - cookie: 1 handler: 40850be0 data: 40dc1000
+bmk_isr_init:122 func: 40850be0 arg: 40dc1000 intr: 11
+bmk_isr_init:134
+
+bmk_cpu_intr_init is being called: 11
+
+cos_hw_map:910 - va: 42c51000 size: 98304 pa: febc8000
+cos_hw_map:910 - va: 42c52000 size: 94208 pa: febc9000
+cos_hw_map:910 - va: 42c53000 size: 90112 pa: febca000
+cos_hw_map:910 - va: 42c54000 size: 86016 pa: febcb000
+cos_hw_map:910 - va: 42c55000 size: 81920 pa: febcc000
+cos_hw_map:910 - va: 42c56000 size: 77824 pa: febcd000
+cos_hw_map:910 - va: 42c57000 size: 73728 pa: febce000
+cos_hw_map:910 - va: 42c58000 size: 69632 pa: febcf000
+bmk_isr_init:141
+wm0: interrupting at pausebreak
+wm0: 32-bit 33MHz PCI bus
+cos_hw_map:910 - va: 42c59000 size: 65536 pa: febd0000
+cos_hw_map:910 - va: 42c5a000 size: 61440 pa: febd1000
+cos_hw_map:910 - va: 42c5b000 size: 57344 pa: febd2000
+cos_hw_map:910 - va: 42c5c000 size: 53248 pa: febd3000
+cos_hw_map:910 - va: 42c5d000 size: 49152 pa: febd4000
+cos_hw_map:910 - va: 42c5e000 size: 45056 pa: febd5000
+cos_hw_map:910 - va: 42c5f000 size: 40960 pa: febd6000
+cos_hw_map:910 - va: 42c60000 size: 36864 pa: febd7000
+rumpcomp_pci_dmalloc:145
+rumpcomp_pci_dmalloc: 0x40e20000:5
+rumpcomp_pci_dmalloc: 0x1ac3d000-0x40e20000
+rumpcomp_pci_dmamem_map:170 - dss[0].ds_pa:1ac3d000 dss[0].ds_len:69632 dss[0].ds_vacookie:40e20000
+rumpcomp_pci_dmamem_map:171 - nseg:1 totlen:69632
+cos_hw_map:910 - va: 42c61000 size: 32768 pa: febd8000
+cos_hw_map:910 - va: 42c62000 size: 28672 pa: febd9000
+cos_hw_map:910 - va: 42c63000 size: 24576 pa: febda000
+cos_hw_map:910 - va: 42c64000 size: 20480 pa: febdb000
+cos_hw_map:910 - va: 42c65000 size: 16384 pa: febdc000
+cos_hw_map:910 - va: 42c66000 size: 12288 pa: febdd000
+rumpcomp_pci_dmamem_map:172
+rumpcomp_pci_dmamem_map: 0x40e20000
+cos_hw_map:910 - va: 42c67000 size: 8192 pa: febde000
+cos_hw_map:910 - va: 42c68000 size: 4096 pa: febdf000
+cos_hw_map:910 - va: 42c69000 size: 0 pa: febe0000
+rumpcomp_pci_irq_map:90 - cookie: 1 fun: 0 device: 3 intrline: b bus: 0
+rumpcomp_pci_irq_map:95
+rumpcomp_pci_irq_establish:104 - cookie: 1 handler: 40850be0 data: 40dc1000
+bmk_isr_init:122 func: 40850be0 arg: 40dc1000 intr: 11
+bmk_isr_init:134
+
+bmk_cpu_intr_init is being called: 11
+
+bmk_isr_init:141
+wm0: interrupting at pausebreak
+wm0: 32-bit 33MHz PCI bus
+rumpcomp_pci_dmalloc:145
+rumpcomp_pci_dmalloc: 0x40e20000:5
+rumpcomp_pci_dmalloc: 0x16c3d000-0x40e20000
+rumpcomp_pci_dmamem_map:170 - dss[0].ds_pa:16c3d000 dss[0].ds_len:69632 dss[0].ds_vacookie:40e20000
+rumpcomp_pci_dmamem_map:171 - nseg:1 totlen:69632
+rumpcomp_pci_dmamem_map:172
+rumpcomp_pci_dmamem_map: 0x40e20000
+wm0: 64 words (6 address bits) MicroWire EEPROM
+wm0: Ethernet address ff:ff:00:12:ff:ff
+wm0: 64 words (6 address bits) MicroWire EEPROM
+wm0: Ethernet address 52:54:00:12:34:56
+makphy0 at wm0 phy 1: Marvell 88E1011 Gigabit PHY, rev. 0
+makphy0 at wm0 phy 1: Marvell 88E1011 Gigabit PHY, rev. 0
+0: Average ASND/ARCV (Total: 457279483 / Iterations: 100000 ): 4572
+0: ---------------------------
+0: ---------------------------
+0: Return from invocation: deadbeef (== DEADBEEF?)
+0: Test done.
+0: ---------------------------
+makphy0: 10baseT, 10baseT-FDX, 100baseTX, 100baseTX-FDX, auto
+vendor 8086 prmakphy0: 10baseT, 10baseT-FDX, 100baseTX, 100baseTX-FDX, autooduct 1237 (host bridge, revision 0x02) at pci0 dev 0 function 0 not configured
+vendor 
+8086 product 7000 (ISA bridge) at pci0 dev 1 function 0 not configured
+vendor 8086 product 7010 (IDE mavendor 8086 product 1237 (host bridge, revision 0x02) at pcss storage, interface 0x80) at pci0 dev 1 function 1 not configured
+vendor 8086 pi0 dev 0 function 0 not configured
+vendor 8086 product 7000 (ISA bridge)roduct 7113 (miscellaneous bridge, revision 0x03) at pci0 dev 1 function 3 not configured
+ at pci0 dev 1 function 0 not configured
+vendor 8086 product 7010 (IDE mass storage, interface 0x80) at pci0 vendor 1013 product 00b8 (VGA display) at pcdev 1 function 1 not configured
+vendor 8086 product 7113 (miscellaneous bridge, revisii0 dev 2 function 0 not configured
+on 0x03) at pci0 dev 1 function 3 not configured
+Exit rump_init
+Mounting temporary filesystem
+vendor 1013 product 00b8 (VGA display) at pci0 dev 2 function 0 not configured
+Done Mounting temporary filesystem
+rumprun_lwp_init
+exiting rumprun_lwp_init
+netbsd_initfini.c: _netbsd_userlevel_init
+Calling runinit
+netbsd_initfini.c: runinit
+Calling _libc_init
+Exit rump_init
+Mounting temporary filesystem
+Exiting _libc_init
+__init_array_start: 0x40aaf2c8
+__init_array_end: 0x40aaf2cc
+fn: 0x40aaf2c8
+Exiting runinit
+Exiting runinitExiting _netbsd_userlevel_init
+Done Mounting temporary filesystem
+rumprun_lwp_init
+exiting rumprun_lwp_init
+netbsd_initfini.c: _netbsd_userlevel_init
+mounted tmpfs on /tmp
+Setting up rump server
+Calling runinit
+netbsd_initfini.c: runinit
+Calling _libc_init
+Exiting _libc_init
+__init_array_start: 0x40aaf2c8
+__init_array_end: 0x40aaf2cc
+fn: 0x40aaf2c8
+Exiting runinit
+Exiting runinitExiting _netbsd_userlevel_init
+Done setting up rump server
+Make /dev/paws device
+/dev/mounted tmpfs on /tmp
+Setting up rump server
+paws: hostpath paws (512 KB)
+Parsing cmdline
+Starting parsing process
+_rumprun_config: 554
+_rumprun_config: 565
+_rumprun_config: 570
+_rumprun_config: 574
+_rumprun_config: 578
+_rumprun_config: 584
+_rumprun_config: 591
+_rumprun_config: 598
+_rumprun_config: 602
+ntok: 15
+__arraycount(parsers): 4
+t: 
+cmdline: {,"net":{,"if":"vioif0","type":"inet","method":"static","addr":"10.0.120.101","mask":"24",},"cmdline":"paws.bin",},
+parsers[0].name: cmdline
+t: 
+cmdline: {,"net":{,"if":"vioif0","type":"inet","method":"static","addr":"10.0.120.101","mask":"24",},"cmdline":"paws.bin",},
+parsers[1].name: env
+t: 
+cmdline: {,"net":{,"if":"vioif0","type":"inet","method":"static","addr":"10.0.120.101","mask":"24",},"cmdline":"paws.bin",},
+parsers[2].name: blk
+t: 
+cmdline: {,"net":{,"if":"vioif0","type":"inet","method":"static","addr":"10.0.120.101","mask":"24",},"cmdline":"paws.bin",},
+parsers[3].name: net
+handle_net
+left: 13
+data: {,"net":{,"if":"vioif0","type":"inet","method":"static","addr":"10.0.120.101","mask":"24",},"cmdline":"paws.bin",},
+ifname: vioif0
+method: static
+type: inet
+config_ipv4
+rumpvmid: 1
+t: 
+cmdline: {,"net":{,"if":"vioif0
+parsers[0].name: cmdline
+_rumprun_config: 620
+_rumprun_config: 624
+Done parsing cmdline
+sched_yield is called
+Done setting up rump server
+Make /dev/paws device
+/bmk_sched_yield is being called 
+dev/paws: hostpath paws (512 KB)
+Parsing cmdline
+Starting parsing process
+_rumprun_config: 554
+_rumprun_config: 565
+_rumprun_config: 570
+_rumprun_config: 574
+_rumprun_config: 578
+_rumprun_config: 584
+_rumprun_config: 591
+_rumprun_config: 598
+_rumprun_config: 602
+ntok: 15
+__arraycount(parsers): 4
+t: 
+cmdline: {,"net":{,"if":"vioif0","type":"inet","method":"static","addr":"10.0.120.101","mask":"24",},"cmdline":"paws.bin",},
+parsers[0].name: cmdline
+t: 
+cmdline: {,"net":{,"if":"vioif0","type":"inet","method":"static","addr":"10.0.120.101","mask":"24",},"cmdline":"paws.bin",},
+parsers[1].name: env
+t: 
+cmdline: {,"net":{,"if":"vioif0","type":"inet","method":"static","addr":"10.0.120.101","mask":"24",},"cmdline":"paws.bin",},
+parsers[2].name: blk
+t: 
+cmdline: {,"net":{,"if":"vioif0","type":"inet","method":"static","addr":"10.0.120.101","mask":"24",},"cmdline":"paws.bin",},
+parsers[3].name: net
+handle_net
+left: 13
+data: {,"net":{,"if":"vioif0","type":"inet","method":"static","addr":"10.0.120.101","mask":"24",},"cmdline":"paws.bin",},
+ifname: vioif0
+method: static
+type: inet
+config_ipv4
+rumpvmid: 2
+config_ipv4: 155
+sched_yield is exiting
+Rumprun.c: 146
+Rumprun.c: 148
+Rumprun.c: 150
+config_ipv4: 161
+config_ipv4: 166
+config_ipv4: 169 rv: 6
+ifconfig "vioif0" for "10.0.120.101/24" failed
+rumprun: ifconfig "vioif0" for "10.0.120.101/24" failed
+FIX PROGNAME
+
+=== ERROR: _
+=== calling "hello" main() ===
+
+exit(1) called ===
+panic: releasing non-pertinent lwp
+rump kernel halting...
+rumpuser_exit
+bmk_platform_halt is being called.
+It's message is: rumpuser panicfd for /dev/paws: 4
+hello hobbes back for more
+
+directory /mnt created
+Printing /
+Current directory //mnt
+Current directory //tmp
+Current directory //dev
+
+Printing /dev
+Current directory /dev/pci3
+Current directory /dev/pci2
+Current directory /dev/pci1
+Current directory /dev/pci0
+Current directory /dev/rvnd0g
+Current directory /dev/rvnd0f
+Current directory /dev/rvnd0e
+Current directory /dev/rvnd0d
+Current directory /dev/rvnd0c
+Current directory /dev/rvnd0b
+Current directory /dev/rvnd0a
+Current directory /dev/vnd0g
+Current directory /dev/vnd0f
+Current directory /dev/vnd0e
+Current directory /dev/vnd0d
+Current directory /dev/vnd0c
+Current directory /dev/vnd0b
+Current directory /dev/vnd0a
+Current directory /dev/urandom
+Current directory /dev/random
+Current directory /dev/mixer
+Current directory /dev/mixer3
+Current directory /dev/mixer2
+Current directory /dev/mixer1
+Current directory /dev/mixer0
+Current directory /dev/audioctl
+Current directory /dev/audioctl3
+Current directory /dev/audioctl2
+Current directory /dev/audioctl1
+Current directory /dev/audioctl0
+Current directory /dev/sound
+Current directory /dev/sound3
+Current directory /dev/sound2
+Current directory /dev/sound1
+Current directory /dev/sound0
+Current directory /dev/audio
+Current directory /dev/audio3
+Current directory /dev/audio2
+Current directory /dev/audio1
+Current directory /dev/audio0
+Current directory /dev/rcd0h
+Current directory /dev/rcd0g
+Current directory /dev/rcd0f
+Current directory /dev/rcd0e
+Current directory /dev/rcd0d
+Current directory /dev/rcd0c
+Current directory /dev/rcd0b
+Current directory /dev/rcd0a
+Current directory /dev/cd0h
+Current directory /dev/cd0g
+Current directory /dev/cd0f
+Current directory /dev/cd0e
+Current directory /dev/cd0d
+Current directory /dev/cd0c
+Current directory /dev/cd0b
+Current directory /dev/cd0a
+Current directory /dev/rsd0h
+Current directory /dev/rsd0g
+Current directory /dev/rsd0f
+Current directory /dev/rsd0e
+Current directory /dev/rsd0d
+Current directory /dev/rsd0c
+Current directory /dev/rsd0b
+Current directory /dev/rsd0a
+Current directory /dev/sd0h
+Current directory /dev/sd0g
+Current directory /dev/sd0f
+Current directory /dev/sd0e
+Current directory /dev/sd0d
+Current directory /dev/sd0c
+Current directory /dev/sd0b
+Current directory /dev/sd0a
+Current directory /dev/cnic3
+Current directory /dev/cnic2
+Current directory /dev/cnic1
+Current directory /dev/cnic0
+Current directory /dev/cnic
+Current directory /dev/tap3
+Current directory /dev/tap2
+Current directory /dev/tap1
+Current directory /dev/tap0
+Current directory /dev/tap
+Current directory /dev/bpf
+Current directory /dev/zero
+Current directory /dev/null
+
+fd for /dev/paws is: 6
+fstat info: st_dev 91
+fstat info: st_size 524288
+
+first print:
+Current directory /mnt/.
+Current directory /mnt/..
+Current directory /mnt/lost+found
+
+Making files...
+
+Second print: 
+Current directory /mnt/.
+Current directory /mnt/..
+Current directory /mnt/lost+found
+Current directory /mnt/file
+Current directory /mnt/file1
+Current directory /mnt/file2
+
+Unmounted, reprinting /mnt
+
+Remounting and printing /mnt
+
+Third print:
+Current directory /mnt/.
+Current directory /mnt/..
+Current directory /mnt/lost+found
+Current directory /mnt/file
+Current directory /mnt/file1
+Current directory /mnt/file2
+Writting to file1: done
+
+Reading from file 1:
+abcdabcdabcabcdabcabcdabcdabcdabcabcdabcdabcdabcabcdabcabcdabcabcdabcabcdabcabcdabcddddddddd
+efgefgefgefgefgefefefefefgefgefgefgefefefefgefefggefefgefefefgefgefefgefgefgefgefggefgefggggggggggg
+
+lo0: 127.0.0.1
+Clean verison of paws. Using netconfig interface in buildrump.sh
+Should have a real networking device at this point
+Lets make a cnic device...
+open fd: 13
+Tun Debug: 0
+cnic0: cnicinit
+cnic0: address set
+ipv4_ifaddr: 0
+ipv4_gw: 0
+TODO: Check above function to see what it does
+ifup: 0
+done
+Reading...
+cnic0: read
+0: Average SINV (Total: 2767805576 / Iterations: 100000 ): 27678
+0: Average SRET (Total: 2232501992 / Iterations: 100000 ): 22325
+0: ---------------------------
+0: ---------------------------
+0: 
+Captbl expand SUCCESS.
+0: ---------------------------
+0: Micro Booter done.
+VM 0 Exiting
+~/research/rump2cos/rumprun/platform/cos

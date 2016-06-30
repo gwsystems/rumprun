@@ -4,7 +4,7 @@
 # -R for recompiling the entire rumpkernel 
 # -C for recompiling composite
 
-rm ~/research/rump2cos/apps/hello/hello.{bin,o,out}
+rm ~/research/rump2cos/apps/paws/paws.{bin,o,out}
 
 while getopts "SRC" opt; do
   case $opt in
@@ -39,13 +39,17 @@ while getopts "SRC" opt; do
   esac
 done
 
-pushd ~/research/rump2cos/apps/hello
-make
+pushd ~/research/rump2cos/apps
+sudo rm -rf temp
+popd
+
+pushd ~/research/rump2cos/apps/paws
+sudo make -i
 popd
 
 pushd ~/research/composite/src/components/implementation/no_interface/rumpbooter
 echo "calling ./buildcosrump.sh" >&2
-./buildRumpCos.sh
+./buildRumpCos.sh paws
 popd
 
 pushd ~/transfer

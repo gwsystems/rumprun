@@ -720,7 +720,7 @@ bmk_sched_init(void)
 {
 	unsigned long tlsinit;
 	struct bmk_tcb tcbinit;
-
+	
 	inittcb(&tcbinit, &tlsinit, 0);
 	/* Replace as cos_thd_mod call */
 	//bmk_platform_cpu_sched_settls(&tcbinit);
@@ -748,15 +748,16 @@ bmk_sched_init(void)
 extern struct bmk_thread *glob_prev;
 extern struct bmk_thread *glob_next;
 extern struct bmk_thread *isr_thd;
+extern int rump_vmid;
 int bmk_isr(int which);
 /* ---- */
-
+//extern int rump_vmid;
 void __attribute__((noreturn))
 bmk_sched_startmain(void (*mainfun)(void *), void *arg)
 {
 	struct bmk_thread *mainthread;
 	struct bmk_thread initthread;
-
+	bmk_printf("rump_vmid; %d\n", rump_vmid);
 	bmk_memset(&initthread, 0, sizeof(initthread));
 	bmk_strcpy(initthread.bt_name, "init");
 	stackalloc(&bmk_mainstackbase, &bmk_mainstacksize);
@@ -780,8 +781,8 @@ bmk_sched_startmain(void (*mainfun)(void *), void *arg)
 	sched_switch(&initthread, mainthread);
 
 	/* RG: Moved to before first sched_switch as we never get here, we don't have timer interrupts */
-	//bmk_intr_init();
-	//bmk_printf("bmk_intr_init done\n");
+//	bmk_intr_init();
+//	bmk_printf("bmk_intr_init done\n");
 
 	while(1) {
 		bmk_isr(0);

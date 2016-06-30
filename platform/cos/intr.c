@@ -149,7 +149,7 @@ bmk_isr_init(int (*func)(void *), void *arg, int intr)
 void
 bmk_isr(int which)
 {
-	bmk_printf("%s:>%d\n", __func__, which);
+//	bmk_printf("%s:>%d\n", __func__, which);
 
 	/* schedule the interrupt handler */
 	isr_todo |= 1<<which;
@@ -164,7 +164,7 @@ bmk_intr_init(void)
 	for (i = 0; i < BMK_INTRLEVS; i++) {
 		SLIST_INIT(&isr_ih[i]);
 	}
-	bmk_printf("%s:%d\n", __func__, __LINE__);
+//	bmk_printf("%s:%d\n", __func__, __LINE__);
 
 	isr_thread = bmk_sched_create("isrthr", NULL, 0, isr, NULL, NULL, 0);
 	isr_thd = isr_thread;

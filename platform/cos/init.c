@@ -17,8 +17,9 @@ void
 bmk_mainthread(void *cmdline)
 {
 	void *cookie;
-
+	extern int rump_vmid;
 	bmk_printf("cmdline: \n%s", (char *)cmdline);
+	bmk_printf("rump_vmid: %d\n", rump_vmid);
 
 	rumprun_boot(cmdline);
 
