@@ -80,7 +80,26 @@ extern const char _tbss_start[], _tbss_end[];
     (((TDATASIZE + TBSSSIZE + sizeof(void *)-1)/sizeof(void *))*sizeof(void *))
 #define TLSAREASIZE (TCBOFFSET + BMK_TLS_EXTRA)
 
-/* The struct definition for bmk_thread was moved
+extern char lk;
+//char intr = '1';
+int intr = 1;
+
+//static void lock(int *i) {
+//        while (!(*i)) ;
+//        *i = 0;
+//}
+//
+//static void unlock(int *i) {
+//        *i = 1;
+//}
+
+//void lock(char *i);
+//void unlock(char *i);
+void lock(int *i);
+void unlock(int *i);
+
+/* 
+ * RG: The struct definition for bmk_thread was moved
  * to rumpcalls.h on the composite side so the composite system
  * could access bmk_current thread without whinning about imcomplete
  * types.
@@ -109,7 +128,7 @@ struct bmk_thread {
 
 __thread struct bmk_thread *bmk_current;
 
-/* RG For debugging...*/
+/* **** RG For debugging **** */
 
 char *
 get_name(struct bmk_thread *thread)
@@ -177,11 +196,13 @@ set_runnable(struct bmk_thread *thread)
 	int flags;
 
 	tflags = thread->bt_flags;
+
 	/*
 	 * Already runnable?  Nothing to do, then.
 	 */
-	if ((tflags & THR_RUNQ) == THR_RUNQ)
+	if ((tflags & THR_RUNQ) == THR_RUNQ) {
 		return;
+	}
 
 	/* get current queue */
 	switch (tflags & THR_QMASK) {
@@ -197,8 +218,9 @@ set_runnable(struct bmk_thread *thread)
 		 * called from an interrupt handler.  Can just ignore
 		 * this whole thing.
 		 */
-		if ((tflags & (THR_RUNNING|THR_QMASK)) == THR_RUNNING)
+		if ((tflags & (THR_RUNNING|THR_QMASK)) == THR_RUNNING) {
 			return;
+		}
 
 		print_threadinfo(thread);
 		bmk_platform_halt("invalid thread queue");
@@ -217,6 +239,7 @@ set_runnable(struct bmk_thread *thread)
 /*
  * Insert thread into timeq at the correct place.
  */
+
 static void
 timeq_sorted_insert(struct bmk_thread *thread)
 {
@@ -252,6 +275,7 @@ timeq_sorted_insert(struct bmk_thread *thread)
 /*
  * Called with interrupts disabled
  */
+
 static void
 clear_runnable(void)
 {
@@ -264,6 +288,7 @@ clear_runnable(void)
 	 * Currently we require that a thread will block only
 	 * once before calling the scheduler.
 	 */
+	
 	bmk_assert((thread->bt_flags & THR_RUNQ) == 0);
 
 	newfl = thread->bt_flags;
@@ -326,12 +351,19 @@ sched_switch(struct bmk_thread *prev, struct bmk_thread *next)
 	if (scheduler_hook)
 		scheduler_hook(prev->bt_cookie, next->bt_cookie);
 	bmk_platform_cpu_sched_settls(&next->bt_tcb);
+
 	bmk_cpu_sched_switch_viathd(prev, next);
 }
 
 static void
 schedule(void)
 {
+
+	static int i = 0;
+	if(!i) {
+		i++;
+		bmk_printf("\tSCHEDULE\n");
+	}
 
 
 	struct bmk_thread *prev, *next, *thread;
@@ -678,7 +710,6 @@ bmk_sched_blockprepare_timeout(bmk_time_t deadline)
 void
 bmk_sched_blockprepare(void)
 {
-
 	bmk_sched_blockprepare_timeout(BMK_SCHED_BLOCK_INFTIME);
 }
 
@@ -744,12 +775,7 @@ bmk_sched_init(void)
 	crcalls.rump_tls_init((&tcbinit)->btcb_tp, boot_thd);
 }
 
-/* RG */
-extern struct bmk_thread *glob_prev;
-extern struct bmk_thread *glob_next;
-extern struct bmk_thread *isr_thd;
-int bmk_isr(int which);
-/* ---- */
+extern capid_t cos_cur;
 
 void __attribute__((noreturn))
 bmk_sched_startmain(void (*mainfun)(void *), void *arg)
@@ -766,10 +792,12 @@ bmk_sched_startmain(void (*mainfun)(void *), void *arg)
 	if (mainthread == NULL)
 		bmk_platform_halt("failed to create main thread");
 
-	/* FIXME: Remove when we put timer intterupts back in, put down below */
+	/* Initially set cos_cur to mainthread */
+	cos_cur = get_cos_thdcap(mainthread);
+
+	/* Make the RK intterupt thread */
 	bmk_intr_init();
 	bmk_printf("bmk_intr_init done\n");
-
 
 	/*
 	 * Manually switch to mainthread without going through
@@ -779,13 +807,14 @@ bmk_sched_startmain(void (*mainfun)(void *), void *arg)
 	setflags(mainthread, THR_RUNNING, THR_RUNQ);
 	sched_switch(&initthread, mainthread);
 
-	/* RG: Moved to before first sched_switch as we never get here, we don't have timer interrupts */
-	//bmk_intr_init();
-	//bmk_printf("bmk_intr_init done\n");
 
 	while(1) {
-		bmk_isr(0);
-		bmk_cpu_sched_switch_viathd(glob_prev, glob_next);
+		/*
+		 * We return here when composite schedules our RK
+		 * Composite keeps track of the last running RK thread (called cos_cur), through its thdid
+		 * prev is not used
+   		 */
+		 crcalls.rump_resume();
 	}
 
 	bmk_platform_halt("bmk_sched_init unreachable");
@@ -827,9 +856,6 @@ bmk_sched_geterrno(void)
 void
 bmk_sched_yield(void)
 {
-
-	bmk_printf("bmk_sched_yield is being called \n");
-
 	struct bmk_thread *thread = bmk_current;
 	int flags;
 

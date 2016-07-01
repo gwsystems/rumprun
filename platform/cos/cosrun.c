@@ -299,7 +299,7 @@ bmk_cpu_intr_init(int intr)
 void
 bmk_cpu_intr_ack(void)
 {
-	bmk_printf("BMK_CPU_INTR_ACK\n");
+	//bmk_printf("BMK_CPU_INTR_ACK\n");
         /*
          * ACK interrupts on PIC
          */
