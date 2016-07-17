@@ -282,6 +282,7 @@ clear_runnable(void)
 	struct bmk_thread *thread = bmk_current;
 	int newfl;
 
+	//print_threadinfo(thread);
 	bmk_assert(thread->bt_flags & THR_RUNNING);
 
 	/*
@@ -808,14 +809,14 @@ bmk_sched_startmain(void (*mainfun)(void *), void *arg)
 	sched_switch(&initthread, mainthread);
 
 
-	while(1) {
-		/*
-		 * We return here when composite schedules our RK
-		 * Composite keeps track of the last running RK thread (called cos_cur), through its thdid
-		 * prev is not used
-   		 */
-		 crcalls.rump_resume();
-	}
+	/*
+	 * We return here when composite schedules our RK
+	 * Composite keeps track of the last running RK thread (called cos_cur), through its thdid
+	 * prev is not used
+	 * We check to see if any of the isr threads are blocked, if so switch to them, if not resume
+	 */
+	 //crcalls.rump_rcv();
+	crcalls.rump_resume();
 
 	bmk_platform_halt("bmk_sched_init unreachable");
 }

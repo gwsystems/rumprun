@@ -151,6 +151,12 @@ bmk_isr(int which)
 	/* schedule the interrupt handler */
 	isr_todo |= 1<<which;
 	bmk_sched_wake(isr_thread);
+
+	/* 
+	 * Would be better if we can acknowledge here 
+	 * Can we?
+	 */
+	//bmk_cpu_intr_ack();
 }
 
 int
