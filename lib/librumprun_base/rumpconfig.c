@@ -146,41 +146,37 @@ config_ipv4(const char *ifname, const char *method,
 	bmk_printf("config_ipv4\n");
 
 	int rv;
-	//extern int rump_vmid;
-	//bmk_printf("rumpvmid: %d\n", rump_vmid);
-	//if(rump_vmid == 2){
-		if (strcmp(method, "dhcp") == 0) {
-			if ((rv = rump_pub_netconfig_dhcp_ipv4_oneshot(ifname)) != 0)
-				errx(1, "configuring dhcp for %s failed: %d",
-				    ifname, rv);
-		} else {
-			bmk_printf("config_ipv4: 155\n");
-			if (strcmp(method, "static") != 0) {
-				errx(1, "method \"static\" or \"dhcp\" expected, "
-				    "got \"%s\"", method);
-			}
-	
-			bmk_printf("config_ipv4: 161\n");
-			if (!addr || !mask) {
-				errx(1, "static net cfg missing addr or mask");
-			}
-	
-			bmk_printf("config_ipv4: 166\n");
-			if ((rv = rump_pub_netconfig_ipv4_ifaddr_cidr(ifname,
-			    addr, atoi(mask))) != 0) {
-				bmk_printf("config_ipv4: 169 rv: %d\n", rv);
-				bmk_printf("ifconfig \"%s\" for \"%s/%s\" failed\n",
-				    ifname, addr, mask);
-				errx(1, "ifconfig \"%s\" for \"%s/%s\" failed",
-				    ifname, addr, mask);
-			}
-	
-			bmk_printf("config_ipv4: 173\n");
-			if (gw && (rv = rump_pub_netconfig_ipv4_gw(gw)) != 0) {
-				errx(1, "gw \"%s\" addition failed", gw);
-			}
+	if (strcmp(method, "dhcp") == 0) {
+		if ((rv = rump_pub_netconfig_dhcp_ipv4_oneshot(ifname)) != 0)
+			errx(1, "configuring dhcp for %s failed: %d",
+			    ifname, rv);
+	} else {
+		bmk_printf("config_ipv4: 155\n");
+		if (strcmp(method, "static") != 0) {
+			errx(1, "method \"static\" or \"dhcp\" expected, "
+			    "got \"%s\"", method);
 		}
-	//}
+
+		bmk_printf("config_ipv4: 161\n");
+		if (!addr || !mask) {
+			errx(1, "static net cfg missing addr or mask");
+		}
+
+		bmk_printf("config_ipv4: 166\n");
+		if ((rv = rump_pub_netconfig_ipv4_ifaddr_cidr(ifname,
+		    addr, atoi(mask))) != 0) {
+			bmk_printf("config_ipv4: 169 rv: %d\n", rv);
+			bmk_printf("ifconfig \"%s\" for \"%s/%s\" failed\n",
+			    ifname, addr, mask);
+			errx(1, "ifconfig \"%s\" for \"%s/%s\" failed",
+			    ifname, addr, mask);
+		}
+
+		bmk_printf("config_ipv4: 173\n");
+		if (gw && (rv = rump_pub_netconfig_ipv4_gw(gw)) != 0) {
+			errx(1, "gw \"%s\" addition failed", gw);
+		}
+	}
 }
 
 static void

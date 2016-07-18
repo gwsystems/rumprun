@@ -53,6 +53,6 @@ echo "calling ./buildcosrump.sh" >&2
 popd
 
 pushd ~/transfer
-echo "calling ./qemu.sh rumpkernboot.sh"
-./qemu.sh rumpkernboot.sh
+echo "calling ./qemu_rk.sh rumpkernboot.sh"
+./qemu_rk.sh rumpkernboot.sh
 popd
