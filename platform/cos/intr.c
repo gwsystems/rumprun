@@ -33,8 +33,6 @@
 
 #include <bmk-rumpuser/rumpuser.h>
 
-#define BMK_SCREW_INTERRUPT_ROUTING
-
 #ifdef BMK_SCREW_INTERRUPT_ROUTING
 #define BMK_INTRLEVS 1
 #else
@@ -55,6 +53,10 @@ static unsigned int isr_lowest = sizeof(isr_todo)*8;
 
 static struct bmk_thread *isr_thread;
 struct bmk_thread *isr_thd;
+
+void lock(int *i);
+void unlock(int *i);
+extern int intr;
 
 /* thread context we use to deliver interrupts to the rump kernel */
 
@@ -99,11 +101,10 @@ isr(void *arg)
 				}
 			}
 			rumpkern_unsched(&nlocks, NULL);
-			//bmk_printf("IGNORING BMK_CPU_INTR_ACK()\n");
 			bmk_cpu_intr_ack();
-
+			
 			if (!didwork) {
-			//	bmk_printf("stray interrupt\n");
+				bmk_printf("stray interrupt\n");
 			}
 		} else {
 			/* no interrupts left. block until the next one. */
@@ -131,14 +132,12 @@ bmk_isr_init(int (*func)(void *), void *arg, int intr)
 	if (!ih)
 		return BMK_ENOMEM;
 
-	bmk_printf("%s:%d\n", __func__, __LINE__);
 	if ((error = bmk_cpu_intr_init(intr)) != 0) {
 		bmk_memfree(ih, BMK_MEMWHO_WIREDBMK);
 		return error;
 	}
 	ih->ih_fun = func;
 	ih->ih_arg = arg;
-	bmk_printf("%s:%d\n", __func__, __LINE__);
 	SLIST_INSERT_HEAD(&isr_ih[intr % BMK_INTRLEVS], ih, ih_entries);
 	if ((unsigned)intr < isr_lowest)
 		isr_lowest = intr;
@@ -149,11 +148,15 @@ bmk_isr_init(int (*func)(void *), void *arg, int intr)
 void
 bmk_isr(int which)
 {
-//	bmk_printf("%s:>%d\n", __func__, which);
-
 	/* schedule the interrupt handler */
 	isr_todo |= 1<<which;
 	bmk_sched_wake(isr_thread);
+
+	/* 
+	 * Would be better if we can acknowledge here 
+	 * Can we?
+	 */
+	//bmk_cpu_intr_ack();
 }
 
 int
@@ -164,14 +167,12 @@ bmk_intr_init(void)
 	for (i = 0; i < BMK_INTRLEVS; i++) {
 		SLIST_INIT(&isr_ih[i]);
 	}
-//	bmk_printf("%s:%d\n", __func__, __LINE__);
+	bmk_printf("BMK_INTRLEVS: %d\n", BMK_INTRLEVS);
 
 	isr_thread = bmk_sched_create("isrthr", NULL, 0, isr, NULL, NULL, 0);
 	isr_thd = isr_thread;
 
-
 	if (!isr_thread)
 		return BMK_EGENERIC;
-	bmk_printf("%s:%d\n", __func__, __LINE__);
 	return 0;
 }

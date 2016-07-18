@@ -119,7 +119,7 @@ bmk_platform_cpu_sched_settls(struct bmk_tcb *next)
 unsigned long
 bmk_platform_splhigh(void)
 {
-//	while(1);
+	crcalls.rump_intr_disable();
 	return 0;
 }
 
@@ -132,7 +132,12 @@ bmk_platform_block(bmk_time_t until)
 	now = bmk_platform_clock_monotonic();
 	if(until < now) return;
 
+	/* Enable interupts around "sleep" */
+	bmk_platform_splx(0);
+
 	while(bmk_platform_clock_monotonic() < until);
+
+	bmk_platform_splhigh();
 
 	return;
 }
@@ -140,7 +145,7 @@ bmk_platform_block(bmk_time_t until)
 void
 bmk_platform_splx(unsigned long x)
 {
-	//while(1);
+	crcalls.rump_intr_enable();
 }
 
 void

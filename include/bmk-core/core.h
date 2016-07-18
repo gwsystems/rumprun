@@ -29,13 +29,18 @@
 #include <bmk-core/platform.h>
 
 int bmk_core_init(unsigned long, unsigned long);
+void bmk_sched_dumpqueue(void);
+
 
 #define bmk_assert(x)							\
   do {									\
 	if (__builtin_expect(!(x), 0)) {				\
+		bmk_printf("%s %d: ", __FILE__, __LINE__);		\
+		bmk_sched_dumpqueue();					\
 		bmk_platform_halt("assert \"" #x "\" FAILED\n");	\
 	}								\
   } while (0)
+
 
 extern unsigned long bmk_stackpageorder, bmk_stacksize;
 extern unsigned long bmk_pageshift, bmk_pagesize;
