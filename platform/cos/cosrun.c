@@ -9,6 +9,7 @@
 #include <arch/i386/types.h>
 
 #include <rumpcalls.h>
+#include <cos_sync.h>
 
 
 // THESE MIGHT NEED TO BE DEFINED FIXMEE
@@ -26,8 +27,6 @@ unsigned long bmk_memsize;
 struct cos_rumpcalls crcalls;
 
 void* _GLOBAL_OFFSET_TABLE_ = (void *) 0x1337BEEF;
-
-int bmk_spldepth = 1;
 
 #define rdtscll(val) __asm__ __volatile__("rdtsc" : "=A" (val))
 
@@ -132,6 +131,7 @@ bmk_platform_block(bmk_time_t until)
 	now = bmk_platform_clock_monotonic();
 	if(until < now) return;
 
+	/* TODO switch to main thread and process any possible interrupts */
 	/* Enable interupts around "sleep" */
 	bmk_platform_splx(0);
 
@@ -220,22 +220,6 @@ bmk_strcmp(const char *a, const char *b)
 	return rv;
 }
 
-/*void 
-print_trace (void)
-{
-	void *array[10];
-	size_t size;
-	char **strings;
-	size_t i;
-
-	size = backtrace(array, 10);
-	strings = backtrace_symbols(array, size);
-
-	for(i=0; i < size; i++)
-		bmk_printf("%s\n", strings[i]);
-
-}*/
-
 void *
 bmk_memset(void *b, int c, unsigned long n)
 {
@@ -245,10 +229,6 @@ bmk_memset(void *b, int c, unsigned long n)
 		*v++ = (unsigned char)c;
 
 	return b;
-
-	// Changed in response to malloc bug. See notes
-	//crcalls.rump_memset(b, c, n);
-	//return b;
 }
 
 void *
@@ -270,9 +250,7 @@ bmk_vprintf(const char *fmt, va_list ap)
 	char s[128];
 	int ret, len = 128;
 
-	//va_start(ap, fmt);
 	ret = crcalls.rump_vsnprintf(s, len, fmt, ap);
-	//va_end(ap);
 	crcalls.rump_cos_print(s, ret);
 
 	return;
@@ -289,24 +267,18 @@ bmk_strncpy(char *d, const char *s, unsigned long n)
 
 	return rv;
 }
-//int pic2mask = 0xff;
-//#define PIC2_DATA	0xa1
 
 int
 bmk_cpu_intr_init(int intr)
 {
 	bmk_printf("\nbmk_cpu_intr_init is being called: %d\n\n", intr);
-//	while(1);
 
-//	pic2mask &= ~(1<<(intr-8));
-//	outb(PIC2_DATA, pic2mask);
 	return 0;
 }
 
 void
 bmk_cpu_intr_ack(void)
 {
-	//bmk_printf("BMK_CPU_INTR_ACK\n");
         /*
          * ACK interrupts on PIC
          */
@@ -317,11 +289,6 @@ bmk_cpu_intr_ack(void)
             ::: "al");
 
 }
-
-/* RG:
- * This simply returns 0 within the hw implementation.
- * The xen implementation uses this to begin bio
- */
 
 int
 rumprun_platform_rumpuser_init(void)

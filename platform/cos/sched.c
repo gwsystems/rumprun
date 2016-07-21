@@ -379,10 +379,13 @@ schedule(void)
 	for (;;) {
 		bmk_time_t curtime, waketime;
 
+		/* RG TODO check function for accuarcy */
 		curtime = bmk_platform_clock_monotonic();
-		waketime = curtime + BLOCKTIME_MAX;
+		waketime = curtime + BLOCKTIME_MAX; /* RG Max block time is 1 s */
 
-		/*
+		/* 
+		 * RG timout queue has priority over block queue...
+		 *
 		 * Process timeout queue first by moving threads onto
 		 * the runqueue if their timeouts have expired.  Since
 		 * the timeouts are sorted, we process until we hit the
@@ -392,6 +395,9 @@ schedule(void)
 
 			if (thread->bt_wakeup_time <= curtime) {
 				/*
+				 * RG this seems like it matters...why run the thraed with
+				 * the least expired deadline?
+				 *
 				 * move thread to runqueue.
 				 * threads will run in inverse order of timeout
 				 * expiry.  not sure if that matters or not.
