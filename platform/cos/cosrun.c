@@ -135,7 +135,7 @@ bmk_platform_block(bmk_time_t until)
 	/* Enable interupts around "sleep" */
 	bmk_platform_splx(0);
 
-	while(bmk_platform_clock_monotonic() < until);
+	while(bmk_platform_clock_monotonic() < until) crcalls.rump_sched_yield();
 
 	bmk_platform_splhigh();
 

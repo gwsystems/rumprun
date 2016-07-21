@@ -123,7 +123,8 @@ struct bmk_thread {
 	TAILQ_ENTRY(bmk_thread) bt_threadq;
 
 	/* RG additions */
-	capid_t cos_thdcap; // thdcap_t == capid_t
+	capid_t cos_thdcap;
+	thdid_t cos_tid; /* unused for now */
 };
 
 __thread struct bmk_thread *bmk_current;
@@ -139,16 +140,20 @@ get_name(struct bmk_thread *thread)
 /* ****************** */
 
 void
-set_cos_thdcap(struct bmk_thread *thread, capid_t value)
+set_cos_thddata(struct bmk_thread *thread, capid_t thd, thdid_t tid)
 {
-	thread->cos_thdcap = value;
+	thread->cos_thdcap = thd;
+	thread->cos_tid = tid;
 }
 
 capid_t
 get_cos_thdcap(struct bmk_thread *thread)
-{
-	return thread->cos_thdcap;
-}
+{ return thread->cos_thdcap; }
+
+thdid_t
+get_cos_thdid(struct bmk_thread *thread)
+{ return thread->cos_tid; }
+
 
 TAILQ_HEAD(threadqueue, bmk_thread);
 static struct threadqueue threadq = TAILQ_HEAD_INITIALIZER(threadq);
@@ -799,9 +804,6 @@ bmk_sched_startmain(void (*mainfun)(void *), void *arg)
 	if (mainthread == NULL)
 		bmk_platform_halt("failed to create main thread");
 
-	/* Initially set cos_cur to mainthread */
-	cos_cur = get_cos_thdcap(mainthread);
-
 	/* Make the RK intterupt thread */
 	bmk_intr_init();
 	bmk_printf("bmk_intr_init done\n");
@@ -814,14 +816,12 @@ bmk_sched_startmain(void (*mainfun)(void *), void *arg)
 	setflags(mainthread, THR_RUNNING, THR_RUNQ);
 	sched_switch(&initthread, mainthread);
 
-
 	/*
 	 * We return here when composite schedules our RK
 	 * Composite keeps track of the last running RK thread (called cos_cur), through its thdid
 	 * prev is not used
 	 * We check to see if any of the isr threads are blocked, if so switch to them, if not resume
 	 */
-	 //crcalls.rump_rcv();
 	crcalls.rump_resume();
 
 	bmk_platform_halt("bmk_sched_init unreachable");
