@@ -350,6 +350,7 @@ bmk_sched_dumpqueue(void)
 static void
 sched_switch(struct bmk_thread *prev, struct bmk_thread *next)
 {
+	bmk_printf("\t~~~~~~~~~~sched_switch to: %s~~~~~~~~~~\n", next->bt_name);
 
 	bmk_assert(next->bt_flags & THR_RUNNING);
 	bmk_assert((next->bt_flags & THR_QMASK) == 0);
@@ -368,8 +369,8 @@ schedule(void)
 	static int i = 0;
 	if(!i) {
 		i++;
-		bmk_printf("\tSCHEDULE\n");
 	}
+	bmk_printf("\t\nSCHEDULE\n");
 
 
 	struct bmk_thread *prev, *next, *thread;
@@ -595,6 +596,7 @@ bmk_sched_create(const char *name, void *cookie, int joinable,
 	    	stack_base, stack_size, tlsarea);
 
 
+
 	return ret;
 }
 
@@ -795,6 +797,7 @@ bmk_sched_startmain(void (*mainfun)(void *), void *arg)
 	struct bmk_thread *mainthread;
 	struct bmk_thread initthread;
 
+
 	bmk_memset(&initthread, 0, sizeof(initthread));
 	bmk_strcpy(initthread.bt_name, "init");
 	stackalloc(&bmk_mainstackbase, &bmk_mainstacksize);
@@ -804,9 +807,9 @@ bmk_sched_startmain(void (*mainfun)(void *), void *arg)
 	if (mainthread == NULL)
 		bmk_platform_halt("failed to create main thread");
 
+
 	/* Make the RK intterupt thread */
 	bmk_intr_init();
-	bmk_printf("bmk_intr_init done\n");
 
 	/*
 	 * Manually switch to mainthread without going through

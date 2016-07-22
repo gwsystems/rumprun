@@ -4,15 +4,13 @@
 #include <bmk-core/core.h>
 #include <bmk-core/sched.h>
 #include <execinfo.h>
-//#include <bmk/kernel.h>
 
 #include <arch/i386/types.h>
 
 #include <rumpcalls.h>
-#include <cos_sync.h>
 
-
-// THESE MIGHT NEED TO BE DEFINED FIXMEE
+/* Unused. Here to satisfy arcitecture dependent code. Left over from bmk implementation */
+int bmk_spldepth = 1; 
 
 typedef long long bmk_time_t;
 
@@ -23,6 +21,8 @@ unsigned long bmk_pagesize = 4096;
 unsigned long bmk_pageshift = 12;
 
 unsigned long bmk_memsize;
+
+extern unsigned int cos_nesting;
 
 struct cos_rumpcalls crcalls;
 
@@ -125,20 +125,38 @@ bmk_platform_splhigh(void)
 void
 bmk_platform_block(bmk_time_t until)
 {
+	unsigned int tmp;
 	bmk_time_t now = 0;
+
+
+	bmk_assert(cos_nesting);
 
 	/* Returned if called too late */
 	now = bmk_platform_clock_monotonic();
 	if(until < now) return;
 
-	/* TODO switch to main thread and process any possible interrupts */
-	/* Enable interupts around "sleep" */
+	bmk_printf("bmk_platform_block: 141\n");
+	/* Enable interupts around yield */
+	tmp = cos_nesting;
+	cos_nesting = 1; /* Set low will now enable interrupts */
+	bmk_printf("bmk_platform_block: about to enable interrupts\n");
 	bmk_platform_splx(0);
 
 	while(bmk_platform_clock_monotonic() < until) crcalls.rump_sched_yield();
+	
 
+	bmk_printf("bmk_platform_block: about to disable interrupts\n");
 	bmk_platform_splhigh();
+	/*
+	 * Restore the depth we had to our nesting
+	 * We do this after we set splhigh so that we properly hit the edge case code where we
+	 * really need to enable interrupts. OW we just increment cos_nesting counter
+	 */
+	cos_nesting = tmp;
 
+	bmk_assert(cos_nesting);
+
+	bmk_printf("bmk_platform_block return\n");
 	return;
 }
 

@@ -99,7 +99,6 @@ struct initinfo {
 void
 _netbsd_userlevel_init(void)
 {
-	bmk_printf("netbsd_initfini.c: _netbsd_userlevel_init\n");
 	static struct initinfo ii;
 	static struct ps_strings ps;
 	AuxInfo *ai = ii.ai;
@@ -123,9 +122,7 @@ _netbsd_userlevel_init(void)
 	bmk_assert(rv < (int)sizeof(ssbuf));
 	environ = initial_env;
 
-	bmk_printf("Calling runinit\n");
 	runinit();
-	bmk_printf("Exiting runinit");
 
 	/* XXX: we should probably use csu, but this is quicker for now */
 	__progname = "rumprun";

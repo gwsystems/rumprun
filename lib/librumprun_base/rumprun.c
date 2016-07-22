@@ -114,9 +114,9 @@ rumprun_boot(char *cmdline)
 	 * Eventually, we of course want bootstrap process which is
 	 * rumprun() internally.
 	 */
-	bmk_printf("rumprun_lwp_init\n");
+	bmk_printf("Rumprun_lwp_init\n");
 	rumprun_lwp_init();
-	bmk_printf("exiting rumprun_lwp_init\n");
+	bmk_printf("Exiting rumprun_lwp_init\n");
 	_netbsd_userlevel_init();
 	bmk_printf("Exiting _netbsd_userlevel_init\n");
 
