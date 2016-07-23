@@ -144,6 +144,7 @@ set_cos_thddata(struct bmk_thread *thread, capid_t thd, thdid_t tid)
 {
 	thread->cos_thdcap = thd;
 	thread->cos_tid = tid;
+	bmk_printf("Thd- name:%s cap:%x id:%x\n", thread->bt_name, (unsigned int)thd, (unsigned int)tid);
 }
 
 capid_t
@@ -350,7 +351,6 @@ bmk_sched_dumpqueue(void)
 static void
 sched_switch(struct bmk_thread *prev, struct bmk_thread *next)
 {
-	bmk_printf("\t~~~~~~~~~~sched_switch to: %s~~~~~~~~~~\n", next->bt_name);
 
 	bmk_assert(next->bt_flags & THR_RUNNING);
 	bmk_assert((next->bt_flags & THR_QMASK) == 0);
@@ -370,7 +370,6 @@ schedule(void)
 	if(!i) {
 		i++;
 	}
-	bmk_printf("\t\nSCHEDULE\n");
 
 
 	struct bmk_thread *prev, *next, *thread;
