@@ -104,7 +104,7 @@ isr(void *arg)
 			bmk_cpu_intr_ack();
 			
 			if (!didwork) {
-				bmk_printf("stray interrupt\n");
+				/* bmk_printf("stray interrupt\n"); */
 			}
 		} else {
 			/* no interrupts left. block until the next one. */

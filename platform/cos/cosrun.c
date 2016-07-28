@@ -68,6 +68,7 @@ void bmk_cpu_intr_ack(void);
 
 extern void *bmk_va2pa(void *addr);
 extern void *bmk_pa2va(void *addr, unsigned long len);
+
 void
 bmk_printf(const char *fmt, ...)
 {
@@ -135,17 +136,16 @@ bmk_platform_block(bmk_time_t until)
 	now = bmk_platform_clock_monotonic();
 	if(until < now) return;
 
-	bmk_printf("bmk_platform_block: 141\n");
 	/* Enable interupts around yield */
 	tmp = cos_nesting;
 	cos_nesting = 1; /* Set low will now enable interrupts */
-	bmk_printf("bmk_platform_block: about to enable interrupts\n");
+
 	bmk_platform_splx(0);
+
+	bmk_assert(!cos_nesting);
 
 	while(bmk_platform_clock_monotonic() < until) crcalls.rump_sched_yield();
 	
-
-	bmk_printf("bmk_platform_block: about to disable interrupts\n");
 	bmk_platform_splhigh();
 	/*
 	 * Restore the depth we had to our nesting
@@ -153,10 +153,8 @@ bmk_platform_block(bmk_time_t until)
 	 * really need to enable interrupts. OW we just increment cos_nesting counter
 	 */
 	cos_nesting = tmp;
-
 	bmk_assert(cos_nesting);
 
-	bmk_printf("bmk_platform_block return\n");
 	return;
 }
 

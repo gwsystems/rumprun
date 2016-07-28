@@ -148,11 +148,8 @@ rumprun_boot(char *cmdline)
 	sched_yield();
 	bmk_printf("sched_yield is exiting\n");
 
-	bmk_printf("Rumprun.c: 146\n");
 	pthread_mutex_init(&w_mtx, NULL);
-	bmk_printf("Rumprun.c: 148\n");
 	pthread_cond_init(&w_cv, NULL);
-	bmk_printf("Rumprun.c: 150\n");
 }
 
 /*
