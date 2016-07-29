@@ -123,7 +123,8 @@ struct bmk_thread {
 	TAILQ_ENTRY(bmk_thread) bt_threadq;
 
 	/* RG additions */
-	capid_t cos_thdcap; // thdcap_t == capid_t
+	capid_t cos_thdcap;
+	thdid_t cos_tid; /* unused for now */
 };
 
 __thread struct bmk_thread *bmk_current;
@@ -139,16 +140,21 @@ get_name(struct bmk_thread *thread)
 /* ****************** */
 
 void
-set_cos_thdcap(struct bmk_thread *thread, capid_t value)
+set_cos_thddata(struct bmk_thread *thread, capid_t thd, thdid_t tid)
 {
-	thread->cos_thdcap = value;
+	thread->cos_thdcap = thd;
+	thread->cos_tid = tid;
+	bmk_printf("Thd- name:%s cap:%x id:%x\n", thread->bt_name, (unsigned int)thd, (unsigned int)tid);
 }
 
 capid_t
 get_cos_thdcap(struct bmk_thread *thread)
-{
-	return thread->cos_thdcap;
-}
+{ return thread->cos_thdcap; }
+
+thdid_t
+get_cos_thdid(struct bmk_thread *thread)
+{ return thread->cos_tid; }
+
 
 TAILQ_HEAD(threadqueue, bmk_thread);
 static struct threadqueue threadq = TAILQ_HEAD_INITIALIZER(threadq);
@@ -229,6 +235,7 @@ set_runnable(struct bmk_thread *thread)
 	/*
 	 * Else, target was blocked and need to make it runnable
 	 */
+
 	flags = bmk_platform_splhigh();
 	TAILQ_REMOVE(tq, thread, bt_schedq);
 	setflags(thread, THR_RUNQ, THR_QMASK);
@@ -282,7 +289,6 @@ clear_runnable(void)
 	struct bmk_thread *thread = bmk_current;
 	int newfl;
 
-	//print_threadinfo(thread);
 	bmk_assert(thread->bt_flags & THR_RUNNING);
 
 	/*
@@ -363,7 +369,6 @@ schedule(void)
 	static int i = 0;
 	if(!i) {
 		i++;
-		bmk_printf("\tSCHEDULE\n");
 	}
 
 
@@ -379,10 +384,13 @@ schedule(void)
 	for (;;) {
 		bmk_time_t curtime, waketime;
 
+		/* RG TODO check function for accuarcy */
 		curtime = bmk_platform_clock_monotonic();
-		waketime = curtime + BLOCKTIME_MAX;
+		waketime = curtime + BLOCKTIME_MAX; /* RG Max block time is 1 s */
 
-		/*
+		/* 
+		 * RG timout queue has priority over block queue...
+		 *
 		 * Process timeout queue first by moving threads onto
 		 * the runqueue if their timeouts have expired.  Since
 		 * the timeouts are sorted, we process until we hit the
@@ -392,6 +400,9 @@ schedule(void)
 
 			if (thread->bt_wakeup_time <= curtime) {
 				/*
+				 * RG this seems like it matters...why run the thraed with
+				 * the least expired deadline?
+				 *
 				 * move thread to runqueue.
 				 * threads will run in inverse order of timeout
 				 * expiry.  not sure if that matters or not.
@@ -582,6 +593,7 @@ bmk_sched_create(const char *name, void *cookie, int joinable,
 
 	ret = bmk_sched_create_withtls(name, cookie, joinable, f, data,
 	    	stack_base, stack_size, tlsarea);
+
 
 
 	return ret;
@@ -784,7 +796,7 @@ bmk_sched_startmain(void (*mainfun)(void *), void *arg)
 {
 	struct bmk_thread *mainthread;
 	struct bmk_thread initthread;
-	bmk_printf("rump_vmid; %d\n", rump_vmid);
+
 	bmk_memset(&initthread, 0, sizeof(initthread));
 	bmk_strcpy(initthread.bt_name, "init");
 	stackalloc(&bmk_mainstackbase, &bmk_mainstacksize);
@@ -794,12 +806,9 @@ bmk_sched_startmain(void (*mainfun)(void *), void *arg)
 	if (mainthread == NULL)
 		bmk_platform_halt("failed to create main thread");
 
-	/* Initially set cos_cur to mainthread */
-	cos_cur = get_cos_thdcap(mainthread);
 
 	/* Make the RK intterupt thread */
 	bmk_intr_init();
-	bmk_printf("bmk_intr_init done\n");
 
 	/*
 	 * Manually switch to mainthread without going through
@@ -809,14 +818,12 @@ bmk_sched_startmain(void (*mainfun)(void *), void *arg)
 	setflags(mainthread, THR_RUNNING, THR_RUNQ);
 	sched_switch(&initthread, mainthread);
 
-
 	/*
 	 * We return here when composite schedules our RK
 	 * Composite keeps track of the last running RK thread (called cos_cur), through its thdid
 	 * prev is not used
 	 * We check to see if any of the isr threads are blocked, if so switch to them, if not resume
 	 */
-	 //crcalls.rump_rcv();
 	crcalls.rump_resume();
 
 	bmk_platform_halt("bmk_sched_init unreachable");

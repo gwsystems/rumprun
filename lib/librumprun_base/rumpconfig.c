@@ -143,36 +143,27 @@ config_ipv4(const char *ifname, const char *method,
 	const char *addr, const char *mask, const char *gw)
 {
 
-	bmk_printf("config_ipv4\n");
-
 	int rv;
 	if (strcmp(method, "dhcp") == 0) {
 		if ((rv = rump_pub_netconfig_dhcp_ipv4_oneshot(ifname)) != 0)
 			errx(1, "configuring dhcp for %s failed: %d",
 			    ifname, rv);
 	} else {
-		bmk_printf("config_ipv4: 155\n");
 		if (strcmp(method, "static") != 0) {
 			errx(1, "method \"static\" or \"dhcp\" expected, "
 			    "got \"%s\"", method);
 		}
 
-		bmk_printf("config_ipv4: 161\n");
 		if (!addr || !mask) {
 			errx(1, "static net cfg missing addr or mask");
 		}
 
-		bmk_printf("config_ipv4: 166\n");
 		if ((rv = rump_pub_netconfig_ipv4_ifaddr_cidr(ifname,
 		    addr, atoi(mask))) != 0) {
-			bmk_printf("config_ipv4: 169 rv: %d\n", rv);
-			bmk_printf("ifconfig \"%s\" for \"%s/%s\" failed\n",
-			    ifname, addr, mask);
 			errx(1, "ifconfig \"%s\" for \"%s/%s\" failed",
 			    ifname, addr, mask);
 		}
 
-		bmk_printf("config_ipv4: 173\n");
 		if (gw && (rv = rump_pub_netconfig_ipv4_gw(gw)) != 0) {
 			errx(1, "gw \"%s\" addition failed", gw);
 		}
@@ -213,10 +204,6 @@ config_ipv6(const char *ifname, const char *method,
 static int
 handle_net(jsmntok_t *t, int left, char *data)
 {
-	bmk_printf("handle_net\n");
-	bmk_printf("left: %d\n", left);
-	bmk_printf("data: %s\n", data);
-
 	const char *ifname, *cloner, *type, *method;
 	const char *addr, *mask, *gw;
 	jsmntok_t *key, *value;
@@ -277,10 +264,6 @@ handle_net(jsmntok_t *t, int left, char *data)
 			    T_PRINTFSTAR(key, data), __func__);
 		}
 	}
-
-	bmk_printf("ifname: %s\n", ifname);
-	bmk_printf("method: %s\n", method);
-	bmk_printf("type: %s\n", type);
 
 	if (!ifname || !type || !method) {
 		errx(1, "net cfg missing vital data, not configuring");
@@ -355,11 +338,6 @@ static void
 mount_cd9660(const char *fstype, const char *dev, const char *mp)
 {
 	struct iso_args mntargs = { .fspec = dev };
-
-	bmk_printf("Mounting cd9660\n");
-	bmk_printf("fstype: %s\n", fstype);
-	bmk_printf("dev: %s\n", dev);
-	bmk_printf("mp: %s\n", mp);
 
 	if (mount(MOUNT_CD9660,
 	    mp, MNT_RDONLY, &mntargs, sizeof(mntargs)) == -1)
@@ -566,16 +544,12 @@ _rumprun_config(char *cmdline)
 	unsigned int i;
 	int ntok;
 
-	bmk_printf("Starting parsing process\n");
-
 	/* is the config file on rootfs?  if so, mount & dig it out */
 	if (strncmp(cmdline, ROOTCFG, rootcfglen) == 0) {
 		cmdline = getcmdlinefromroot(cmdline + rootcfglen);
 		if (cmdline == NULL)
 			errx(1, "could not get cfg from rootfs");
 	}
-
-	bmk_printf("_rumprun_config: %d\n", 554);
 
 	while (*cmdline != '{') {
 		if (*cmdline == '\0') {
@@ -586,53 +560,31 @@ _rumprun_config(char *cmdline)
 		cmdline++;
 	}
 
-	bmk_printf("_rumprun_config: %d\n", 565);
-
 	cmdline_len = strlen(cmdline);
 
 
-	bmk_printf("_rumprun_config: %d\n", 570);
-
 	jsmn_init(&p);
 
-	bmk_printf("_rumprun_config: %d\n", 574);
-
 	ntok = jsmn_parse(&p, cmdline, cmdline_len, NULL, 0);
-
-	bmk_printf("_rumprun_config: %d\n", 578);
 
 	if (ntok <= 0) {
 		errx(1, "json parse failed 1");
 	}
-
-	bmk_printf("_rumprun_config: %d\n", 584);
 
 	tokens = malloc(ntok * sizeof(*t));
 	if (!tokens) {
 		errx(1, "failed to allocate jsmn tokens");
 	}
 
-	bmk_printf("_rumprun_config: %d\n", 591);
-
 	jsmn_init(&p);
 	if ((ntok = jsmn_parse(&p, cmdline, cmdline_len, tokens, ntok)) < 1) {
 		errx(1, "json parse failed 2");
 	}
 
-	bmk_printf("_rumprun_config: %d\n", 598);
-
 	T_CHECKTYPE(tokens, cmdline, JSMN_OBJECT, __func__);
-
-	bmk_printf("_rumprun_config: %d\n", 602);
-
-	bmk_printf("ntok: %d\n", ntok);
-	bmk_printf("__arraycount(parsers): %d\n", __arraycount(parsers));
 
 	for (t = &tokens[1]; t < &tokens[ntok]; ) {
 		for (i = 0; i < __arraycount(parsers); i++) {
-			bmk_printf("t: %s\n", t);
-			bmk_printf("cmdline: %s\n", cmdline);
-			bmk_printf("parsers[%d].name: %s\n", i, parsers[i].name);
 			if (T_STREQ(t, cmdline, parsers[i].name)) {
 				int left;
 
@@ -645,17 +597,12 @@ _rumprun_config(char *cmdline)
 		if (i == __arraycount(parsers)) {
 			errx(1, "no match for key \"%.*s\"",
 			    T_PRINTFSTAR(t, cmdline));
-			bmk_printf("no match for key \"%.*s\"",
-			    T_PRINTFSTAR(t, cmdline));
 		}
 	}
 
-	bmk_printf("_rumprun_config: %d\n", 620);
-
 	free(tokens);
-
-	bmk_printf("_rumprun_config: %d\n", 624);
 }
+
 
 void
 _rumprun_deconfig(void)

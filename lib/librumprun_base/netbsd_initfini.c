@@ -63,27 +63,20 @@ void *__dso_handle;
 static void
 runinit(void)
 {
-	bmk_printf("netbsd_initfini.c: runinit\n");
 	const initfini_fn *fn;
 
-	bmk_printf("Calling _libc_init\n");
 	_libc_init();
-	bmk_printf("Exiting _libc_init\n");
 
-	bmk_printf("__init_array_start: %p\n", __init_array_start);
-	bmk_printf("__init_array_end: %p\n", __init_array_end);
 
 	for (fn = __init_array_start; fn < __init_array_end; fn++) {
 		bmk_printf("fn: %p\n", fn);
 		(*fn)();
 	}
-	bmk_printf("Exiting runinit\n");
 }
 
 static void
 runfini(void)
 {
-	bmk_printf("netbsd_initfini.c: runfini\n");
 	const initfini_fn *fn;
 
 	for (fn = __fini_array_start; fn < __fini_array_end; fn++)
@@ -99,7 +92,6 @@ struct initinfo {
 void
 _netbsd_userlevel_init(void)
 {
-	bmk_printf("netbsd_initfini.c: _netbsd_userlevel_init\n");
 	static struct initinfo ii;
 	static struct ps_strings ps;
 	AuxInfo *ai = ii.ai;
@@ -123,9 +115,7 @@ _netbsd_userlevel_init(void)
 	bmk_assert(rv < (int)sizeof(ssbuf));
 	environ = initial_env;
 
-	bmk_printf("Calling runinit\n");
 	runinit();
-	bmk_printf("Exiting runinit");
 
 	/* XXX: we should probably use csu, but this is quicker for now */
 	__progname = "rumprun";

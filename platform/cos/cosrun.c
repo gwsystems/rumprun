@@ -4,14 +4,14 @@
 #include <bmk-core/core.h>
 #include <bmk-core/sched.h>
 #include <execinfo.h>
-//#include <bmk/kernel.h>
 #include "cosrun.h"
+
 #include <arch/i386/types.h>
 
 #include <rumpcalls.h>
 
-
-// THESE MIGHT NEED TO BE DEFINED FIXMEE
+/* Unused. Here to satisfy arcitecture dependent code. Left over from bmk implementation */
+int bmk_spldepth = 1; 
 
 typedef long long bmk_time_t;
 
@@ -23,11 +23,11 @@ unsigned long bmk_pageshift = 12;
 
 unsigned long bmk_memsize;
 
+extern unsigned int cos_nesting;
+
 struct cos_rumpcalls crcalls;
 
 void* _GLOBAL_OFFSET_TABLE_ = (void *) 0x1337BEEF;
-
-int bmk_spldepth = 1;
 
 #define rdtscll(val) __asm__ __volatile__("rdtsc" : "=A" (val))
 
@@ -71,7 +71,6 @@ void bmk_cpu_intr_ack(void);
 extern void *bmk_va2pa(void *addr);
 extern void *bmk_pa2va(void *addr, unsigned long len);
 
-
 int rump_shmem_write(void *buff, unsigned int size, unsigned int srcvm, unsigned int dstvm){
 	return crcalls.rump_shmem_send(buff, size, srcvm, dstvm);
 }
@@ -80,7 +79,6 @@ void * rump_shmem_read(void *buff, unsigned int srcvm, unsigned int dstvm){
 	if(crcalls.rump_shmem_recv(buff, srcvm, dstvm) == -1) return NULL;
 	return buff;
 }
-
 
 void
 bmk_printf(const char *fmt, ...)
@@ -139,18 +137,34 @@ bmk_platform_splhigh(void)
 void
 bmk_platform_block(bmk_time_t until)
 {
+	unsigned int tmp;
 	bmk_time_t now = 0;
+
+
+	bmk_assert(cos_nesting);
 
 	/* Returned if called too late */
 	now = bmk_platform_clock_monotonic();
 	if(until < now) return;
 
-	/* Enable interupts around "sleep" */
+	/* Enable interupts around yield */
+	tmp = cos_nesting;
+	cos_nesting = 1; /* Set low will now enable interrupts */
+
 	bmk_platform_splx(0);
 
-	while(bmk_platform_clock_monotonic() < until);
+	bmk_assert(!cos_nesting);
 
+	while(bmk_platform_clock_monotonic() < until) crcalls.rump_sched_yield();
+	
 	bmk_platform_splhigh();
+	/*
+	 * Restore the depth we had to our nesting
+	 * We do this after we set splhigh so that we properly hit the edge case code where we
+	 * really need to enable interrupts. OW we just increment cos_nesting counter
+	 */
+	cos_nesting = tmp;
+	bmk_assert(cos_nesting);
 
 	return;
 }
@@ -233,22 +247,6 @@ bmk_strcmp(const char *a, const char *b)
 	return rv;
 }
 
-/*void 
-print_trace (void)
-{
-	void *array[10];
-	size_t size;
-	char **strings;
-	size_t i;
-
-	size = backtrace(array, 10);
-	strings = backtrace_symbols(array, size);
-
-	for(i=0; i < size; i++)
-		bmk_printf("%s\n", strings[i]);
-
-}*/
-
 void *
 bmk_memset(void *b, int c, unsigned long n)
 {
@@ -258,10 +256,6 @@ bmk_memset(void *b, int c, unsigned long n)
 		*v++ = (unsigned char)c;
 
 	return b;
-
-	// Changed in response to malloc bug. See notes
-	//crcalls.rump_memset(b, c, n);
-	//return b;
 }
 
 void *
@@ -283,9 +277,7 @@ bmk_vprintf(const char *fmt, va_list ap)
 	char s[128];
 	int ret, len = 128;
 
-	//va_start(ap, fmt);
 	ret = crcalls.rump_vsnprintf(s, len, fmt, ap);
-	//va_end(ap);
 	crcalls.rump_cos_print(s, ret);
 
 	return;
@@ -302,24 +294,18 @@ bmk_strncpy(char *d, const char *s, unsigned long n)
 
 	return rv;
 }
-//int pic2mask = 0xff;
-//#define PIC2_DATA	0xa1
 
 int
 bmk_cpu_intr_init(int intr)
 {
 	bmk_printf("\nbmk_cpu_intr_init is being called: %d\n\n", intr);
-//	while(1);
 
-//	pic2mask &= ~(1<<(intr-8));
-//	outb(PIC2_DATA, pic2mask);
 	return 0;
 }
 
 void
 bmk_cpu_intr_ack(void)
 {
-	//bmk_printf("BMK_CPU_INTR_ACK\n");
         /*
          * ACK interrupts on PIC
          */
@@ -330,11 +316,6 @@ bmk_cpu_intr_ack(void)
             ::: "al");
 
 }
-
-/* RG:
- * This simply returns 0 within the hw implementation.
- * The xen implementation uses this to begin bio
- */
 
 int
 rumprun_platform_rumpuser_init(void)

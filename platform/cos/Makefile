@@ -17,7 +17,7 @@ CFLAGS+=	${BUILDRUMP_TOOL_CFLAGS}
 CFLAGS+=        -I../../../Composite/src/components/implementation/no_interface/rumpbooter/
 CFLAGS+=        -I../../../Composite/src/components/include/
 CFLAGS+=        -I../../../Composite/src/kernel/include/shared/
-CFLAGS+=        -Iinclude -Irump/inclulde -I../../include
+CFLAGS+=        -Iinclude -I../../include
 
 # Check if we're building for a supported target.
 supported= false
