@@ -5,7 +5,7 @@
 #include <bmk-core/sched.h>
 #include <execinfo.h>
 //#include <bmk/kernel.h>
-
+#include "cosrun.h"
 #include <arch/i386/types.h>
 
 #include <rumpcalls.h>
@@ -65,10 +65,23 @@ void bmk_cpu_sched_switch_viathd(struct bmk_thread *prev, struct bmk_thread *nex
 
 int bmk_cpu_intr_init(int intr);
 void bmk_cpu_intr_ack(void);
+
 /* Prototype Definitions */
 
 extern void *bmk_va2pa(void *addr);
 extern void *bmk_pa2va(void *addr, unsigned long len);
+
+
+int rump_shmem_write(void *buff, unsigned int size, unsigned int srcvm, unsigned int dstvm){
+	return crcalls.rump_shmem_send(buff, size, srcvm, dstvm);
+}
+
+void * rump_shmem_read(void *buff, unsigned int srcvm, unsigned int dstvm){
+	if(crcalls.rump_shmem_recv(buff, srcvm, dstvm) == -1) return NULL;
+	return buff;
+}
+
+
 void
 bmk_printf(const char *fmt, ...)
 {

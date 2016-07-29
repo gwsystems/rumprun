@@ -34,6 +34,8 @@ int bmk_isr_init(int (*)(void *), void *, int);
 
 void bmk_mainthread(void *);
 
+int rk_shmem_send(int vmid, void * buff, unsigned int size);
+
 #endif /* _LOCORE */
 
 #include <bmk-core/errno.h>

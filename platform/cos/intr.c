@@ -63,6 +63,7 @@ extern int intr;
 static void
 isr(void *arg)
 {
+	bmk_printf("isr\n");
 	int i, didwork;
 
         rumpuser__hyp.hyp_schedule();
