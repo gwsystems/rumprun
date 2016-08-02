@@ -27,3 +27,6 @@ platform/*/tests/wopr/wopr
 app-tools/rumprun-*
 .prevbuild
 app-tools/i486-*
+
+*.swp
+*.swo
