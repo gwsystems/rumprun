@@ -144,7 +144,6 @@ set_cos_thddata(struct bmk_thread *thread, capid_t thd, thdid_t tid)
 {
 	thread->cos_thdcap = thd;
 	thread->cos_tid = tid;
-	bmk_printf("Thd- name:%s cap:%x id:%x\n", thread->bt_name, (unsigned int)thd, (unsigned int)tid);
 }
 
 capid_t
