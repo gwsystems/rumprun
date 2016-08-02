@@ -196,12 +196,14 @@ mainbouncer(void *arg)
 	 */
 	//const char *progname = rr->rr_argv[0];
 	fprintf(stderr, "FIX PROGNAME\n");
-	const char *progname = "hello";
+	const char *progname = "paws";
 	int rv;
 
 	rump_pub_lwproc_rfork(RUMP_RFFDG);
+	fprintf(stderr, "203\n");
 
 	pthread_cleanup_push(releaseme, rr);
+	fprintf(stderr, "206\n");
 
 	fprintf(stderr,"\n=== calling \"%s\" main() ===\n\n", progname);
 	rv = rr->rr_mainfun(rr->rr_argc, rr->rr_argv);
