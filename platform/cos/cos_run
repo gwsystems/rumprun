@@ -44,6 +44,7 @@ sudo rm -rf temp
 popd
 
 pushd ~/research/rump2cos/apps/paws
+sudo make clean
 sudo make -i
 popd
 

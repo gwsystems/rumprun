@@ -154,7 +154,6 @@ bmk_platform_block(bmk_time_t until)
 	bmk_platform_splx(0);
 
 	bmk_assert(!cos_nesting);
-
 	while(bmk_platform_clock_monotonic() < until) crcalls.rump_sched_yield();
 	
 	bmk_platform_splhigh();

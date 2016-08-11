@@ -536,6 +536,7 @@ getcmdlinefromroot(const char *cfgname)
 void
 _rumprun_config(char *cmdline)
 {
+	bmk_printf("rumprun_config\n");
 	jsmn_parser p;
 	jsmntok_t *tokens = NULL;
 	jsmntok_t *t;
@@ -577,17 +578,17 @@ _rumprun_config(char *cmdline)
 	}
 
 	jsmn_init(&p);
+	
 	if ((ntok = jsmn_parse(&p, cmdline, cmdline_len, tokens, ntok)) < 1) {
 		errx(1, "json parse failed 2");
 	}
 
 	T_CHECKTYPE(tokens, cmdline, JSMN_OBJECT, __func__);
-
+	
 	for (t = &tokens[1]; t < &tokens[ntok]; ) {
 		for (i = 0; i < __arraycount(parsers); i++) {
 			if (T_STREQ(t, cmdline, parsers[i].name)) {
 				int left;
-
 				t++;
 				left = &tokens[ntok] - t;
 				t += parsers[i].handler(t, left, cmdline);
@@ -599,7 +600,6 @@ _rumprun_config(char *cmdline)
 			    T_PRINTFSTAR(t, cmdline));
 		}
 	}
-
 	free(tokens);
 }
 

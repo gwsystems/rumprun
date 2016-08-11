@@ -136,9 +136,12 @@ rumprun_boot(char *cmdline)
 	if(puberrno)
 		bmk_printf("rump_pub_etfs_register failed: %d\n", puberrno);
 
-	bmk_printf("Parsing cmdline\n");
-	_rumprun_config(cmdline);
-	bmk_printf("Done parsing cmdline\n");
+	extern int rump_vmid;
+	if(cmdline){
+		bmk_printf("Parsing cmdline for RK%d:\n", rump_vmid);
+		_rumprun_config(cmdline);
+		bmk_printf("Done parsing cmdline\n");
+	}
 
 	/*
 	 * give all threads a chance to run, and ensure that the main

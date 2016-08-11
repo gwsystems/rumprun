@@ -364,7 +364,6 @@ sched_switch(struct bmk_thread *prev, struct bmk_thread *next)
 static void
 schedule(void)
 {
-
 	static int i = 0;
 	if(!i) {
 		i++;
@@ -787,7 +786,7 @@ bmk_sched_init(void)
 	crcalls.rump_tls_init((&tcbinit)->btcb_tp, boot_thd);
 }
 
-extern int rump_vmid;
+extern int vmid;
 extern capid_t cos_cur;
 
 void __attribute__((noreturn))

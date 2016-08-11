@@ -35,7 +35,6 @@ extern void *bmk_pa2va(void *addr, unsigned long len);
 
 #define PCI_CONF_ADDR 0xcf8
 #define PCI_CONF_DATA 0xcfc
-extern int rump_vmid;
 int
 rumpcomp_pci_iospace_init(void)
 {

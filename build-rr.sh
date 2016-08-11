@@ -129,17 +129,17 @@ checksubmodules ()
 		exit 1
 	fi
 
-	if git submodule status ${RUMPSRC} 2>/dev/null | grep -q '^+' \
-	    || git submodule status ${BUILDRUMP} 2>/dev/null | grep -q '^+'
-	then
-		echo '>>'
-		echo '>> Your git submodules are out-of-date'
-		echo '>> Forgot to run "git submodule update" after pull?'
-		echo '>> (sleeping for 5s, press ctrl-C to abort)'
-		echo '>>'
-		echo -n '>>'
-		for x in 1 2 3 4 5; do echo -n ' !' ; sleep 1 ; done
-	fi
+#	if git submodule status ${RUMPSRC} 2>/dev/null | grep -q '^+' \
+#	    || git submodule status ${BUILDRUMP} 2>/dev/null | grep -q '^+'
+#	then
+#		echo '>>'
+#		echo '>> Your git submodules are out-of-date'
+#		echo '>> Forgot to run "git submodule update" after pull?'
+#		echo '>> (sleeping for 5s, press ctrl-C to abort)'
+#		echo '>>'
+#		echo -n '>>'
+#		for x in 1 2 3 4 5; do echo -n ' !' ; sleep 1 ; done
+#	fi
 }
 
 checkprevbuilds ()
