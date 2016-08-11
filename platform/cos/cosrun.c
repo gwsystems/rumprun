@@ -3,6 +3,7 @@
 #include <bmk-core/null.h>
 #include <bmk-core/core.h>
 #include <bmk-core/sched.h>
+#include <bmk-core/queue.h>
 #include <execinfo.h>
 
 #include <arch/i386/types.h>
@@ -64,6 +65,8 @@ void bmk_cpu_sched_switch_viathd(struct bmk_thread *prev, struct bmk_thread *nex
 
 int bmk_cpu_intr_init(int intr);
 void bmk_cpu_intr_ack(void);
+
+void rumpns_bmk_printf(const char *fmt, ...) __attribute__ ((weak, alias ("bmk_printf")));
 /* Prototype Definitions */
 
 extern void *bmk_va2pa(void *addr);
@@ -123,12 +126,21 @@ bmk_platform_splhigh(void)
 	return 0;
 }
 
+TAILQ_HEAD(threadqueue, bmk_thread);
+extern struct threadqueue *runq_p;
+/* bmk_time_t time_blocked = 0; */
+
 void
 bmk_platform_block(bmk_time_t until)
 {
 	unsigned int tmp;
 	bmk_time_t now = 0;
 
+	/*
+	 * Uncomment for blocked timing here, time_blocked, below and in sched_switch
+	 * bmk_time_t start = 0;
+	 * bmk_time_t end = 0;
+	 */
 
 	bmk_assert(cos_nesting);
 
@@ -144,7 +156,13 @@ bmk_platform_block(bmk_time_t until)
 
 	bmk_assert(!cos_nesting);
 
-	while(bmk_platform_clock_monotonic() < until) crcalls.rump_sched_yield();
+	/* start = bmk_platform_clock_monotonic(); */
+	while(bmk_platform_clock_monotonic() < until) {
+		if(!TAILQ_EMPTY(runq_p)) break;
+		crcalls.rump_sched_yield();
+	}
+	/* end = bmk_platform_clock_monotonic(); */
+	/* time_blocked += end - start; */
 	
 	bmk_platform_splhigh();
 	/*

@@ -80,24 +80,6 @@ extern const char _tbss_start[], _tbss_end[];
     (((TDATASIZE + TBSSSIZE + sizeof(void *)-1)/sizeof(void *))*sizeof(void *))
 #define TLSAREASIZE (TCBOFFSET + BMK_TLS_EXTRA)
 
-extern char lk;
-//char intr = '1';
-int intr = 1;
-
-//static void lock(int *i) {
-//        while (!(*i)) ;
-//        *i = 0;
-//}
-//
-//static void unlock(int *i) {
-//        *i = 1;
-//}
-
-//void lock(char *i);
-//void unlock(char *i);
-void lock(int *i);
-void unlock(int *i);
-
 /* 
  * RG: The struct definition for bmk_thread was moved
  * to rumpcalls.h on the composite side so the composite system
@@ -124,7 +106,9 @@ struct bmk_thread {
 
 	/* RG additions */
 	capid_t cos_thdcap;
-	thdid_t cos_tid; /* unused for now */
+	thdid_t cos_tid;
+	/* bmk_time_t runtime_start; */
+	/* bmk_time_t runtime_end; */
 };
 
 __thread struct bmk_thread *bmk_current;
@@ -176,6 +160,8 @@ static struct threadqueue zombieq = TAILQ_HEAD_INITIALIZER(zombieq);
 static struct threadqueue runq = TAILQ_HEAD_INITIALIZER(runq);
 static struct threadqueue blockq = TAILQ_HEAD_INITIALIZER(blockq);
 static struct threadqueue timeq = TAILQ_HEAD_INITIALIZER(timeq);
+
+struct threadqueue *runq_p = &runq;
 
 static void (*scheduler_hook)(void *, void *);
 
@@ -273,8 +259,7 @@ timeq_sorted_insert(struct bmk_thread *thread)
 	 * RG we needed to make this <= not just < because of the granularity at which
 	 * we give wiakup times
 	 */
-	bmk_assert(TAILQ_LAST(&timeq, threadqueue)->bt_wakeup_time
-	    <= thread->bt_wakeup_time);
+	bmk_assert(TAILQ_LAST(&timeq, threadqueue)->bt_wakeup_time <= thread->bt_wakeup_time);
 	TAILQ_INSERT_TAIL(&timeq, thread, bt_schedq);
 }
 
@@ -347,6 +332,7 @@ bmk_sched_dumpqueue(void)
 	bmk_printf("END blockq dump\n");
 }
 
+/* extern bmk_time_t time_blocked; */
 static void
 sched_switch(struct bmk_thread *prev, struct bmk_thread *next)
 {
@@ -358,19 +344,25 @@ sched_switch(struct bmk_thread *prev, struct bmk_thread *next)
 		scheduler_hook(prev->bt_cookie, next->bt_cookie);
 	bmk_platform_cpu_sched_settls(&next->bt_tcb);
 
+	/*
+	 * For thread execution time:
+         * uncomment here
+	 * uncomment the extern above for time_blocked
+	 * uncomment bmk_time_t variables in bmk_struct
+	 * uncomment bmk_platform_block in cosrun.c
+	 *
+	 * next->runtime_start = bmk_platform_clock_monotonic();
+	 * prev->runtime_end = bmk_platform_clock_monotonic();
+	 * printc("%s %lld %lld\n", get_name(prev), time_blocked, prev->runtime_end - prev->runtime_start - time_blocked);
+	 * time_blocked = 0;
+	 */
+
 	bmk_cpu_sched_switch_viathd(prev, next);
 }
 
 static void
 schedule(void)
 {
-
-	static int i = 0;
-	if(!i) {
-		i++;
-	}
-
-
 	struct bmk_thread *prev, *next, *thread;
 	unsigned long flags;
 
@@ -745,7 +737,6 @@ bmk_sched_block(void)
 void
 bmk_sched_wake(struct bmk_thread *thread)
 {
-
 	thread->bt_wakeup_time = BMK_SCHED_BLOCK_INFTIME;
 	set_runnable(thread);
 }

@@ -52,11 +52,12 @@ static unsigned int isr_todo;
 static unsigned int isr_lowest = sizeof(isr_todo)*8;
 
 static struct bmk_thread *isr_thread;
-struct bmk_thread *isr_thd;
 
 void lock(int *i);
 void unlock(int *i);
 extern int intr;
+
+unsigned long get_cos_thdid(struct bmk_thread *thread);
 
 /* thread context we use to deliver interrupts to the rump kernel */
 
@@ -164,7 +165,6 @@ bmk_intr_init(void)
 	bmk_printf("BMK_INTRLEVS: %d\n", BMK_INTRLEVS);
 
 	isr_thread = bmk_sched_create("isrthr", NULL, 0, isr, NULL, NULL, 0);
-	isr_thd = isr_thread;
 
 	if (!isr_thread)
 		return BMK_EGENERIC;
