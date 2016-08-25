@@ -737,6 +737,7 @@ bmk_sched_block(void)
 void
 bmk_sched_wake(struct bmk_thread *thread)
 {
+	bmk_assert(thread != NULL);
 	thread->bt_wakeup_time = BMK_SCHED_BLOCK_INFTIME;
 	set_runnable(thread);
 }

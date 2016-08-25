@@ -93,6 +93,12 @@ rumpcomp_pci_irq_map(unsigned bus, unsigned device, unsigned fun,
 void *
 rumpcomp_pci_irq_establish(unsigned cookie, int (*handler)(void *), void *data)
 {
+	bmk_printf("cookie: %d\n", cookie);
+	if(cookie == 12 || cookie == 13 || cookie == 14){
+		intrs[cookie] = cookie;
+		bmk_isr_init(handler, data, cookie);
+		return &intrs[cookie];
+	}
 	if (bmk_isr_init(handler, data, intrs[cookie]) == 0)
 		return &intrs[cookie];
 	else

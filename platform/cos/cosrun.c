@@ -78,6 +78,7 @@ int rump_shmem_write(void *buff, unsigned int size, unsigned int srcvm, unsigned
 }
 
 void * rump_shmem_read(void *buff, unsigned int srcvm, unsigned int dstvm){
+	
 	if(crcalls.rump_shmem_recv(buff, srcvm, dstvm) == -1) return NULL;
 	return buff;
 }
@@ -165,9 +166,6 @@ bmk_platform_block(bmk_time_t until)
 	bmk_platform_splx(0);
 
 	bmk_assert(!cos_nesting);
-<<<<<<< HEAD
-	while(bmk_platform_clock_monotonic() < until) crcalls.rump_sched_yield();
-=======
 
 	/* start = bmk_platform_clock_monotonic(); */
 	while(bmk_platform_clock_monotonic() < until) {
@@ -176,7 +174,6 @@ bmk_platform_block(bmk_time_t until)
 	}
 	/* end = bmk_platform_clock_monotonic(); */
 	/* time_blocked += end - start; */
->>>>>>> b62d2546d7a3823385c3f8bb017db6958b7ec527
 	
 	bmk_platform_splhigh();
 	/*
