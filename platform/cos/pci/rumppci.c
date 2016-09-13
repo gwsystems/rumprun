@@ -94,7 +94,7 @@ void *
 rumpcomp_pci_irq_establish(unsigned cookie, int (*handler)(void *), void *data)
 {
 	bmk_printf("cookie: %d\n", cookie);
-	if(cookie == 12 || cookie == 13 || cookie == 14){
+	if(cookie == 12 || cookie == 13 || cookie == 15){
 		intrs[cookie] = cookie;
 		bmk_isr_init(handler, data, cookie);
 		return &intrs[cookie];
