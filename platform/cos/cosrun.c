@@ -73,11 +73,19 @@ void rumpns_bmk_printf(const char *fmt, ...) __attribute__ ((weak, alias ("bmk_p
 extern void *bmk_va2pa(void *addr);
 extern void *bmk_pa2va(void *addr, unsigned long len);
 
-int rump_shmem_write(void *buff, unsigned int size, unsigned int srcvm, unsigned int dstvm){
+int
+rump_shmem_dequeue_size(unsigned int srcvm, unsigned int dstvm)
+{
+	return crcalls.rump_dequeue_size(srcvm, dstvm);
+}
+
+int 
+rump_shmem_write(void *buff, unsigned int size, unsigned int srcvm, unsigned int dstvm){
 	return crcalls.rump_shmem_send(buff, size, srcvm, dstvm);
 }
 
-void * rump_shmem_read(void *buff, unsigned int srcvm, unsigned int dstvm){
+void * 
+rump_shmem_read(void *buff, unsigned int srcvm, unsigned int dstvm){
 	
 	if(crcalls.rump_shmem_recv(buff, srcvm, dstvm) == -1) return NULL;
 	return buff;
@@ -316,8 +324,6 @@ bmk_strncpy(char *d, const char *s, unsigned long n)
 int
 bmk_cpu_intr_init(int intr)
 {
-	bmk_printf("\nbmk_cpu_intr_init is being called: %d\n\n", intr);
-
 	return 0;
 }
 
@@ -338,6 +344,5 @@ bmk_cpu_intr_ack(void)
 int
 rumprun_platform_rumpuser_init(void)
 {
-	bmk_printf("rumprun_platform_rumpuser_init is being called.\n");
 	return 0;
 }
