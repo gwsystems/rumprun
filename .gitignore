@@ -30,3 +30,9 @@ app-tools/i486-*
 
 *.swp
 *.swo
+
+app-tools/specs-compile_or_ferment
+app-tools/specs-stub
+platform/cos/include/bmk/machine
+platform/pseudolinkstubs.c
+
