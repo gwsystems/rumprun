@@ -1,7 +1,6 @@
 /*- * Copyright (c) 2015 Antti Kantee.  All Rights Reserved.
  *
  * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
  * are met:
  * 1. Redistributions of source code must retain the above copyright
  *    notice, this list of conditions and the following disclaimer.
@@ -53,14 +52,10 @@
 #include <rumprun-base/config.h>
 
 #include "rumprun-private.h"
+#include "cnic_init.h"
 
 static pthread_mutex_t w_mtx;
 static pthread_cond_t w_cv;
-
-//lb: lets see if this works:
-int cnic_pthread_wrapper(void);
-void * cnic_init_bouncer(void * arg);
-void * cnic_init_pthread(int (*cnic_fn)(int, char *[]));
 
 int rumprun_enosys(void);
 int
@@ -68,6 +63,7 @@ rumprun_enosys(void)
 {
 	return ENOSYS;
 }
+
 __strong_alias(rumprun_notmain,rumprun_enosys);
 __weak_alias(rumpbake_main1,rumprun_notmain);
 __weak_alias(rumpbake_main2,rumprun_notmain);
@@ -79,7 +75,6 @@ __weak_alias(rumpbake_main7,rumprun_notmain);
 __weak_alias(rumpbake_main8,rumprun_notmain);
 
 __weak_alias(rump_init_server,rumprun_enosys);
-#include "cnic_init.h"
 void
 rumprun_boot(char *cmdline)
 {
@@ -147,7 +142,6 @@ rumprun_boot(char *cmdline)
 		bmk_printf("Done parsing cmdline\n");
 	}
 	
-	cnic_pthread_wrapper();
 
 	/*
 	 * give all threads a chance to run, and ensure that the main
@@ -195,8 +189,6 @@ releaseme(void *arg)
 	pthread_mutex_unlock(&w_mtx);
 }
 
-
-
 static void *
 mainbouncer(void *arg)
 {
@@ -207,7 +199,7 @@ mainbouncer(void *arg)
 	 */
 	//const char *progname = rr->rr_argv[0];
 	fprintf(stderr, "FIX PROGNAME\n");
-	const char *progname = "paws";
+	const char *progname = "nginx";
 	int rv;
 
 	rump_pub_lwproc_rfork(RUMP_RFFDG);
@@ -215,6 +207,7 @@ mainbouncer(void *arg)
 	pthread_cleanup_push(releaseme, rr);
 
 	fprintf(stderr,"\n=== calling \"%s\" main() ===\n\n", progname);
+	rump_cnic_init(rr->rr_argc, rr->rr_argv);
 	rv = rr->rr_mainfun(rr->rr_argc, rr->rr_argv);
 	fflush(stdout);
 	fprintf(stderr,"\n=== main() of \"%s\" returned %d ===\n",
@@ -231,64 +224,10 @@ mainbouncer(void *arg)
 	exit(rv);
 }
 
-int
-cnic_pthread_wrapper(void)
-{
-	printf("\n\n-----------cnic_pthread_init()-----------------------\n\n");
-	int (*cnic_init_fn)(int, char *[]) = rump_cnic_init;
-	cnic_init_pthread(cnic_init_fn);
-	return 0;
-}
-
-void *
-cnic_init_pthread(int (*cnic_fn)(int, char *[])){
-	//set up lwp struct with function pointer to cnic_init
-	struct rumprunner *rr;
-
-	rr = malloc(sizeof(*rr));
-
-	rr->rr_mainfun = cnic_fn;
-	rr->rr_flags = 0;
-
-	//create pthread with cnic_init_bouncer function
-	if (pthread_create(&rr->rr_mainthread, NULL, cnic_init_bouncer, rr) != 0) {
-		fprintf(stderr, "rumprun: running cnic_init failed\n");
-		free(rr);
-		return NULL;
-	}
-	LIST_INSERT_HEAD(&rumprunners, rr, rr_entries);
-
-	return rr;
-}
-
-void *
-cnic_init_bouncer(void * arg)
-{
-	//actually run cnic_init() in lwp
-	struct rumprunner *rr = arg;
-	const char *progname = "cnic_init";
-	int rv;
-
-	rump_pub_lwproc_rfork(RUMP_RFFDG);
-
-	pthread_cleanup_push(releaseme, rr);
-
-	fprintf(stderr,"\n=== calling \"%s\" ===\n\n", progname);
-	rv = rr->rr_mainfun(rr->rr_argc, rr->rr_argv);
-	fflush(stdout);
-	fprintf(stderr,"\n=== main() of \"%s\" returned %d ===\n",
-	    progname, rv);
-
-	pthread_cleanup_pop(1);
-
-	/* exit() calls rumprun_pub_lwproc_releaselwp() (via pthread_exit()) */
-	exit(rv);
-}
-
 void *
 rumprun(int (*mainfun)(int, char *[]), int argc, char *argv[])
 {
-	printf("rumprun_________________\n");
+	printf("\n__________________rumprun_________________\n");
 	struct rumprunner *rr;
 
 	rr = malloc(sizeof(*rr));

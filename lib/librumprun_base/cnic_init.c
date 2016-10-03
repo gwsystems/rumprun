@@ -156,8 +156,5 @@ rump_cnic_init(int ignore, char *argv[])
 	}
 
 	printf("done with cnic_init\n");
-	bmk_sched_blockprepare();
-	bmk_sched_block();
-	assert(0);
 	return 0;
 }
