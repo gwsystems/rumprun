@@ -279,6 +279,7 @@ bmk_pgalloc_loadmem(unsigned long min, unsigned long max)
 	}
 }
 
+extern int vmid;
 /* Allocate 2^@order contiguous pages. Returns a VIRTUAL address. */
 void *
 bmk_pgalloc(int order)
@@ -294,7 +295,7 @@ bmk_pgalloc(int order)
 			break;
 	}
 	if (i == FREELIST_SIZE) {
-		bmk_printf("cannot handle page request order %d!\n", order);
+		bmk_printf("VM%d cannot handle page request order %d!\n", vmid, order);
 		return 0;
 	}
 
