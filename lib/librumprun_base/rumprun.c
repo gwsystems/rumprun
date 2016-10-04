@@ -75,6 +75,9 @@ __weak_alias(rumpbake_main7,rumprun_notmain);
 __weak_alias(rumpbake_main8,rumprun_notmain);
 
 __weak_alias(rump_init_server,rumprun_enosys);
+
+extern int rump_vmid;
+
 void
 rumprun_boot(char *cmdline)
 {
@@ -135,7 +138,6 @@ rumprun_boot(char *cmdline)
 	if(puberrno)
 		bmk_printf("rump_pub_etfs_register failed: %d\n", puberrno);
 
-	extern int rump_vmid;
 	if(cmdline){
 		bmk_printf("Parsing cmdline for RK%d:\n", rump_vmid);
 		_rumprun_config(cmdline);
@@ -207,8 +209,22 @@ mainbouncer(void *arg)
 	pthread_cleanup_push(releaseme, rr);
 
 	fprintf(stderr,"\n=== calling \"%s\" main() ===\n\n", progname);
+
+	/* initialize cnics */
 	rump_cnic_init(rr->rr_argc, rr->rr_argv);
+
+	/* If DOM0 block indefinitily, don't run main application */
+	if (rump_vmid == 0) {
+		bmk_printf("blocking DOM0\n");
+		bmk_sched_blockprepare();
+		bmk_sched_block();
+		bmk_printf("ERROR! unblocking DOM0\n");
+		assert(0);
+	}
+
+	/* run main application */
 	rv = rr->rr_mainfun(rr->rr_argc, rr->rr_argv);
+
 	fflush(stdout);
 	fprintf(stderr,"\n=== main() of \"%s\" returned %d ===\n",
 	    progname, rv);
