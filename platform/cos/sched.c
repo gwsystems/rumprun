@@ -107,8 +107,8 @@ struct bmk_thread {
 	/* RG additions */
 	capid_t cos_thdcap;
 	thdid_t cos_tid;
-	/* bmk_time_t runtime_start; */
-	/* bmk_time_t runtime_end; */
+	bmk_time_t runtime_start; 
+	bmk_time_t runtime_end; 
 };
 
 __thread struct bmk_thread *bmk_current;
@@ -332,7 +332,10 @@ bmk_sched_dumpqueue(void)
 	bmk_printf("END blockq dump\n");
 }
 
-/* extern bmk_time_t time_blocked; */
+extern int rump_vmid;
+extern bmk_time_t time_blocked;
+bmk_time_t vm_platform_clock_monotonic(void);
+
 static void
 sched_switch(struct bmk_thread *prev, struct bmk_thread *next)
 {
@@ -350,12 +353,16 @@ sched_switch(struct bmk_thread *prev, struct bmk_thread *next)
 	 * uncomment the extern above for time_blocked
 	 * uncomment bmk_time_t variables in bmk_struct
 	 * uncomment bmk_platform_block in cosrun.c
-	 *
-	 * next->runtime_start = bmk_platform_clock_monotonic();
-	 * prev->runtime_end = bmk_platform_clock_monotonic();
-	 * printc("%s %lld %lld\n", get_name(prev), time_blocked, prev->runtime_end - prev->runtime_start - time_blocked);
-	 * time_blocked = 0;
 	 */
+	
+       	 next->runtime_start = vm_platform_clock_monotonic();
+	 prev->runtime_end   = vm_platform_clock_monotonic();
+	 	 
+	 if(rump_vmid == 1){
+		 bmk_printf("%s %lld %lld", get_name(prev), time_blocked, prev->runtime_end - prev->runtime_start - time_blocked);
+	 }
+	 time_blocked = 0;
+	 
 
 	bmk_cpu_sched_switch_viathd(prev, next);
 }

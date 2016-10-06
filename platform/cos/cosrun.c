@@ -43,6 +43,7 @@ void  bmk_printf(const char *fmt, ...);
 int bmk_snprintf(char *bf, unsigned long size, const char *fmt, ...);
 bmk_time_t bmk_platform_clock_monotonic(void);
 bmk_time_t bmk_platform_clock_epochoffset(void);
+bmk_time_t vm_platform_clock_monotonic(void);
 void __attribute__((noreturn)) bmk_platform_halt(const char *panicstring);
 int bmk_strcmp(const char *a, const char *b);
 void *bmk_memset(void *b, int c, unsigned long n);
@@ -147,7 +148,7 @@ bmk_platform_splhigh(void)
 
 TAILQ_HEAD(threadqueue, bmk_thread);
 extern struct threadqueue *runq_p;
-/* bmk_time_t time_blocked = 0; */
+bmk_time_t time_blocked = 0; 
 
 void
 bmk_platform_block(bmk_time_t until)
@@ -157,9 +158,10 @@ bmk_platform_block(bmk_time_t until)
 
 	/*
 	 * Uncomment for blocked timing here, time_blocked, below and in sched_switch
-	 * bmk_time_t start = 0;
-	 * bmk_time_t end = 0;
 	 */
+	 bmk_time_t start = 0;
+	 bmk_time_t end = 0;
+	 
 
 	bmk_assert(cos_nesting);
 
@@ -175,13 +177,13 @@ bmk_platform_block(bmk_time_t until)
 
 	bmk_assert(!cos_nesting);
 
-	/* start = bmk_platform_clock_monotonic(); */
+	start = vm_platform_clock_monotonic();
 	while(bmk_platform_clock_monotonic() < until) {
 		if(!TAILQ_EMPTY(runq_p)) break;
 		crcalls.rump_sched_yield();
 	}
-	/* end = bmk_platform_clock_monotonic(); */
-	/* time_blocked += end - start; */
+	end = vm_platform_clock_monotonic(); 
+	time_blocked += end - start; 
 	
 	bmk_platform_splhigh();
 	/*
@@ -230,6 +232,17 @@ void
 bmk_cpu_sched_switch_viathd(struct bmk_thread *prev, struct bmk_thread *next)
 {
 	crcalls.rump_cpu_sched_switch_viathd(prev, next);
+}
+
+bmk_time_t
+vm_platform_clock_monotonic(void)
+{
+	bmk_time_t cur_time;
+
+	/* bmk_time_t is just a long long */
+	cur_time = (bmk_time_t)crcalls.rump_vm_clock_now();
+
+	return cur_time;
 }
 
 bmk_time_t
