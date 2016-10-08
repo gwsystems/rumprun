@@ -150,6 +150,8 @@ TAILQ_HEAD(threadqueue, bmk_thread);
 extern struct threadqueue *runq_p;
 bmk_time_t time_blocked = 0; 
 
+extern int rump_vmid;
+
 void
 bmk_platform_block(bmk_time_t until)
 {
@@ -159,8 +161,8 @@ bmk_platform_block(bmk_time_t until)
 	/*
 	 * Uncomment for blocked timing here, time_blocked, below and in sched_switch
 	 */
-	// bmk_time_t start = 0;
-	// bmk_time_t end = 0;
+	//bmk_time_t start = 0;
+	//bmk_time_t end = 0;
 	 
 
 	bmk_assert(cos_nesting);
@@ -181,6 +183,11 @@ bmk_platform_block(bmk_time_t until)
 	while(bmk_platform_clock_monotonic() < until) {
 		if(!TAILQ_EMPTY(runq_p)) break;
 		crcalls.rump_sched_yield();
+
+		/* If the RK still has nothing in runq after returning here, go to VK */
+		if(TAILQ_EMPTY(runq_p)) {
+			crcalls.rump_vm_yield();
+		}
 	}
 	//end = bmk_platform_clock_monotonic(); 
 	//time_blocked += end - start; 
