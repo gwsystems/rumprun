@@ -159,8 +159,8 @@ bmk_platform_block(bmk_time_t until)
 	/*
 	 * Uncomment for blocked timing here, time_blocked, below and in sched_switch
 	 */
-	 bmk_time_t start = 0;
-	 bmk_time_t end = 0;
+	// bmk_time_t start = 0;
+	// bmk_time_t end = 0;
 	 
 
 	bmk_assert(cos_nesting);
@@ -177,13 +177,13 @@ bmk_platform_block(bmk_time_t until)
 
 	bmk_assert(!cos_nesting);
 
-	start = vm_platform_clock_monotonic();
+	//start = bmk_platform_clock_monotonic();
 	while(bmk_platform_clock_monotonic() < until) {
 		if(!TAILQ_EMPTY(runq_p)) break;
 		crcalls.rump_sched_yield();
 	}
-	end = vm_platform_clock_monotonic(); 
-	time_blocked += end - start; 
+	//end = bmk_platform_clock_monotonic(); 
+	//time_blocked += end - start; 
 	
 	bmk_platform_splhigh();
 	/*

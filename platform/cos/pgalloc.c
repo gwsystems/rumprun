@@ -295,7 +295,7 @@ bmk_pgalloc(int order)
 			break;
 	}
 	if (i == FREELIST_SIZE) {
-		bmk_printf("VM%d cannot handle page request order %d! freelist size: %d\n", vmid, order, FREELIST_SIZE);
+		bmk_printf("VM%d cannot handle page request order %d! freelist size: %lu\n", vmid, order, FREELIST_SIZE);
 		return 0;
 	}
 

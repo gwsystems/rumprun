@@ -257,7 +257,7 @@ timeq_sorted_insert(struct bmk_thread *thread)
 
 	/*
 	 * RG we needed to make this <= not just < because of the granularity at which
-	 * we give wiakup times
+	 * we give wakeup times
 	 */
 	bmk_assert(TAILQ_LAST(&timeq, threadqueue)->bt_wakeup_time <= thread->bt_wakeup_time);
 	TAILQ_INSERT_TAIL(&timeq, thread, bt_schedq);
@@ -334,7 +334,6 @@ bmk_sched_dumpqueue(void)
 
 extern int rump_vmid;
 extern bmk_time_t time_blocked;
-bmk_time_t vm_platform_clock_monotonic(void);
 
 static void
 sched_switch(struct bmk_thread *prev, struct bmk_thread *next)
@@ -355,13 +354,13 @@ sched_switch(struct bmk_thread *prev, struct bmk_thread *next)
 	 * uncomment bmk_platform_block in cosrun.c
 	 */
 	
-       	 next->runtime_start = vm_platform_clock_monotonic();
-	 prev->runtime_end   = vm_platform_clock_monotonic();
+       	 //next->runtime_start = bmk_platform_clock_monotonic();
+	 //prev->runtime_end   = bmk_platform_clock_monotonic();
 	 	 
-	 if(rump_vmid == 1){
-		 bmk_printf("%s %lld %lld", get_name(prev), time_blocked, prev->runtime_end - prev->runtime_start - time_blocked);
-	 }
-	 time_blocked = 0;
+	 //if(rump_vmid == 1){
+		 //bmk_printf("%s %llu %llu\n", get_name(prev), time_blocked, prev->runtime_end - prev->runtime_start - time_blocked);
+	 //}
+	 //time_blocked = 0;
 	 
 
 	bmk_cpu_sched_switch_viathd(prev, next);
