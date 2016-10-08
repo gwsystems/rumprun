@@ -358,9 +358,9 @@ sched_switch(struct bmk_thread *prev, struct bmk_thread *next)
        	 next->runtime_start = vm_platform_clock_monotonic();
 	 prev->runtime_end   = vm_platform_clock_monotonic();
 	 	 
-	 if(rump_vmid == 1){
+	 /*if(rump_vmid == 1){
 		 bmk_printf("%s %lld %lld", get_name(prev), time_blocked, prev->runtime_end - prev->runtime_start - time_blocked);
-	 }
+	 }*/
 	 time_blocked = 0;
 	 
 
