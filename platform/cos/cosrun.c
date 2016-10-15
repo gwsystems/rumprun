@@ -157,6 +157,7 @@ bmk_platform_block(bmk_time_t until)
 {
 	unsigned int tmp;
 	bmk_time_t now = 0;
+	int first = 1;
 
 	/*
 	 * Uncomment for blocked timing here, time_blocked, below and in sched_switch
@@ -181,12 +182,15 @@ bmk_platform_block(bmk_time_t until)
 
 	//start = bmk_platform_clock_monotonic();
 
-	crcalls.rump_sched_yield();
-	if (TAILQ_EMPTY(runq_p)) crcalls.rump_vm_yield();
-
 	while(bmk_platform_clock_monotonic() < until) {
 		if(!TAILQ_EMPTY(runq_p)) break;
+		if (first) {
+			crcalls.rump_sched_yield();
+			first = 0;
+		} else {
 		/* If the RK still has nothing in runq after returning here, go to VK */
+			crcalls.rump_vm_yield();
+		}
 	}
 	//end = bmk_platform_clock_monotonic(); 
 	//time_blocked += end - start; 
