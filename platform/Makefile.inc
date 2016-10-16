@@ -48,7 +48,7 @@ commonlibs: ${COMMONLIBS}
 
 .PHONY: buildtest
 buildtest: ../../tests/hello/hello.c ${OBJ_DIR}/rumprun.o commonlibs app-tools
-	${APP_TOOLS_CC} -g -o $@ $< -lrumprun_tester
+	${APP_TOOLS_CC} -o $@ $< -lrumprun_tester
 	@echo Testing baking ...
 	@export RUMPRUN_WARNING_STFU=please ; for board in \
 	    $(shell RUMPRUN_WARNING_STFU=please ${APP_TOOLS_DIR}/rumpbake list\
