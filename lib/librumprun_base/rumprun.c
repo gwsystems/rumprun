@@ -57,6 +57,8 @@
 static pthread_mutex_t w_mtx;
 static pthread_cond_t w_cv;
 
+void bmk_fs_test(void);
+
 int rumprun_enosys(void);
 int
 rumprun_enosys(void)
@@ -213,12 +215,13 @@ mainbouncer(void *arg)
 	/* initialize cnics */
 	rump_cnic_init(rr->rr_argc, rr->rr_argv);
 
-	/* If DOM0 block indefinitily, don't run main application */
+	/* If VM0 run fs test into VM1 then block indefinitily, don't run main application */
 	if (rump_vmid == 0) {
-		bmk_printf("blocking DOM0\n");
+		bmk_printf("\n ##### blocking VM0 in mainbouncer ##### \n\n");
+		bmk_fs_test();
 		bmk_sched_blockprepare();
 		bmk_sched_block();
-		bmk_printf("ERROR! unblocking DOM0\n");
+		bmk_printf("\nERROR! unblocking DOM0\n\n");
 		assert(0);
 	}
 

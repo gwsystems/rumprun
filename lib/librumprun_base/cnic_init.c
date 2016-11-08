@@ -28,8 +28,7 @@
 
 int rumpns_rtinit(struct ifaddr *, int, int);
 extern int rump_vmid;
-//
-///* HACK FIXME */
+/* HACK FIXME */
 extern struct ifnet *rumpns_global_ifp;
 
 static int
@@ -124,8 +123,8 @@ rump_cnic_create(int num, char *addr, char *netmask){
 	rv = rump_pub_netconfig_ifup(cnic);
 	if(!rv) bmk_printf("ifup: success\n");
 	else bmk_printf("ifup: fail %d\n", rv);
-	
-	return fd;	
+
+	return fd;
 }
 
 int
@@ -140,18 +139,18 @@ rump_cnic_init(int ignore, char *argv[])
 	 */
 	if(vmid == 0) {
 		bmk_printf("----- dom0 -----\n");
-	        fd = rump_cnic_create(0, "111.111.111.0", "255.255.255.0");	
+	        fd = rump_cnic_create(0, "111.111.111.0", "255.255.255.0");
 		assert(fd);
-	        fd = rump_cnic_create(1, "222.222.222.0", "255.255.255.0");	
+	        fd = rump_cnic_create(1, "222.222.222.0", "255.255.255.0");
 		assert(fd);
 	} else if(vmid == 1){
 		bmk_printf("----- VM%d -----\n", vmid);
-	        fd  = rump_cnic_create(2, "111.111.111.1", "255.255.255.0");	
+	        fd  = rump_cnic_create(2, "111.111.111.1", "255.255.255.0");
 		bmk_printf("assert\n", vmid);
 		assert(fd);
 	} else if(vmid == 2){
 		bmk_printf("----- VM%d -----\n", vmid);
-	        fd = rump_cnic_create(3, "222.222.222.1", "255.255.255.0");	
+	        fd = rump_cnic_create(3, "222.222.222.1", "255.255.255.0");
 		assert(fd);
 	}
 

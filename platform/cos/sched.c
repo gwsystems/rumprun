@@ -358,7 +358,8 @@ sched_switch(struct bmk_thread *prev, struct bmk_thread *next)
 	 //prev->runtime_end   = bmk_platform_clock_monotonic();
 	 	 
 	 //if(rump_vmid == 1){
-		 //bmk_printf("%s %llu %llu\n", get_name(prev), time_blocked, prev->runtime_end - prev->runtime_start - time_blocked);
+		 //bmk_printf("%s %llu %llu (us)\n", get_name(prev), time_blocked/1000, (prev->runtime_end - prev->runtime_start - time_blocked)/1000);
+		 //bmk_printf("%s\n", get_name(prev));
 	 //}
 	 /* print just block timing */
 	 //if (time_blocked && rump_vmid == 1) bmk_printf("VM%d %s %llu\n", rump_vmid, get_name(prev), time_blocked);

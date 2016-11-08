@@ -11,8 +11,10 @@
 
 #include <rumpcalls.h>
 
+extern int vmid;
+
 /* Unused. Here to satisfy arcitecture dependent code. Left over from bmk implementation */
-int bmk_spldepth = 1; 
+int bmk_spldepth = 1;
 
 typedef long long bmk_time_t;
 
@@ -68,7 +70,10 @@ void bmk_cpu_sched_switch_viathd(struct bmk_thread *prev, struct bmk_thread *nex
 int bmk_cpu_intr_init(int intr);
 void bmk_cpu_intr_ack(void);
 
+void bmk_fs_test(void);
+
 void rumpns_bmk_printf(const char *fmt, ...) __attribute__ ((weak, alias ("bmk_printf")));
+
 /* Prototype Definitions */
 
 extern void *bmk_va2pa(void *addr);
@@ -76,18 +81,16 @@ extern void *bmk_pa2va(void *addr, unsigned long len);
 
 int
 rump_shmem_dequeue_size(unsigned int srcvm, unsigned int dstvm)
+{ return crcalls.rump_dequeue_size(srcvm, dstvm); }
+
+int
+rump_shmem_write(void *buff, unsigned int size, unsigned int srcvm, unsigned int dstvm)
+{ return crcalls.rump_shmem_send(buff, size, srcvm, dstvm); }
+
+void *
+rump_shmem_read(void *buff, unsigned int srcvm, unsigned int dstvm)
 {
-	return crcalls.rump_dequeue_size(srcvm, dstvm);
-}
 
-int 
-rump_shmem_write(void *buff, unsigned int size, unsigned int srcvm, unsigned int dstvm){
-	return crcalls.rump_shmem_send(buff, size, srcvm, dstvm);
-}
-
-void * 
-rump_shmem_read(void *buff, unsigned int srcvm, unsigned int dstvm){
-	
 	if(crcalls.rump_shmem_recv(buff, srcvm, dstvm) == -1) return NULL;
 	return buff;
 }
@@ -369,4 +372,11 @@ int
 rumprun_platform_rumpuser_init(void)
 {
 	return 0;
+}
+
+void
+bmk_fs_test(void)
+{
+	bmk_printf("VM%d: Running FS test into VM1\n", vmid);
+	bmk_printf("VM%d: Done running test\n\n", vmid);
 }
