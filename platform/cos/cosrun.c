@@ -13,7 +13,6 @@
 
 extern int vmid;
 
-/* Unused. Here to satisfy arcitecture dependent code. Left over from bmk implementation */
 int bmk_spldepth = 1;
 
 typedef long long bmk_time_t;
@@ -138,9 +137,7 @@ bmk_snprintf(char *bf, unsigned long size, const char *fmt, ...)
 
 void
 bmk_platform_cpu_sched_settls(struct bmk_tcb *next)
-{
-	return;
-}
+{ return; }
 
 unsigned long
 bmk_platform_splhigh(void)
@@ -151,7 +148,7 @@ bmk_platform_splhigh(void)
 
 TAILQ_HEAD(threadqueue, bmk_thread);
 extern struct threadqueue *runq_p;
-bmk_time_t time_blocked = 0; 
+bmk_time_t time_blocked = 0;
 
 extern int rump_vmid;
 
@@ -167,7 +164,6 @@ bmk_platform_block(bmk_time_t until)
 	 */
 	//bmk_time_t start = 0;
 	//bmk_time_t end = 0;
-	 
 
 	bmk_assert(cos_nesting);
 
@@ -196,9 +192,9 @@ bmk_platform_block(bmk_time_t until)
 			which = 1;
 		}
 	}
-	//end = bmk_platform_clock_monotonic(); 
-	//time_blocked += end - start; 
-	
+	//end = bmk_platform_clock_monotonic();
+	//time_blocked += end - start;
+
 	bmk_platform_splhigh();
 	/*
 	 * Restore the depth we had to our nesting
@@ -213,9 +209,7 @@ bmk_platform_block(bmk_time_t until)
 
 void
 bmk_platform_splx(unsigned long x)
-{
-	crcalls.rump_intr_enable();
-}
+{ crcalls.rump_intr_enable(); }
 
 void
 bmk_cpu_sched_create(struct bmk_thread *thread, struct bmk_tcb *tcb,
@@ -244,9 +238,7 @@ bmk_strcpy(char *d, const char *s)
 
 void
 bmk_cpu_sched_switch_viathd(struct bmk_thread *prev, struct bmk_thread *next)
-{
-	crcalls.rump_cpu_sched_switch_viathd(prev, next);
-}
+{ crcalls.rump_cpu_sched_switch_viathd(prev, next); }
 
 bmk_time_t
 vm_platform_clock_monotonic(void)
@@ -334,7 +326,6 @@ bmk_vprintf(const char *fmt, va_list ap)
 	crcalls.rump_cos_print(s, ret);
 
 	return;
-
 }
 
 char *
@@ -350,9 +341,7 @@ bmk_strncpy(char *d, const char *s, unsigned long n)
 
 int
 bmk_cpu_intr_init(int intr)
-{
-	return 0;
-}
+{ return 0; }
 
 void
 bmk_cpu_intr_ack(void)
@@ -370,13 +359,8 @@ bmk_cpu_intr_ack(void)
 
 int
 rumprun_platform_rumpuser_init(void)
-{
-	return 0;
-}
+{ return 0; }
 
 void
 bmk_fs_test(void)
-{
-	bmk_printf("VM%d: Running FS test into VM1\n", vmid);
-	bmk_printf("VM%d: Done running test\n\n", vmid);
-}
+{ crcalls.rump_fs_test(); }
