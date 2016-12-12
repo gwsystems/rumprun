@@ -95,6 +95,7 @@ _lwp_ctl(int ctl, struct lwpctl **data)
 	return 0;
 }
 
+extern int user_create;
 int
 rumprun_makelwp(void (*start)(void *), void *arg, void *private,
 	void *stack_base, size_t stack_size, unsigned long flag, lwpid_t *lid)
@@ -118,18 +119,29 @@ rumprun_makelwp(void (*start)(void *), void *arg, void *private,
 	rl->rl_start = start;
 	rl->rl_arg = arg;
 	rl->rl_lwpid = ++curlwpid;
-	rl->rl_thread = bmk_sched_create_withtls("lwp", rl, 0,
-	    rumprun_makelwp_tramp, newlwp, stack_base, stack_size, private);
+
+	if (!user_create) {
+		rl->rl_thread = bmk_sched_create_withtls("lwp", rl, 0,
+		    rumprun_makelwp_tramp, newlwp, stack_base, stack_size, private);
+	} else {
+		rl->rl_thread = bmk_sched_create_withtls("user_lwp", rl, 0,
+		    rumprun_makelwp_tramp, newlwp, stack_base, stack_size, private);
+	}
+
 	if (rl->rl_thread == NULL) {
 		free(rl);
 		rump_pub_lwproc_releaselwp();
 		rump_pub_lwproc_switch(curlwp);
 		return EBUSY; /* ??? */
 	}
+
 	rump_pub_lwproc_switch(curlwp);
 
+	if (!user_create) {
+		TAILQ_INSERT_TAIL(&all_lwp, rl, rl_entries);
+	}
+
 	*lid = rl->rl_lwpid;
-	TAILQ_INSERT_TAIL(&all_lwp, rl, rl_entries);
 
 	return 0;
 }

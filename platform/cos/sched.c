@@ -37,7 +37,6 @@
 #include <bmk-core/printf.h>
 #include <bmk-core/queue.h>
 #include <bmk-core/string.h>
-#include <bmk-core/sched.h>
 #include <bmk-core/types.h>
 
 #include <arch/i386/types.h>
@@ -46,6 +45,7 @@
 /* Located on the composite side */
 #include <rumpcalls.h>
 #include <cos_init.h>
+#include <bmk-core/sched.h>
 
 void *bmk_mainstackbase;
 unsigned long bmk_mainstacksize;
@@ -55,7 +55,6 @@ unsigned long bmk_mainstacksize;
  */
 #define BLOCKTIME_MAX (1*1000*1000*1000)
 
-#define NAME_MAXLEN 16
 
 /* flags and their meanings + invariants */
 #define THR_RUNQ	0x0001		/* on runq, can be run		*/
@@ -80,36 +79,12 @@ extern const char _tbss_start[], _tbss_end[];
     (((TDATASIZE + TBSSSIZE + sizeof(void *)-1)/sizeof(void *))*sizeof(void *))
 #define TLSAREASIZE (TCBOFFSET + BMK_TLS_EXTRA)
 
-/* 
+/*
  * RG: The struct definition for bmk_thread was moved
  * to rumpcalls.h on the composite side so the composite system
  * could access bmk_current thread without whinning about imcomplete
  * types.
  */
-struct bmk_thread {
-	char bt_name[NAME_MAXLEN];
-
-	bmk_time_t bt_wakeup_time;
-
-	int bt_flags;
-	int bt_errno;
-
-	void *bt_stackbase;
-
-	void *bt_cookie;
-
-	/* MD thread control block */
-	struct bmk_tcb bt_tcb;
-
-	TAILQ_ENTRY(bmk_thread) bt_schedq;
-	TAILQ_ENTRY(bmk_thread) bt_threadq;
-
-	/* RG additions */
-	capid_t cos_thdcap;
-	thdid_t cos_tid;
-	bmk_time_t runtime_start; 
-	bmk_time_t runtime_end; 
-};
 
 __thread struct bmk_thread *bmk_current;
 
@@ -353,10 +328,10 @@ sched_switch(struct bmk_thread *prev, struct bmk_thread *next)
 	 * uncomment bmk_time_t variables in bmk_struct
 	 * uncomment bmk_platform_block in cosrun.c
 	 */
-	
-       	 //next->runtime_start = bmk_platform_clock_monotonic();
+
+	 //next->runtime_start = bmk_platform_clock_monotonic();
 	 //prev->runtime_end   = bmk_platform_clock_monotonic();
-	 	 
+
 	 //if(rump_vmid == 1){
 		 //bmk_printf("%s %llu %llu (us)\n", get_name(prev), time_blocked/1000, (prev->runtime_end - prev->runtime_start - time_blocked)/1000);
 		 //bmk_printf("%s\n", get_name(prev));
@@ -364,7 +339,6 @@ sched_switch(struct bmk_thread *prev, struct bmk_thread *next)
 	 /* print just block timing */
 	 //if (time_blocked && rump_vmid == 1) bmk_printf("VM%d %s %llu\n", rump_vmid, get_name(prev), time_blocked);
 	 //time_blocked = 0;
-	 
 
 	bmk_cpu_sched_switch_viathd(prev, next);
 }
@@ -553,7 +527,10 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 	 * for the new thread that we just created, not the one currently running
 	 * We can do this by seting the value in tlsarea[0] = thread
 	 */
+	/* TODO confident this is outdated, no need for tlsarea array */
 	if(((struct bmk_thread **)tlsarea)[0] == thread) while(1);
+
+
 	initcurrent(tlsarea, thread);
 	//if(((struct bmk_thread **)tlsarea)[0] != thread) while(1);
 	/* For further testing, call tls_set and tls_get */
@@ -567,12 +544,20 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 	cos_thdcap = get_cos_thdcap(thread);
 	crcalls.rump_tls_init((unsigned long)tlsarea, cos_thdcap);
 
-
-	TAILQ_INSERT_TAIL(&threadq, thread, bt_threadq);
+	/* Don't insert if user_pthread */
+	if (bmk_strcmp(name, "user_lwp")) {
+		TAILQ_INSERT_TAIL(&threadq, thread, bt_threadq);
+	} else {
+		bmk_printf("match, not adding %s to threadq\n", name);
+	}
 
 	/* set runnable manually, we don't satisfy invariants yet */
 	flags = bmk_platform_splhigh();
-	TAILQ_INSERT_TAIL(&runq, thread, bt_schedq);
+	if (bmk_strcmp(name, "user_lwp")) {
+		TAILQ_INSERT_TAIL(&runq, thread, bt_schedq);
+	} else {
+		bmk_printf("match, not adding %s to runq\n", name);
+	}
 	thread->bt_flags |= THR_RUNQ;
 
 	bmk_platform_splx(flags);
@@ -590,11 +575,8 @@ bmk_sched_create(const char *name, void *cookie, int joinable,
 
 	tlsarea = bmk_sched_tls_alloc();
 
-
 	ret = bmk_sched_create_withtls(name, cookie, joinable, f, data,
-	    	stack_base, stack_size, tlsarea);
-
-
+		stack_base, stack_size, tlsarea);
 
 	return ret;
 }

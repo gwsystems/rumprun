@@ -104,7 +104,7 @@ isr(void *arg)
 			}
 			rumpkern_unsched(&nlocks, NULL);
 			bmk_cpu_intr_ack();
-			
+
 			if (!didwork) {
 				/* bmk_printf("stray interrupt\n"); */
 			}

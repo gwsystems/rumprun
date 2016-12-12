@@ -145,7 +145,7 @@ rumprun_boot(char *cmdline)
 		_rumprun_config(cmdline);
 		bmk_printf("Done parsing cmdline\n");
 	}
-	
+
 
 	/*
 	 * give all threads a chance to run, and ensure that the main
@@ -193,6 +193,9 @@ releaseme(void *arg)
 	pthread_mutex_unlock(&w_mtx);
 }
 
+extern unsigned long vm_main_thd;
+int cos_thd_switch(unsigned long c);
+
 static void *
 mainbouncer(void *arg)
 {
@@ -203,7 +206,7 @@ mainbouncer(void *arg)
 	 */
 	//const char *progname = rr->rr_argv[0];
 	fprintf(stderr, "FIX PROGNAME\n");
-	const char *progname = "nginx";
+	const char *progname = "slack_bot";
 	int rv;
 
 	rump_pub_lwproc_rfork(RUMP_RFFDG);
@@ -217,8 +220,8 @@ mainbouncer(void *arg)
 
 	/* If VM0 run fs test into VM1 then block indefinitily, don't run main application */
 	if (rump_vmid == 0) {
-		bmk_printf("\n ##### blocking VM0 in mainbouncer ##### \n\n");
-		bmk_fs_test();
+		bmk_printf("\n ##### blocking VM0 in mainbouncer. Switching to userspace ##### \n\n");
+		cos_thd_switch(vm_main_thd);
 		bmk_sched_blockprepare();
 		bmk_sched_block();
 		bmk_printf("\nERROR! unblocking DOM0\n\n");
@@ -243,11 +246,15 @@ mainbouncer(void *arg)
 	exit(rv);
 }
 
+int user_create = 0;
+
 void *
 rumprun(int (*mainfun)(int, char *[]), int argc, char *argv[])
 {
 	printf("\n__________________rumprun_________________\n");
 	struct rumprunner *rr;
+	pthread_t user_pthread;
+	int error;
 
 	rr = malloc(sizeof(*rr));
 
@@ -257,11 +264,31 @@ rumprun(int (*mainfun)(int, char *[]), int argc, char *argv[])
 	rr->rr_argv = argv;
 	rr->rr_flags = 0;
 
+	/*
+	 * HACK HACK HACK
+	 * Using global variable as a sign that this pthread context belongs to user space
+	 * thdcap
+	 */
+	printf("user pthread_create\n");
+	user_create = 1;
+	if (pthread_create(&user_pthread, NULL, NULL, NULL) != 0) {
+		fprintf(stderr, "rumprun: running %s failed\n", argv[0]);
+		free(rr);
+		return NULL;
+	}
+	user_create = 0;
+	printf("user pthread_create done\n");
+	/* Remove from running queue so we don't run this user pthread */
+	error = pthread_suspend_np(user_pthread);
+	printf("suspend error: %d\n", error);
+
+	printf("pthread_create\n");
 	if (pthread_create(&rr->rr_mainthread, NULL, mainbouncer, rr) != 0) {
 		fprintf(stderr, "rumprun: running %s failed\n", argv[0]);
 		free(rr);
 		return NULL;
 	}
+	printf("pthread_create done\n");
 	LIST_INSERT_HEAD(&rumprunners, rr, rr_entries);
 
 	pthread_mutex_lock(&w_mtx);
