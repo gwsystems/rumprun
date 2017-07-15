@@ -216,17 +216,21 @@ mainbouncer(void *arg)
 	fprintf(stderr,"\n=== calling \"%s\" main() ===\n\n", progname);
 
 	/* initialize cnics */
-	rump_cnic_init(rr->rr_argc, rr->rr_argv);
+	//rump_cnic_init(rr->rr_argc, rr->rr_argv);
 
 	/* If VM0 run fs test into VM1 then block indefinitily, don't run main application */
-	if (rump_vmid == 0) {
+	/*
+	 * FIXME rump_vmid has been depricated and replaced a new spdid with an api for acces in rumpcall.h\c
+	 * Add RK support to call to Composite to get info
+	 */
+	//if (rump_vmid == 0) {
 		bmk_printf("\n ##### blocking VM0 in mainbouncer. Switching to userspace ##### \n\n");
 		cos_thd_switch(vm_main_thd);
 		bmk_sched_blockprepare();
 		bmk_sched_block();
 		bmk_printf("\nERROR! unblocking DOM0\n\n");
 		assert(0);
-	}
+	//}
 
 	/* run main application */
 	rv = rr->rr_mainfun(rr->rr_argc, rr->rr_argv);

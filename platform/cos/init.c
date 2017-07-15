@@ -17,16 +17,15 @@ void
 bmk_mainthread(void *cmdline)
 {
 	void *cookie;
-	extern int vmid;
-	rump_vmid = vmid;
+	/* FIXME vmid has been discontinued, add rumpcall down to composite to fetch new spdid */
+	rump_vmid = -1;
 //	bmk_printf("cmdline: \n%s", (char *)cmdline);
-	bmk_printf("vmid: %d\n", vmid);
-		
+
 	rumprun_boot(cmdline);
 	RUNMAINS();
 
 	while ((cookie = rumprun_get_finished()) != NULL)
 		rumprun_wait(cookie);
-	
+
 	rumprun_reboot();
 }

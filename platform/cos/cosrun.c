@@ -11,8 +11,6 @@
 
 #include <rumpcalls.h>
 
-extern int vmid;
-
 int bmk_spldepth = 1;
 
 typedef long long bmk_time_t;
@@ -149,8 +147,6 @@ bmk_platform_splhigh(void)
 TAILQ_HEAD(threadqueue, bmk_thread);
 extern struct threadqueue *runq_p;
 bmk_time_t time_blocked = 0;
-
-extern int rump_vmid;
 
 void
 bmk_platform_block(bmk_time_t until)

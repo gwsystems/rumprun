@@ -307,7 +307,6 @@ bmk_sched_dumpqueue(void)
 	bmk_printf("END blockq dump\n");
 }
 
-extern int rump_vmid;
 extern bmk_time_t time_blocked;
 
 static void
@@ -358,11 +357,10 @@ schedule(void)
 	for (;;) {
 		bmk_time_t curtime, waketime;
 
-		/* RG TODO check function for accuarcy */
 		curtime = bmk_platform_clock_monotonic();
 		waketime = curtime + BLOCKTIME_MAX; /* RG Max block time is 1 s */
 
-		/* 
+		/*
 		 * RG timout queue has priority over block queue...
 		 *
 		 * Process timeout queue first by moving threads onto
@@ -371,6 +369,7 @@ schedule(void)
 		 * first one which will not be woked up.
 		 */
 		while ((thread = TAILQ_FIRST(&timeq)) != NULL) {
+			bmk_printf("Looking to switch to: %s\n", get_name(thread));
 
 			if (thread->bt_wakeup_time <= curtime) {
 				/*
@@ -770,7 +769,6 @@ bmk_sched_init(void)
 	crcalls.rump_tls_init((&tcbinit)->btcb_tp, boot_thd);
 }
 
-extern int vmid;
 extern capid_t cos_cur;
 
 void __attribute__((noreturn))

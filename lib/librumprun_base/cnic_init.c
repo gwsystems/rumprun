@@ -131,6 +131,7 @@ int
 rump_cnic_init(int ignore, char *argv[])
 {
 	printf("rump_cnic_init\n");
+	/* FIXME, vmid and rump_vmid have been discontinued, add rumpcall to fetch new spdid now */
 	int vmid = rump_vmid;
 	int fd;
 	/*
