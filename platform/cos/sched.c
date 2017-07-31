@@ -369,7 +369,6 @@ schedule(void)
 		 * first one which will not be woked up.
 		 */
 		while ((thread = TAILQ_FIRST(&timeq)) != NULL) {
-			bmk_printf("Looking to switch to: %s\n", get_name(thread));
 
 			if (thread->bt_wakeup_time <= curtime) {
 				/*
