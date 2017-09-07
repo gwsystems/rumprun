@@ -357,12 +357,7 @@ bmk_cpu_intr_ack(void)
         /*
          * ACK interrupts on PIC
          */
-        __asm__ __volatile(
-            "movb $0x20, %%al\n"
-            "outb %%al, $0xa0\n"
-            "outb %%al, $0x20\n"
-            ::: "al");
-
+	crcalls.rump_cpu_intr_ack();
 }
 
 int

@@ -65,13 +65,13 @@ static void
 isr(void *arg)
 {
 	bmk_printf("isr\n");
-	int i, didwork;
+	int i;//, didwork;
 
         rumpuser__hyp.hyp_schedule();
         rumpuser__hyp.hyp_lwproc_newlwp(0);
         rumpuser__hyp.hyp_unschedule();
 
-	didwork = 0;
+	//didwork = 0;
 	for (;;) {
 		splhigh();
 		if (isr_todo) {
@@ -85,6 +85,7 @@ isr(void *arg)
 			rumpkern_sched(nlocks, NULL);
 			for (i = isr_lowest; isrcopy; i++) {
 				struct intrhand *ih;
+				int rirq_workdone = 0, rirq = 0;
 
 #if BMK_INTRLEVS == 1
 				isrcopy = 0;
@@ -96,24 +97,29 @@ isr(void *arg)
 				isrcopy &= ~(1<<i);
 #endif
 
+				if ((i != 13 && i != 15)) rirq = 1;
+
 				SLIST_FOREACH(ih, &isr_ih[i], ih_entries) {
 					if (ih->ih_fun(ih->ih_arg) != 0) {
-						didwork = 1;
+						//didwork = 1;
+						if (rirq) rirq_workdone = 1;
 					}
 				}
+
+				if (rirq_workdone) bmk_cpu_intr_ack();
 			}
 			rumpkern_unsched(&nlocks, NULL);
-			bmk_cpu_intr_ack();
+//			bmk_cpu_intr_ack();
 			
-			if (!didwork) {
-				/* bmk_printf("stray interrupt\n"); */
-			}
+//			if (!didwork) {
+//				/* bmk_printf("stray interrupt\n"); */
+//			}
 		} else {
 			/* no interrupts left. block until the next one. */
 			bmk_sched_blockprepare();
 			spl0();
 			bmk_sched_block();
-			didwork = 0;
+//			didwork = 0;
 		}
 	}
 }
