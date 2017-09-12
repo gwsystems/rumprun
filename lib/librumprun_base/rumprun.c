@@ -224,12 +224,12 @@ mainbouncer(void *arg)
 	 * Add RK support to call to Composite to get info
 	 */
 	//if (rump_vmid == 0) {
-		bmk_printf("\n ##### blocking VM0 in mainbouncer. Switching to userspace ##### \n\n");
-		cos_thd_switch(vm_main_thd);
-		bmk_sched_blockprepare();
-		bmk_sched_block();
-		bmk_printf("\nERROR! unblocking DOM0\n\n");
-		assert(0);
+		//bmk_printf("\n ##### blocking VM0 in mainbouncer. Switching to userspace ##### \n\n");
+		//cos_thd_switch(vm_main_thd);
+		//bmk_sched_blockprepare();
+		//bmk_sched_block();
+		//bmk_printf("\nERROR! unblocking DOM0\n\n");
+		//assert(0);
 	//}
 
 	/* run main application */

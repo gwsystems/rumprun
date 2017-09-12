@@ -6,6 +6,7 @@
 #include <bmk-core/queue.h>
 #include <execinfo.h>
 #include "cosrun.h"
+#include "udpserv.h"
 
 #include <arch/i386/types.h>
 
@@ -147,6 +148,12 @@ bmk_platform_splhigh(void)
 TAILQ_HEAD(threadqueue, bmk_thread);
 extern struct threadqueue *runq_p;
 bmk_time_t time_blocked = 0;
+
+void
+yield_udpserv(void)
+{
+	crcalls.rump_vm_yield();
+}
 
 void
 bmk_platform_block(bmk_time_t until)
