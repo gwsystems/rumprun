@@ -359,4 +359,7 @@ rumprun_platform_rumpuser_init(void)
 
 void
 bmk_fs_test(void)
-{ crcalls.rump_fs_test(); }
+{
+	/* Discontinued, now implemented as a syscall into RK */
+	//crcalls.rump_fs_test();
+}

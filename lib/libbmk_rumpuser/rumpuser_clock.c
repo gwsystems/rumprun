@@ -37,9 +37,6 @@ int
 rumpuser_clock_gettime(int which, int64_t *sec, long *nsec)
 {
 
-//	bmk_printf("rumpuser_clock_gettime\n");
-//	bmk_printf("which: %d\n", which);
-
 	bmk_time_t time;
 
 	time = bmk_platform_clock_monotonic();
