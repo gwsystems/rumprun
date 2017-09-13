@@ -150,12 +150,6 @@ extern struct threadqueue *runq_p;
 bmk_time_t time_blocked = 0;
 
 void
-yield_udpserv(void)
-{
-	crcalls.rump_vm_yield();
-}
-
-void
 bmk_platform_block(bmk_time_t until)
 {
 	unsigned int tmp;
