@@ -137,9 +137,9 @@ rumprun_makelwp(void (*start)(void *), void *arg, void *private,
 
 	rump_pub_lwproc_switch(curlwp);
 
-	if (!user_create) {
+	//if (!user_create) {
 		TAILQ_INSERT_TAIL(&all_lwp, rl, rl_entries);
-	}
+	//}
 
 	*lid = rl->rl_lwpid;
 

@@ -257,8 +257,8 @@ rumprun(int (*mainfun)(int, char *[]), int argc, char *argv[])
 {
 	printf("\n__________________rumprun_________________\n");
 	struct rumprunner *rr;
-	pthread_t user_pthread;
-	int error;
+//	pthread_t user_pthread;
+//	int error;
 
 	rr = malloc(sizeof(*rr));
 
@@ -273,25 +273,25 @@ rumprun(int (*mainfun)(int, char *[]), int argc, char *argv[])
 	 * Using global variable as a sign that this pthread context belongs to user space
 	 * thdcap
 	 */
-	printf("user pthread_create\n");
-	user_create = 1;
-	if (pthread_create(&user_pthread, NULL, NULL, NULL) != 0) {
-		fprintf(stderr, "rumprun: running %s failed\n", argv[0]);
-		free(rr);
-		return NULL;
-	}
-	user_create = 0;
-	printf("user pthread_create done\n");
-	/* Remove from running queue so we don't run this user pthread */
-	error = pthread_suspend_np(user_pthread);
-	printf("suspend error: %d\n", error);
+//	printf("user pthread_create\n");
+//	if (pthread_create(&user_pthread, NULL, NULL, NULL) != 0) {
+//		fprintf(stderr, "rumprun: running %s failed\n", argv[0]);
+//		free(rr);
+//		return NULL;
+//	}
+//	printf("user pthread_create done\n");
+//	/* Remove from running queue so we don't run this user pthread */
+//	error = pthread_suspend_np(user_pthread);
+//	printf("suspend error: %d\n", error);
 
 	printf("pthread_create\n");
+	user_create = 1;
 	if (pthread_create(&rr->rr_mainthread, NULL, mainbouncer, rr) != 0) {
 		fprintf(stderr, "rumprun: running %s failed\n", argv[0]);
 		free(rr);
 		return NULL;
 	}
+	user_create = 0;
 	printf("pthread_create done\n");
 	LIST_INSERT_HEAD(&rumprunners, rr, rr_entries);
 
