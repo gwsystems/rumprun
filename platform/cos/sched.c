@@ -542,20 +542,20 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 	cos_thdcap = get_cos_thdcap(thread);
 	crcalls.rump_tls_init((unsigned long)tlsarea, cos_thdcap);
 
-	TAILQ_INSERT_TAIL(&threadq, thread, bt_threadq);
 	/* Don't insert if user_pthread */
-//	if (bmk_strcmp(name, "user_lwp")) {
-//	} else {
-//		bmk_printf("match, not adding %s to threadq\n", name);
-//	}
+	if (bmk_strcmp(name, "user_lwp")) {
+		TAILQ_INSERT_TAIL(&threadq, thread, bt_threadq);
+	} else {
+		bmk_printf("match, not adding %s to threadq\n", name);
+	}
 
 	/* set runnable manually, we don't satisfy invariants yet */
 	flags = bmk_platform_splhigh();
-	TAILQ_INSERT_TAIL(&runq, thread, bt_schedq);
-//	if (bmk_strcmp(name, "user_lwp")) {
-//	} else {
-//		bmk_printf("match, not adding %s to runq\n", name);
-//	}
+	if (bmk_strcmp(name, "user_lwp")) {
+		TAILQ_INSERT_TAIL(&runq, thread, bt_schedq);
+	} else {
+		bmk_printf("match, not adding %s to runq\n", name);
+	}
 	thread->bt_flags |= THR_RUNQ;
 
 	bmk_platform_splx(flags);

@@ -134,7 +134,6 @@ rumprun_makelwp(void (*start)(void *), void *arg, void *private,
 		rl->rl_thread = bmk_sched_create_withtls("user_lwp", rl, 0,
 		    rumprun_makelwp_tramp, newlwp, stack_base, stack_size, private);
 	}
-	_meuserthd = 0;
 
 	if (rl->rl_thread == NULL) {
 		free(rl);
@@ -145,9 +144,10 @@ rumprun_makelwp(void (*start)(void *), void *arg, void *private,
 
 	rump_pub_lwproc_switch(curlwp);
 
-	TAILQ_INSERT_TAIL(&all_lwp, rl, rl_entries);
+	if (!_meuserthd) TAILQ_INSERT_TAIL(&all_lwp, rl, rl_entries);
 
 	*lid = rl->rl_lwpid;
+	_meuserthd = 0;
 
 	return 0;
 }
