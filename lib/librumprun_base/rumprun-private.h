@@ -31,4 +31,6 @@ void _netbsd_userlevel_fini(void);
 
 void rumprun_lwp_init(void);
 
+void rumprun_set_meuserthd(void);
+
 #endif /* _RUMPRUN_BASE_RUMPRUN_PRIVATE_H_ */

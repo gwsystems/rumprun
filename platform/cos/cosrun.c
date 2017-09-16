@@ -6,7 +6,6 @@
 #include <bmk-core/queue.h>
 #include <execinfo.h>
 #include "cosrun.h"
-#include "udpserv.h"
 
 #include <arch/i386/types.h>
 

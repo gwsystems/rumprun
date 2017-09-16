@@ -77,6 +77,12 @@ static struct rumprun_lwp mainthread = {
 
 static void rumprun_makelwp_tramp(void *);
 
+static int _meuserthd;
+
+void
+rumprun_set_meuserthd(void)
+{ _meuserthd = 1; }
+
 static ptrdiff_t meoff;
 static void
 assignme(void *tcb, struct rumprun_lwp *value)
@@ -95,7 +101,6 @@ _lwp_ctl(int ctl, struct lwpctl **data)
 	return 0;
 }
 
-extern int user_create;
 int
 rumprun_makelwp(void (*start)(void *), void *arg, void *private,
 	void *stack_base, size_t stack_size, unsigned long flag, lwpid_t *lid)
@@ -120,13 +125,16 @@ rumprun_makelwp(void (*start)(void *), void *arg, void *private,
 	rl->rl_arg = arg;
 	rl->rl_lwpid = ++curlwpid;
 
-	if (!user_create) {
+	if (!_meuserthd) {
+		printf("creating lwp thread..");
 		rl->rl_thread = bmk_sched_create_withtls("lwp", rl, 0,
 		    rumprun_makelwp_tramp, newlwp, stack_base, stack_size, private);
 	} else {
+		printf("creating user_lwp thread..");
 		rl->rl_thread = bmk_sched_create_withtls("user_lwp", rl, 0,
 		    rumprun_makelwp_tramp, newlwp, stack_base, stack_size, private);
 	}
+	_meuserthd = 0;
 
 	if (rl->rl_thread == NULL) {
 		free(rl);
@@ -137,9 +145,7 @@ rumprun_makelwp(void (*start)(void *), void *arg, void *private,
 
 	rump_pub_lwproc_switch(curlwp);
 
-	//if (!user_create) {
-		TAILQ_INSERT_TAIL(&all_lwp, rl, rl_entries);
-	//}
+	TAILQ_INSERT_TAIL(&all_lwp, rl, rl_entries);
 
 	*lid = rl->rl_lwpid;
 
