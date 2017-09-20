@@ -44,7 +44,6 @@
 
 /* Located on the composite side */
 #include <rumpcalls.h>
-#include <cos_init.h>
 #include <bmk-core/sched.h>
 
 void *bmk_mainstackbase;
@@ -542,20 +541,11 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 	cos_thdcap = get_cos_thdcap(thread);
 	crcalls.rump_tls_init((unsigned long)tlsarea, cos_thdcap);
 
-	/* Don't insert if user_pthread */
-	if (bmk_strcmp(name, "user_lwp")) {
-		TAILQ_INSERT_TAIL(&threadq, thread, bt_threadq);
-	} else {
-		bmk_printf("match, not adding %s to threadq\n", name);
-	}
+	TAILQ_INSERT_TAIL(&threadq, thread, bt_threadq);
 
 	/* set runnable manually, we don't satisfy invariants yet */
 	flags = bmk_platform_splhigh();
-	if (bmk_strcmp(name, "user_lwp")) {
-		TAILQ_INSERT_TAIL(&runq, thread, bt_schedq);
-	} else {
-		bmk_printf("match, not adding %s to runq\n", name);
-	}
+	TAILQ_INSERT_TAIL(&runq, thread, bt_schedq);
 	thread->bt_flags |= THR_RUNQ;
 
 	bmk_platform_splx(flags);
