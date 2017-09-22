@@ -23,8 +23,6 @@ unsigned long bmk_pageshift = 12;
 
 unsigned long bmk_memsize;
 
-extern unsigned int cos_nesting;
-
 struct cos_rumpcalls crcalls;
 
 void* _GLOBAL_OFFSET_TABLE_ = (void *) 0x1337BEEF;
@@ -72,9 +70,15 @@ void bmk_fs_test(void);
 void rumpns_bmk_printf(const char *fmt, ...) __attribute__ ((weak, alias ("bmk_printf")));
 
 /* Prototype Definitions */
-
 extern void *bmk_va2pa(void *addr);
 extern void *bmk_pa2va(void *addr, unsigned long len);
+
+/* scheduler api */
+void bmk_cpu_sched_wakeup(struct bmk_thread *thread);
+int  bmk_cpu_sched_block_timeout(struct bmk_thread *curr, unsigned long long timeout);
+void bmk_cpu_sched_block(struct bmk_thread *curr);
+void bmk_cpu_sched_yield(void);
+void bmk_cpu_sched_exit(void);
 
 int
 rump_shmem_dequeue_size(unsigned int srcvm, unsigned int dstvm)
@@ -145,60 +149,24 @@ bmk_platform_splhigh(void)
 }
 
 TAILQ_HEAD(threadqueue, bmk_thread);
-extern struct threadqueue *runq_p;
 bmk_time_t time_blocked = 0;
 
 void
 bmk_platform_block(bmk_time_t until)
 {
-	unsigned int tmp;
 	bmk_time_t now = 0;
-	int which = 1;
-
-	/*
-	 * Uncomment for blocked timing here, time_blocked, below and in sched_switch
-	 */
-	//bmk_time_t start = 0;
-	//bmk_time_t end = 0;
-
-	bmk_assert(cos_nesting);
 
 	/* Returned if called too late */
 	now = bmk_platform_clock_monotonic();
 	if(until < now) return;
 
 	/* Enable interupts around yield */
-	tmp = cos_nesting;
-	cos_nesting = 1; /* Set low will now enable interrupts */
-
 	bmk_platform_splx(0);
 
-	bmk_assert(!cos_nesting);
-
-	//start = bmk_platform_clock_monotonic();
-
-	while(bmk_platform_clock_monotonic() < until) {
-		if(!TAILQ_EMPTY(runq_p)) break;
-		if (which) {
-			crcalls.rump_sched_yield();
-			which = 0;
-		} else {
-		/* If the RK still has nothing in runq after returning here, go to VK */
-			crcalls.rump_vm_yield();
-			which = 1;
-		}
-	}
-	//end = bmk_platform_clock_monotonic();
-	//time_blocked += end - start;
+	/* if there is nothing in runq, blocking this should not run any BMK thread */
+	bmk_cpu_sched_block_timeout(bmk_current, until);
 
 	bmk_platform_splhigh();
-	/*
-	 * Restore the depth we had to our nesting
-	 * We do this after we set splhigh so that we properly hit the edge case code where we
-	 * really need to enable interrupts. OW we just increment cos_nesting counter
-	 */
-	cos_nesting = tmp;
-	bmk_assert(cos_nesting);
 
 	return;
 }
@@ -357,4 +325,36 @@ bmk_fs_test(void)
 {
 	/* Discontinued, now implemented as a syscall into RK */
 	//crcalls.rump_fs_test();
+}
+
+void
+bmk_cpu_sched_wakeup(struct bmk_thread *thread)
+{
+	crcalls.rump_cpu_sched_wakeup(thread);
+}
+
+int
+bmk_cpu_sched_block_timeout(struct bmk_thread *curr, unsigned long long timeout)
+{
+	return crcalls.rump_cpu_sched_block_timeout(curr, timeout);
+}
+
+void
+bmk_cpu_sched_block(struct bmk_thread *curr)
+{
+	crcalls.rump_cpu_sched_block(curr);
+}
+
+void
+bmk_cpu_sched_yield(void)
+{
+	crcalls.rump_cpu_sched_yield();
+}
+
+void
+bmk_cpu_sched_exit(void)
+{
+	crcalls.rump_cpu_sched_exit();
+	/* should not return here! */
+	bmk_assert(0);
 }

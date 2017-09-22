@@ -156,7 +156,9 @@ void
 bmk_isr(int which)
 {
 	/* schedule the interrupt handler */
+	splhigh();
 	isr_todo |= 1<<which;
+	spl0();
 	bmk_sched_wake(isr_thread);
 }
 
