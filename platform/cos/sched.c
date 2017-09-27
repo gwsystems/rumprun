@@ -84,6 +84,9 @@ extern int  bmk_cpu_sched_block_timeout(struct bmk_thread *curr, unsigned long l
 extern void bmk_cpu_sched_block(struct bmk_thread *curr);
 extern void bmk_cpu_sched_yield(void);
 extern void bmk_cpu_sched_exit(void);
+extern void bmk_cpu_sched_set_prio(int prio); /* curr thd */
+
+extern int bmk_strcmp(const char *a, const char *b);
 
 /*
  * RG: The struct definition for bmk_thread was moved
@@ -109,6 +112,7 @@ set_cos_thddata(struct bmk_thread *thread, capid_t thd, thdid_t tid)
 {
 	thread->cos_thdcap = thd;
 	thread->cos_tid = tid;
+	thread->firsttime = 1;
 }
 
 capid_t
@@ -152,6 +156,19 @@ clear_runnable(void)
 {
 	int ret = 0;
 	struct bmk_thread *thread = bmk_current;
+
+	/*
+	 * Prioritizing either just the isrthr or all three network related threads
+	 * doesn't work. We get "rumpuser mutex error" and the system halts!
+	 */
+//	if (thread->firsttime && (!bmk_strcmp(thread->bt_name, "isrthr") ||
+//				  !bmk_strcmp(thread->bt_name, "user_lwp") ||
+//				  !bmk_strcmp(thread->bt_name, "rsi0/3"))
+//	   ) {
+//		bmk_printf("Setting higher prio -%s\n", thread->bt_name);
+//		bmk_cpu_sched_set_prio(5);
+//		thread->firsttime = 0;
+//	}
 
 	if (thread->bt_wakeup_time != BMK_SCHED_BLOCK_INFTIME) {
 		ret = bmk_cpu_sched_block_timeout(thread, thread->bt_wakeup_time);

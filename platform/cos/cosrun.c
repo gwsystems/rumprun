@@ -79,6 +79,7 @@ int  bmk_cpu_sched_block_timeout(struct bmk_thread *curr, unsigned long long tim
 void bmk_cpu_sched_block(struct bmk_thread *curr);
 void bmk_cpu_sched_yield(void);
 void bmk_cpu_sched_exit(void);
+void bmk_cpu_sched_set_prio(int prio);
 
 int
 rump_shmem_dequeue_size(unsigned int srcvm, unsigned int dstvm)
@@ -357,4 +358,10 @@ bmk_cpu_sched_exit(void)
 	crcalls.rump_cpu_sched_exit();
 	/* should not return here! */
 	bmk_assert(0);
+}
+
+void
+bmk_cpu_sched_set_prio(int prio)
+{
+	crcalls.rump_cpu_sched_set_prio(prio);
 }
