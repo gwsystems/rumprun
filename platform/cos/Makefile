@@ -14,10 +14,10 @@ include ../Makefile.inc
 
 CPPFLAGS=	-Iinclude -Irump/include -I../../include -nostdinc
 CFLAGS+=	${BUILDRUMP_TOOL_CFLAGS}
-CFLAGS+=        -I../../../Composite/src/components/implementation/no_interface/rumpbooter/
-CFLAGS+=        -I../../../Composite/src/components/include/
-CFLAGS+=        -I../../../Composite/src/kernel/include/shared/
-CFLAGS+=        -Iinclude -I../../include  
+CFLAGS+=        -I../../../../../implementation/no_interface/rumpbooter/
+CFLAGS+=        -I../../../../../include/
+CFLAGS+=        -I../../../../../../kernel/include/shared/
+CFLAGS+=        -Iinclude -I../../include
 
 # Check if we're building for a supported target.
 supported= false

@@ -41,8 +41,6 @@
 
 #include <arch/i386/types.h>
 
-
-/* Located on the composite side */
 #include <rumpcalls.h>
 #include <bmk-core/sched.h>
 
