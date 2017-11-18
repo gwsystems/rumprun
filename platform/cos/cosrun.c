@@ -81,22 +81,6 @@ void bmk_cpu_sched_yield(void);
 void bmk_cpu_sched_exit(void);
 void bmk_cpu_sched_set_prio(int prio);
 
-int
-rump_shmem_dequeue_size(unsigned int srcvm, unsigned int dstvm)
-{ return crcalls.rump_dequeue_size(srcvm, dstvm); }
-
-int
-rump_shmem_write(void *buff, unsigned int size, unsigned int srcvm, unsigned int dstvm)
-{ return crcalls.rump_shmem_send(buff, size, srcvm, dstvm); }
-
-void *
-rump_shmem_read(void *buff, unsigned int srcvm, unsigned int dstvm)
-{
-
-	if(crcalls.rump_shmem_recv(buff, srcvm, dstvm) == -1) return NULL;
-	return buff;
-}
-
 void
 bmk_printf(const char *fmt, ...)
 {
