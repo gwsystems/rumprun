@@ -4,6 +4,7 @@ LIBISPRIVATE=	# defined
 # kernel-level source code
 CFLAGS+=        -fno-stack-protector
 CFLAGS+=        -I$(.CURDIR)/../../../../../implementation/no_interface/rumpbooter/
+CFLAGS+=        -I$(.CURDIR)/../../../../../interface/rk/
 CFLAGS+=        -I$(.CURDIR)/../../../../../../kernel/include/shared/
 
 SRCS=		rumpuser_base.c

@@ -39,8 +39,6 @@
 #include <bmk-core/string.h>
 #include <bmk-core/types.h>
 
-#include <arch/i386/types.h>
-
 #include <rumpcalls.h>
 #include <bmk-core/sched.h>
 

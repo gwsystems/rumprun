@@ -15,6 +15,7 @@ include ../Makefile.inc
 CPPFLAGS=	-Iinclude -Irump/include -I../../include -nostdinc
 CFLAGS+=	${BUILDRUMP_TOOL_CFLAGS}
 CFLAGS+=        -I../../../../../implementation/no_interface/rumpbooter/
+CFLAGS+=        -I../../../../../interface/rk/
 CFLAGS+=        -I../../../../../include/
 CFLAGS+=        -I../../../../../../kernel/include/shared/
 CFLAGS+=        -Iinclude -I../../include

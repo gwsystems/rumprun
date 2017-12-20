@@ -7,8 +7,6 @@
 #include <execinfo.h>
 #include "cosrun.h"
 
-#include <arch/i386/types.h>
-
 #include <rumpcalls.h>
 
 int bmk_spldepth = 1;

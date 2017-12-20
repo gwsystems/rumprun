@@ -41,7 +41,7 @@
 #include <bmk-rumpuser/core_types.h>
 #include <bmk-rumpuser/rumpuser.h>
 
-#include <rumpcalls.h>
+//#include <rumpcalls.h>
 
 TAILQ_HEAD(waithead, waiter);
 struct waiter {
