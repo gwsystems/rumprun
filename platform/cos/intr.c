@@ -65,7 +65,7 @@ static void
 isr(void *arg)
 {
 	bmk_printf("isr\n");
-	int i;//, didwork;
+	int i;
 
         rumpuser__hyp.hyp_schedule();
         rumpuser__hyp.hyp_lwproc_newlwp(0);

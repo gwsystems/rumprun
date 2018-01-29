@@ -15,9 +15,15 @@ void
 bmk_mainthread(void *cmdline)
 {
 	void *cookie;
-	/* FIXME vmid has been discontinued, add rumpcall down to composite to fetch new spdid */
-	rump_vmid = -1;
-//	bmk_printf("cmdline: \n%s", (char *)cmdline);
+	extern int spdid;
+	/*
+	 * FIXME vmid has been discontinued, add rumpcall down to composite to fetch new spdid
+	 * Use the preexisting sinv, just add another option in addition to the existing yield
+	 * and cap_frontier call
+	 */
+	rump_vmid = spdid;
+	bmk_printf("Starting bmk_mainthread\n");
+	bmk_printf("cmdline: \n%s", (char *)cmdline);
 
 	rumprun_boot(cmdline);
 	RUNMAINS();
