@@ -238,36 +238,6 @@ rumprun(int (*mainfun)(int, char *[]), int argc, char *argv[])
 {
 	printf("\n__________________rumprun_________________\n");
 	struct rumprunner *rr;
-	int shdmem_id;
-	unsigned long vaddr;
-
-	/* tmp functions to test calls down to shdmem */
-	printf("Just about to create schedulable shdmem component, lets test shdmem before that...\n");
-	shdmem_id = shm_allocate(rump_vmid, 1);
-	printf("shdmem_id: %d\n", shdmem_id);
-	shdmem_id = shm_allocate(rump_vmid, 1);
-	printf("shdmem_id: %d\n", shdmem_id);
-	shdmem_id = shm_allocate(rump_vmid, 1);
-	printf("shdmem_id: %d\n", shdmem_id);
-	shdmem_id = shm_allocate(rump_vmid, 1);
-	printf("shdmem_id: %d\n", shdmem_id);
-	shdmem_id = shm_allocate(rump_vmid, 1);
-	printf("shdmem_id: %d\n", shdmem_id);
-	shdmem_id = shm_allocate(rump_vmid, 1);
-	printf("shdmem_id: %d\n", shdmem_id);
-	shdmem_id = shm_allocate(rump_vmid, 1);
-	printf("shdmem_id: %d\n", shdmem_id);
-	shdmem_id = shm_allocate(rump_vmid, 1);
-	printf("shdmem_id: %d\n", shdmem_id);
-	shdmem_id = shm_allocate(rump_vmid, 1);
-	printf("shdmem_id: %d\n", shdmem_id);
-
-	printf("getting vaddr for the last shmem page...\n");
-	vaddr = shm_get_vaddr(rump_vmid, shdmem_id);
-	assert(vaddr);
-	printf("vaddr: %p\n", (void *)vaddr);
-	*(unsigned long *)vaddr = 'a';
-
 
 	rr = malloc(sizeof(*rr));
 
