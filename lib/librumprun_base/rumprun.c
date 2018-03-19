@@ -141,7 +141,7 @@ rumprun_boot(char *cmdline)
 		bmk_printf("rump_pub_etfs_register failed: %d\n", puberrno);
 
 	if(cmdline){
-		bmk_printf("Parsing cmdline for RK%d:\n", rump_vmid);
+		bmk_printf("Parsing cmdline for RK%d: %s\n", rump_vmid, cmdline);
 		_rumprun_config(cmdline);
 		bmk_printf("Done parsing cmdline\n");
 	}

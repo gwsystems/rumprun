@@ -420,7 +420,7 @@ bmk_memfree(void *cp, enum bmk_memwho who)
 		    (unsigned char *)origp + i < (unsigned char *)op;
 		    i++) {
 			bmk_assert(*((unsigned char *)origp + i) == MAGIC);
-				
+
 		}
 	}
 #endif

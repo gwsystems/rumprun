@@ -50,6 +50,18 @@ unsigned long bmk_mainstacksize;
  */
 #define BLOCKTIME_MAX (1*1000*1000*1000)
 
+extern const char _tdata_start[], _tdata_end[];
+extern const char _tbss_start[], _tbss_end[];
+#define TDATASIZE (_tdata_end - _tdata_start)
+#define TBSSSIZE (_tbss_end - _tbss_start)
+#define TCBOFFSET \
+    (((TDATASIZE + TBSSSIZE + sizeof(void *)-1)/sizeof(void *))*sizeof(void *))
+#define TLSAREASIZE (TCBOFFSET + BMK_TLS_EXTRA)
+
+int tcboffset;
+int tdatasize;
+int tbsssize;
+const char *_tdata_start_cpy;
 
 /* flags and their meanings + invariants */
 #define THR_RUNQ	0x0001		/* on runq, can be run		*/
@@ -65,14 +77,6 @@ unsigned long bmk_mainstacksize;
 #define THR_EXTSTACK	0x0100
 #define THR_DEAD	0x0200
 #define THR_BLOCKPREP	0x0400
-
-extern const char _tdata_start[], _tdata_end[];
-extern const char _tbss_start[], _tbss_end[];
-#define TDATASIZE (_tdata_end - _tdata_start)
-#define TBSSSIZE (_tbss_end - _tbss_start)
-#define TCBOFFSET \
-    (((TDATASIZE + TBSSSIZE + sizeof(void *)-1)/sizeof(void *))*sizeof(void *))
-#define TLSAREASIZE (TCBOFFSET + BMK_TLS_EXTRA)
 
 /* scheduler api */
 extern void bmk_cpu_sched_wakeup(struct bmk_thread *thread);
@@ -139,15 +143,12 @@ setflags(struct bmk_thread *thread, int add, int remove)
 
 static void
 set_runnable(struct bmk_thread *thread)
-{
-	bmk_cpu_sched_wakeup(thread);
-}
+{ bmk_cpu_sched_wakeup(thread); }
 
 /*
  * Called with interrupts disabled
  */
-
-static int 
+static int
 clear_runnable(void)
 {
 	int ret = 0;
@@ -169,36 +170,15 @@ stackalloc(void **stack, unsigned long *ss)
 	*ss = bmk_stacksize;
 }
 
-//static void
-//stackfree(struct bmk_thread *thread)
-//{
-//	bmk_pgfree(thread->bt_stackbase, bmk_stackpageorder);
-//}
-
 void
 bmk_sched_dumpqueue(void)
-{
-	print_threadinfo(bmk_current);
-}
+{ print_threadinfo(bmk_current); }
 
 extern bmk_time_t time_blocked;
 
-/* wonder how we're going to run this scheduler_hook!! */
-//static void
-//sched_switch(struct bmk_thread *prev, struct bmk_thread *next)
-//{
-//	if (scheduler_hook)
-//		scheduler_hook(prev->bt_cookie, next->bt_cookie);
-//	bmk_platform_cpu_sched_settls(&next->bt_tcb);
-//
-//	bmk_cpu_sched_switch_viathd(prev, next);
-//}
-
 static void
 schedule(void)
-{
-	bmk_cpu_sched_yield();
-}
+{ bmk_cpu_sched_yield(); }
 
 /*
  * Allocate tls and initialize it.
@@ -207,9 +187,10 @@ schedule(void)
 void *
 bmk_sched_tls_alloc(void)
 {
-	//allocs a char arry and stores all thread mem there.
+	bmk_printf("bmk_sched_tls_alloc\n");
 	char *tlsmem;
 
+	/* TODO change this to pull from the tls manager component */
 	tlsmem = bmk_memalloc(TLSAREASIZE, 0, BMK_MEMWHO_WIREDBMK);
 
 	bmk_memcpy(tlsmem, _tdata_start, TDATASIZE); //copy from alloc to tlsmem
@@ -262,15 +243,14 @@ initcurrent(void *tcb, struct bmk_thread *value)
 
 struct bmk_thread *
 bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
-	void (*f)(void *), void *data,
-	void *stack_base, unsigned long stack_size, void *tlsarea)
+			 void (*f)(void *), void *data,
+			 void *stack_base, unsigned long stack_size, void *tlsarea)
 {
-
 	struct bmk_thread *thread;
+	void *tlsmgr_area;
 	capid_t cos_thdcap;
 
 	thread = bmk_xmalloc_bmk(sizeof(*thread));
-	/* Set tls here if nothing else is working */
 
 	bmk_memset(thread, 0, sizeof(*thread));
 	bmk_strncpy(thread->bt_name, name, sizeof(thread->bt_name)-1);
@@ -286,32 +266,22 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 		thread->bt_flags |= THR_MUSTJOIN;
 
 	bmk_cpu_sched_create(thread, &thread->bt_tcb, f, data,
-	    stack_base, stack_size);
+			     stack_base, stack_size);
+
+	/*
+	 * TLS area provided here will be ignored and replaced
+	 * with our own from TLS Manager component
+	 */
+	tlsmgr_area = crcalls.rump_tls_alloc(thread);
+	bmk_memcpy(tlsmgr_area, tlsarea, TLSAREASIZE);
 
 	thread->bt_cookie = cookie;
 	thread->bt_wakeup_time = BMK_SCHED_BLOCK_INFTIME;
 
 	inittcb(&thread->bt_tcb, tlsarea, TCBOFFSET);
-
-	/* RG
-	 * We want to edit this function to make bmk_current = thread we are passing in
-	 * for the new thread that we just created, not the one currently running
-	 * We can do this by seting the value in tlsarea[0] = thread
-	 */
-	/* TODO confident this is outdated, no need for tlsarea array */
-	if(((struct bmk_thread **)tlsarea)[0] == thread) while(1);
-
-
 	initcurrent(tlsarea, thread);
-	//if(((struct bmk_thread **)tlsarea)[0] != thread) while(1);
-	/* For further testing, call tls_set and tls_get */
 
-	/*
-	 * RG Set tls in gs here
-	 * We need to wait till after bmk_cpu_sched_create is called
-	 * so that we can use can get the cos_thdcap of the thread that
-	 * we are setting tls for.
-	 */
+	/* RG set tls in gs register here */
 	cos_thdcap = get_cos_thdcap(thread);
 	crcalls.rump_tls_init((unsigned long)tlsarea, cos_thdcap);
 
@@ -325,14 +295,13 @@ bmk_sched_create(const char *name, void *cookie, int joinable,
 	void (*f)(void *), void *data,
 	void *stack_base, unsigned long stack_size)
 {
-
-	void *tlsarea;
 	struct bmk_thread *ret;
+	void *tlsarea;
 
 	tlsarea = bmk_sched_tls_alloc();
 
 	ret = bmk_sched_create_withtls(name, cookie, joinable, f, data,
-		stack_base, stack_size, tlsarea);
+				stack_base, stack_size, tlsarea);
 
 	return ret;
 }
@@ -475,6 +444,11 @@ bmk_sched_init(void)
 {
 	unsigned long tlsinit;
 	struct bmk_tcb tcbinit;
+
+	tcboffset = TCBOFFSET;
+	tdatasize = TDATASIZE;
+	tbsssize  = TBSSSIZE;
+	_tdata_start_cpy = _tdata_start;
 
 	bmk_printf("within bmk_sched_init\n");
 	inittcb(&tcbinit, &tlsinit, 0);

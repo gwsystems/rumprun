@@ -376,7 +376,7 @@ morecore(int bucket)
 
 void
 bmk_memfree(void *cp, enum bmk_memwho who)
-{   
+{
 	long size;
 	union overhead *op;
 	unsigned long alignpad;

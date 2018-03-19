@@ -563,7 +563,6 @@ _rumprun_config(char *cmdline)
 
 	cmdline_len = strlen(cmdline);
 
-
 	jsmn_init(&p);
 
 	ntok = jsmn_parse(&p, cmdline, cmdline_len, NULL, 0);
@@ -578,13 +577,13 @@ _rumprun_config(char *cmdline)
 	}
 
 	jsmn_init(&p);
-	
+
 	if ((ntok = jsmn_parse(&p, cmdline, cmdline_len, tokens, ntok)) < 1) {
 		errx(1, "json parse failed 2");
 	}
 
 	T_CHECKTYPE(tokens, cmdline, JSMN_OBJECT, __func__);
-	
+
 	for (t = &tokens[1]; t < &tokens[ntok]; ) {
 		for (i = 0; i < __arraycount(parsers); i++) {
 			if (T_STREQ(t, cmdline, parsers[i].name)) {
