@@ -86,6 +86,7 @@ rumpcomp_pci_irq_map(unsigned bus, unsigned device, unsigned fun,
 	if (cookie > BMK_MAXINTR)
 		return BMK_EGENERIC;
 
+	bmk_printf("device: %u, fun: %p, intrline: %d assigned to cookie: %u\n", device, (void *)fun, intrline, cookie);
 	intrs[cookie] = intrline;
 	return 0;
 }

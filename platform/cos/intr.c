@@ -146,8 +146,9 @@ bmk_isr_init(int (*func)(void *), void *arg, int intr)
 	ih->ih_fun = func;
 	ih->ih_arg = arg;
 	SLIST_INSERT_HEAD(&isr_ih[intr % BMK_INTRLEVS], ih, ih_entries);
-	if ((unsigned)intr < isr_lowest)
+	if ((unsigned)intr < isr_lowest) {
 		isr_lowest = intr;
+	}
 
 	return 0;
 }

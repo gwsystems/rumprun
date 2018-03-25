@@ -536,7 +536,7 @@ getcmdlinefromroot(const char *cfgname)
 void
 _rumprun_config(char *cmdline)
 {
-	bmk_printf("rumprun_config\n");
+	bmk_printf("_rumprun_config\n");
 	jsmn_parser p;
 	jsmntok_t *tokens = NULL;
 	jsmntok_t *t;
@@ -600,6 +600,7 @@ _rumprun_config(char *cmdline)
 		}
 	}
 	free(tokens);
+	bmk_printf("_config done\n");
 }
 
 

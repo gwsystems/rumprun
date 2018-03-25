@@ -6,7 +6,7 @@ OBJS_BMK+=	arch/x86/x86_subr.o
 
 LDSCRIPT=	arch/i386/kern.ldscript
 
-CFLAGS+=	-mno-sse -mno-mmx -march=i686
+CFLAGS+=	-mno-sse -mno-mmx -march=i686 -DBMK_SCREW_INTERRUPT_ROUTING
 
 arch/i386/locore32.o: arch/i386/locore32.S
 	${CC} ${CFLAGS} ${CPPFLAGS} -D_LOCORE -c -o arch/i386/locore32.o $<
