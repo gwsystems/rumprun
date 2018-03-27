@@ -64,7 +64,6 @@ unsigned long get_cos_thdid(struct bmk_thread *thread);
 static void
 isr(void *arg)
 {
-	bmk_printf("isr\n");
 	int i;
 
         rumpuser__hyp.hyp_schedule();
@@ -126,9 +125,6 @@ isr(void *arg)
 int
 bmk_isr_init(int (*func)(void *), void *arg, int intr)
 {
-
-	bmk_printf("%s:%d func: %x arg: %x intr: %d\n", __func__, __LINE__, (unsigned)func, (unsigned)arg, intr);
-
 	struct intrhand *ih;
 	int error;
 

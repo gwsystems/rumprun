@@ -65,7 +65,13 @@ void	bmk_sched_unsuspend(struct bmk_thread *);
 void	*bmk_sched_tls_alloc(void);
 void	bmk_sched_tls_free(void *);
 
+/* Get running thread's tcb */
 void	*bmk_sched_gettcb(void);
+/*
+ * Get tcb of another thread - COS extension
+ * Used to fetch cos set tls and set it within lwp threads
+ */
+void    *bmk_sched_thd_gettcb(struct bmk_thread *);
 
 void	bmk_cpu_sched_create(struct bmk_thread *, struct bmk_tcb *,
 			     void (*)(void *), void *,

@@ -85,8 +85,9 @@ rumprun_boot(char *cmdline)
 {
 	bmk_printf("rumprun_boot\n");
 
-	/* RG: Testing to see if gs was set correctly  */
+	/* Testing to see if gs was set correctly  */
 	bmk_printf("\n\nbmk_current: %p\n", bmk_current);
+	bmk_printf("&bmk_current: %p\n", &bmk_current);
 	/* End of testing */
 
 	struct tmpfs_args ta = {
@@ -151,9 +152,7 @@ rumprun_boot(char *cmdline)
 	 * give all threads a chance to run, and ensure that the main
 	 * thread has gone through a context switch
 	 */
-	bmk_printf("sched_yield is called\n");
 	sched_yield();
-	bmk_printf("sched_yield is exiting\n");
 
 	pthread_mutex_init(&w_mtx, NULL);
 	pthread_cond_init(&w_cv, NULL);

@@ -130,9 +130,7 @@ static void (*scheduler_hook)(void *, void *);
 
 static void
 print_threadinfo(struct bmk_thread *thread)
-{
-	    bmk_printf("Thread info: %s, %p, %i\n" ,thread->bt_name, thread, thread->bt_flags);
-}
+{ bmk_printf("Thread info: %s, %p, %i\n", thread->bt_name, thread, thread->bt_flags); }
 
 static inline void
 setflags(struct bmk_thread *thread, int add, int remove)
@@ -187,10 +185,8 @@ schedule(void)
 void *
 bmk_sched_tls_alloc(void)
 {
-	bmk_printf("bmk_sched_tls_alloc\n");
 	char *tlsmem;
 
-	/* TODO change this to pull from the tls manager component */
 	tlsmem = bmk_memalloc(TLSAREASIZE, 0, BMK_MEMWHO_WIREDBMK);
 
 	bmk_memcpy(tlsmem, _tdata_start, TDATASIZE); //copy from alloc to tlsmem
@@ -205,16 +201,18 @@ bmk_sched_tls_alloc(void)
 void
 bmk_sched_tls_free(void *mem)
 {
+	/* BMK doesn't control their tls sections anymore */
 	mem = (void *)((unsigned long)mem - TCBOFFSET);
-	bmk_memfree(mem, BMK_MEMWHO_WIREDBMK);
+	//bmk_memfree(mem, BMK_MEMWHO_WIREDBMK);
 }
 
 void *
 bmk_sched_gettcb(void)
-{
+{ return (void *)bmk_current->bt_tcb.btcb_tp; }
 
-	return (void *)bmk_current->bt_tcb.btcb_tp;
-}
+void *
+bmk_sched_thd_gettcb(struct bmk_thread *thread)
+{ return crcalls.rump_tls_alloc(thread); }
 
 static void
 inittcb(struct bmk_tcb *tcb, void *tlsarea, unsigned long tlssize)
@@ -247,7 +245,7 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 			 void *stack_base, unsigned long stack_size, void *tlsarea)
 {
 	struct bmk_thread *thread;
-	void *tlsmgr_area;
+	void *tlsmgr_area = NULL;
 	capid_t cos_thdcap;
 
 	thread = bmk_xmalloc_bmk(sizeof(*thread));
@@ -278,12 +276,12 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 	thread->bt_cookie = cookie;
 	thread->bt_wakeup_time = BMK_SCHED_BLOCK_INFTIME;
 
-	inittcb(&thread->bt_tcb, tlsarea, TCBOFFSET);
-	initcurrent(tlsarea, thread);
+	inittcb(&thread->bt_tcb, tlsmgr_area, TCBOFFSET);
+	initcurrent(tlsmgr_area, thread);
 
 	/* RG set tls in gs register here */
 	cos_thdcap = get_cos_thdcap(thread);
-	crcalls.rump_tls_init((unsigned long)tlsarea, cos_thdcap);
+	crcalls.rump_tls_init((unsigned long)tlsmgr_area, cos_thdcap);
 
 	TAILQ_INSERT_TAIL(&threadq, thread, bt_threadq);
 
@@ -450,10 +448,7 @@ bmk_sched_init(void)
 	tbsssize  = TBSSSIZE;
 	_tdata_start_cpy = _tdata_start;
 
-	bmk_printf("within bmk_sched_init\n");
 	inittcb(&tcbinit, &tlsinit, 0);
-	/* Replace as cos_thd_mod call */
-	//bmk_platform_cpu_sched_settls(&tcbinit);
 	crcalls.rump_tls_init((&tcbinit)->btcb_tp, boot_thd);
 
 	/*
@@ -469,8 +464,6 @@ bmk_sched_init(void)
 	 * to use it until we get TLS really initialized.
 	 */
 	tcbinit.btcb_tp = 0;
-	/* Replace as cos_thd_mod call */
-	//bmk_platform_cpu_sched_settls(&tcbinit);
 	crcalls.rump_tls_init((&tcbinit)->btcb_tp, boot_thd);
 }
 
@@ -488,7 +481,7 @@ bmk_sched_startmain(void (*mainfun)(void *), void *arg)
 	bmk_intr_init();
 
 	/*
-	 * Composite side scheduler! 
+	 * Composite side scheduler!
 	 * Fixed-Priority scheduler (non-preemptive at each PRIORITY)
 	 * (Interrupts can preempt BMK thread execution but BMK thread execution will
 	 * resume at the last preemption point before any other BMK thread is run).

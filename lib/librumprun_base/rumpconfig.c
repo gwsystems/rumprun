@@ -129,7 +129,6 @@ handle_cmdline(jsmntok_t *t, int left, char *data)
 static int
 handle_env(jsmntok_t *t, int left, char *data)
 {
-
 	T_CHECKTYPE(t, data, JSMN_STRING, __func__);
 
 	if (putenv(token2cstr(t, data)) == -1)
@@ -283,7 +282,6 @@ handle_net(jsmntok_t *t, int left, char *data)
 	} else {
 		errx(1, "network type \"%s\" not supported", type);
 	}
-
 
 	return 2*objsize + 1;
 }
@@ -536,7 +534,6 @@ getcmdlinefromroot(const char *cfgname)
 void
 _rumprun_config(char *cmdline)
 {
-	bmk_printf("_rumprun_config\n");
 	jsmn_parser p;
 	jsmntok_t *tokens = NULL;
 	jsmntok_t *t;
@@ -600,7 +597,6 @@ _rumprun_config(char *cmdline)
 		}
 	}
 	free(tokens);
-	bmk_printf("_config done\n");
 }
 
 

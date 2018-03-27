@@ -114,10 +114,7 @@ rumpuser_thread_create(void *(*f)(void *), void *arg, const char *thrname,
 
 void
 rumpuser_thread_exit(void)
-{
-
-	bmk_sched_exit();
-}
+{ bmk_sched_exit(); }
 
 int
 rumpuser_thread_join(void *p)
@@ -496,6 +493,4 @@ rumpuser_curlwpop(int enum_rumplwpop, struct lwp *l)
 
 struct lwp *
 rumpuser_curlwp(void)
-{
-	return current_lwp;
-}
+{ return current_lwp; }

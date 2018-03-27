@@ -87,7 +87,6 @@ static ptrdiff_t meoff;
 static void
 assignme(void *tcb, struct rumprun_lwp *value)
 {
-
 	struct rumprun_lwp **dst = (void *)((uintptr_t)tcb + meoff);
 
 	*dst = value;
@@ -126,11 +125,11 @@ rumprun_makelwp(void (*start)(void *), void *arg, void *private,
 	rl->rl_lwpid = ++curlwpid;
 
 	if (!_meuserthd) {
-		printf("creating lwp thread..");
+		printf("creating lwp thread..\n");
 		rl->rl_thread = bmk_sched_create_withtls("lwp", rl, 0,
 		    rumprun_makelwp_tramp, newlwp, stack_base, stack_size, private);
 	} else {
-		printf("creating user_lwp thread..");
+		printf("creating user_lwp thread..\n");
 		rl->rl_thread = bmk_sched_create_withtls("user_lwp", rl, 0,
 		    rumprun_makelwp_tramp, newlwp, stack_base, stack_size, private);
 	}
@@ -141,6 +140,13 @@ rumprun_makelwp(void (*start)(void *), void *arg, void *private,
 		rump_pub_lwproc_switch(curlwp);
 		return EBUSY; /* ??? */
 	}
+
+	private = bmk_sched_thd_gettcb(rl->rl_thread);
+	/*
+	 * Call assignme again to reset tls to be tls provided from cos, this is hacky
+	 * as we already it was already assigned above, but this is minimally invasive
+	 */
+	assignme(private, rl);
 
 	rump_pub_lwproc_switch(curlwp);
 
@@ -155,8 +161,6 @@ rumprun_makelwp(void (*start)(void *), void *arg, void *private,
 static void
 rumprun_makelwp_tramp(void *arg)
 {
-
-
 	rump_pub_lwproc_switch(arg);
 	(me->rl_start)(me->rl_arg);
 }
@@ -410,8 +414,6 @@ void _lwpabort(void);
 void __dead
 _lwpabort(void)
 {
-
-
 	printf("_lwpabort() called\n");
 	_exit(1);
 }

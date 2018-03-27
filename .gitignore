@@ -36,3 +36,5 @@ app-tools/specs-stub
 platform/cos/include/bmk/machine
 platform/pseudolinkstubs.c
 
+lib/libbmk_rumpuser/cos/
+lib/librumprun_base/cos/
