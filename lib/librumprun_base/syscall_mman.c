@@ -51,6 +51,12 @@
 #define MMAP_PRINTF(x)
 #endif
 
+void *rump_mmap(void *, size_t, int, int, int, off_t);
+
+void *
+rump_mmap(void *addr, size_t len, int prot, int flags, int fd, off_t off)
+{ return mmap(addr, len, prot, flags, fd, off);}
+
 void *
 mmap(void *addr, size_t len, int prot, int flags, int fd, off_t off)
 {
@@ -59,6 +65,17 @@ mmap(void *addr, size_t len, int prot, int flags, int fd, off_t off)
 	long pagesize = sysconf(_SC_PAGESIZE);
 	size_t roundedlen, nnu;
 	int error;
+
+	printf("IN RK, mmap\n");
+	printf("addr: %p, len: %u, prot: %d, flags: %d, fd: %d, off: %llu\n",
+		addr, len, prot, flags, fd, off);
+	printf("MAP_PRIVATE|MAP_ANONYMOUS: %d\n", MAP_PRIVATE|MAP_ANONYMOUS);
+	/*
+	 * hack, rk #define's are different than cos.
+	 * Reset here, hope we never use anything else..
+	 */
+	flags = MAP_PRIVATE|MAP_ANONYMOUS;
+	prot = PROT_READ|PROT_WRITE;
 
 	if (fd != -1 && prot != PROT_READ) {
 		MMAP_PRINTF(("mmap: trying to r/w map a file. failing!\n"));
@@ -103,11 +120,13 @@ mmap(void *addr, size_t len, int prot, int flags, int fd, off_t off)
 	 * stops (we could do a fstat(), but that's racy), so just assume
 	 * that the caller knows what her or she is doing.
 	 */
+	printf("%s, %d\n", __FILE__, __LINE__);
 	if (nnu != roundedlen) {
 		assert(nnu < roundedlen);
 		memset((uint8_t *)v+nnu, 0, roundedlen-nnu);
 	}
 
+	printf("v: %p\n", v);
 	return v;
 }
 #undef mmap
