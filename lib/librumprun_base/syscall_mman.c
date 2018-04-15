@@ -120,13 +120,11 @@ mmap(void *addr, size_t len, int prot, int flags, int fd, off_t off)
 	 * stops (we could do a fstat(), but that's racy), so just assume
 	 * that the caller knows what her or she is doing.
 	 */
-	printf("%s, %d\n", __FILE__, __LINE__);
 	if (nnu != roundedlen) {
 		assert(nnu < roundedlen);
 		memset((uint8_t *)v+nnu, 0, roundedlen-nnu);
 	}
 
-	printf("v: %p\n", v);
 	return v;
 }
 #undef mmap
