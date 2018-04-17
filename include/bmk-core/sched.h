@@ -96,4 +96,6 @@ void	bmk_platform_cpu_sched_settls(struct bmk_tcb *);
 bmk_time_t	bmk_platform_clock_monotonic(void);
 bmk_time_t	bmk_platform_clock_epochoffset(void);
 
+char *get_name(struct bmk_thread *thread);
+
 #endif /* _BMK_CORE_SCHED_H_ */

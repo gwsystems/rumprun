@@ -80,6 +80,8 @@ wakeup_one(struct waithead *wh)
 	struct waiter *w;
 
 	if ((w = TAILQ_FIRST(wh)) != NULL) {
+		//bmk_printf("%s, bmk_current: %s\n", __func__, get_name(bmk_current));
+		if (!bmk_strcmp(get_name(bmk_current), "voter_inv_thd")) return;
 		TAILQ_REMOVE(wh, w, entries);
 		w->onlist = 0;
 		bmk_sched_wake(w->who);
@@ -92,6 +94,8 @@ wakeup_all(struct waithead *wh)
 	struct waiter *w;
 
 	while ((w = TAILQ_FIRST(wh)) != NULL) {
+		//bmk_printf("%s, bmk_current: %s\n", __func__, get_name(bmk_current));
+		if (!bmk_strcmp(get_name(bmk_current), "voter_inv_thd")) return;
 		TAILQ_REMOVE(wh, w, entries);
 		w->onlist = 0;
 		bmk_sched_wake(w->who);
@@ -162,9 +166,13 @@ void
 rumpuser_mutex_enter_nowrap(struct rumpuser_mtx *mtx)
 {
 
-	int rv;
+	int rv = -1;
 
-	rv = rumpuser_mutex_tryenter(mtx);
+	while (rv != 0) {
+		rv = rumpuser_mutex_tryenter(mtx);
+		//if (rv != 0) bmk_printf("rumpuser_mutex_tryenter failed... trying again\n");
+		return;
+	}
 	/* one VCPU supported, no preemption => must succeed */
 	if (rv != 0) {
 		bmk_platform_halt("rumpuser mutex error");
@@ -195,6 +203,7 @@ void
 rumpuser_mutex_exit(struct rumpuser_mtx *mtx)
 {
 
+	if (mtx->v != 1) return;
 	bmk_assert(mtx->v == 1);
 	mtx->v = 0;
 	mtx->o = NULL;
