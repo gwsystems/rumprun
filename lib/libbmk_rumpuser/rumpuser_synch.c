@@ -430,14 +430,14 @@ rumpuser_cv_timedwait(struct rumpuser_cv *cv, struct rumpuser_mtx *mtx,
 	int64_t sec, int64_t nsec)
 {
 
-	int nlocks;
-	int rv;
+	//int nlocks;
+	int rv = -1;
 
-	cv->nwaiters++;
-	cv_unsched(mtx, &nlocks);
-	rv = wait(&cv->waiters, sec * 1000*1000*1000ULL + nsec);
-	cv_resched(mtx, nlocks);
-	cv->nwaiters--;
+	//cv->nwaiters++;
+	//cv_unsched(mtx, &nlocks);
+	//rv = wait(&cv->waiters, sec * 1000*1000*1000ULL + nsec);
+	//cv_resched(mtx, nlocks);
+	//cv->nwaiters--;
 
 	return rv;
 }

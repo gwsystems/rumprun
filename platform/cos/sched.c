@@ -141,7 +141,9 @@ setflags(struct bmk_thread *thread, int add, int remove)
 
 static void
 set_runnable(struct bmk_thread *thread)
-{ bmk_cpu_sched_wakeup(thread); }
+{
+	bmk_cpu_sched_wakeup(thread);
+}
 
 /*
  * Called with interrupts disabled
@@ -151,6 +153,13 @@ clear_runnable(void)
 {
 	int ret = 0;
 	struct bmk_thread *thread = bmk_current;
+
+	if (!bmk_strcmp(bmk_current->bt_name, "voter_inv_thd"))
+	{
+		printc("OH! The voter is in clear_runnable ... get out!!\n");
+		/* A number I really doubt anyone else is using and that we can recognize */
+		return 0;
+	}
 
 	if (thread->bt_wakeup_time != BMK_SCHED_BLOCK_INFTIME) {
 		ret = bmk_cpu_sched_block_timeout(thread, thread->bt_wakeup_time);
@@ -271,6 +280,7 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 	 * with our own from TLS Manager component
 	 */
 	tlsmgr_area = crcalls.rump_tls_alloc(thread);
+	bmk_printf("tlsmgr_area: %p\n", tlsmgr_area);
 	bmk_memcpy(tlsmgr_area, tlsarea, TLSAREASIZE);
 
 	thread->bt_cookie = cookie;
@@ -279,11 +289,17 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 	inittcb(&thread->bt_tcb, tlsmgr_area, TCBOFFSET);
 	initcurrent(tlsmgr_area, thread);
 
-	/* RG set tls in gs register here */
-	cos_thdcap = get_cos_thdcap(thread);
-	crcalls.rump_tls_init((unsigned long)tlsmgr_area, cos_thdcap);
 
-	TAILQ_INSERT_TAIL(&threadq, thread, bt_threadq);
+	/*
+	 * Don't include voter thread onto the runq, also no need to reset tls region
+	 * vaddr is set already by the voter
+	 */
+	if (bmk_strcmp("voter_inv_thd", thread->bt_name)) {
+		/* RG set tls in gs register here */
+		cos_thdcap = get_cos_thdcap(thread);
+		crcalls.rump_tls_init((unsigned long)tlsmgr_area, cos_thdcap);
+		TAILQ_INSERT_TAIL(&threadq, thread, bt_threadq);
+	}
 
 	return thread;
 }
