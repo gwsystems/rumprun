@@ -156,8 +156,6 @@ clear_runnable(void)
 
 	if (!bmk_strcmp(bmk_current->bt_name, "voter_inv_thd"))
 	{
-		printc("OH! The voter is in clear_runnable ... get out!!\n");
-		/* A number I really doubt anyone else is using and that we can recognize */
 		return 0;
 	}
 
