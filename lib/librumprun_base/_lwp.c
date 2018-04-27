@@ -125,8 +125,10 @@ rumprun_makelwp(void (*start)(void *), void *arg, void *private,
 	rl->rl_lwpid = ++curlwpid;
 
 	if (!_meuserthd) {
-		printf("creating lwp thread..\n");
-		rl->rl_thread = bmk_sched_create_withtls("lwp", rl, 0,
+		char name[128];
+		sprintf(name, "lwp%d", getpid());
+		printf("creating %s thread..\n", name);
+		rl->rl_thread = bmk_sched_create_withtls(name, rl, 0,
 		    rumprun_makelwp_tramp, newlwp, stack_base, stack_size, private);
 	} else {
 		printf("creating user_lwp thread..\n");
