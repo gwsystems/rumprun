@@ -232,10 +232,60 @@ mainbouncer(void *arg)
 int shm_allocate(unsigned int spdid, unsigned int num_pages);
 unsigned long shm_get_vaddr(unsigned int spdid, unsigned int id);
 
+void thread_test(void);
+void *test_func(void *);
+
+
+void *
+test_func(void *unused)
+{
+	printf("IN TEST FUNC! PID: %d\n", rump_sys_getpid());
+
+	while (1) sched_yield();
+	/* TODO, need to get sched exit working? maybe... */
+	assert(0);
+	return NULL;
+}
+
+void
+thread_test(void)
+{
+	pthread_t thd;
+	int ret;
+	struct lwp *old;
+
+	/* Create a lwp context for our thread */
+	assert(!rump_pub_lwproc_newlwp(rump_sys_getpid()));
+	old = rump_pub_lwproc_curlwp();
+	assert(old);
+
+	printf("Current pid: %d\n", rump_sys_getpid());
+	printf("Calling pthread_create for pid: %d\n", rump_sys_getpid());
+	ret = pthread_create(&thd, NULL, test_func, NULL);
+	printf("Ret from pthread_create: %d\n", ret);
+
+	printf("testing rfork...\n");
+	rump_pub_lwproc_rfork(RUMP_RFFDG);
+	printf("done testing rfork\n");
+	printf("Current pid: %d\n", rump_sys_getpid());
+
+	printf("Calling pthread_create for pid: %d\n", rump_sys_getpid());
+	ret = pthread_create(&thd, NULL, test_func, NULL);
+	printf("Ret from pthread_create: %d\n", ret);
+
+	sched_yield();
+	/* Switch back to first process */
+	rump_pub_lwproc_switch(old);
+}
+
 void *
 rumprun(int (*mainfun)(int, char *[]), int argc, char *argv[])
 {
 	printf("\n__________________rumprun_________________\n");
+	/* Test threading and process apis */
+	thread_test();
+	printf("continuing with pid: %d\n", rump_sys_getpid());
+
 	struct rumprunner *rr;
 
 	rr = malloc(sizeof(*rr));
