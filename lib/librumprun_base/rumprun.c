@@ -240,10 +240,8 @@ void *
 test_func(void *unused)
 {
 	printf("IN TEST FUNC! PID: %d\n", rump_sys_getpid());
-
-	while (1) sched_yield();
-	/* TODO, need to get sched exit working? maybe... */
-	assert(0);
+	printf("Calling pthread exit: %d\n", rump_sys_getpid());
+	pthread_exit((void *)"GOOD\0");
 	return NULL;
 }
 
@@ -252,6 +250,7 @@ thread_test(void)
 {
 	pthread_t thd;
 	int ret;
+	void *thd_ret;
 	struct lwp *old;
 
 	/* Create a lwp context for our thread */
@@ -264,6 +263,11 @@ thread_test(void)
 	ret = pthread_create(&thd, NULL, test_func, NULL);
 	printf("Ret from pthread_create: %d\n", ret);
 
+	printf("Calling pthread_join\n");
+	ret = pthread_join(thd, &thd_ret);
+	printf("ret from pthread_join: %s\n", (char *)thd_ret);
+	assert(!ret);
+
 	printf("testing rfork...\n");
 	rump_pub_lwproc_rfork(RUMP_RFFDG);
 	printf("done testing rfork\n");
@@ -273,7 +277,6 @@ thread_test(void)
 	ret = pthread_create(&thd, NULL, test_func, NULL);
 	printf("Ret from pthread_create: %d\n", ret);
 
-	sched_yield();
 	/* Switch back to first process */
 	rump_pub_lwproc_switch(old);
 }

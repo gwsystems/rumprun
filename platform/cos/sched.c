@@ -278,7 +278,6 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 	 * with our own from TLS Manager component
 	 */
 	tlsmgr_area = crcalls.rump_tls_alloc(thread);
-	bmk_printf("tlsmgr_area: %p\n", tlsmgr_area);
 	bmk_memcpy(tlsmgr_area, tlsarea, TLSAREASIZE);
 
 	thread->bt_cookie = cookie;
@@ -287,17 +286,10 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 	inittcb(&thread->bt_tcb, tlsmgr_area, TCBOFFSET);
 	initcurrent(tlsmgr_area, thread);
 
-
-	/*
-	 * Don't include voter thread onto the runq, also no need to reset tls region
-	 * vaddr is set already by the voter
-	 */
-	if (bmk_strcmp("voter_inv_thd", thread->bt_name)) {
-		/* RG set tls in gs register here */
-		cos_thdcap = get_cos_thdcap(thread);
-		crcalls.rump_tls_init((unsigned long)tlsmgr_area, cos_thdcap);
-		TAILQ_INSERT_TAIL(&threadq, thread, bt_threadq);
-	}
+	/* RG set tls in gs register here */
+	cos_thdcap = get_cos_thdcap(thread);
+	crcalls.rump_tls_init((unsigned long)tlsmgr_area, cos_thdcap);
+	TAILQ_INSERT_TAIL(&threadq, thread, bt_threadq);
 
 	return thread;
 }
@@ -350,6 +342,7 @@ bmk_sched_exit_withtls(void)
 		flags = bmk_platform_splhigh();
 	}
 
+	bmk_platform_splx(flags);
 	bmk_cpu_sched_exit();
 
 	/* FIXME: BMK REAPER FUNCTIONALITY LOST!! */
