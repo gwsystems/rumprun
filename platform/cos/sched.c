@@ -271,6 +271,7 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 	 * with our own from TLS Manager component
 	 */
 	tlsmgr_area = crcalls.rump_tls_alloc(thread);
+	bmk_printf("tlsmgr_area: %p\n", tlsmgr_area);
 	bmk_memcpy(tlsmgr_area, tlsarea, TLSAREASIZE);
 
 	thread->bt_cookie = cookie;

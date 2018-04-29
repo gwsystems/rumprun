@@ -178,6 +178,8 @@ rumpuser_mutex_tryenter(struct rumpuser_mtx *mtx)
 	struct lwp *l = rumpuser_curlwp();
 
 	if (mtx->bmk_o == bmk_current) {
+		rumpuser_dprintf("l: %p, bmk_current: %p, mtx->bmk_o: %p\n", (void *)l, (void *)bmk_current, (void *)mtx->bmk_o);
+		rumpuser_dprintf("&bmk_current: %p\n", (void *)&bmk_current);
 		bmk_platform_halt("rumpuser mutex: locking against myself");
 	}
 
@@ -478,6 +480,7 @@ rumpuser_curlwpop(int enum_rumplwpop, struct lwp *l)
 
 	switch (op) {
 	case RUMPUSER_LWP_CREATE:
+		break;
 	case RUMPUSER_LWP_DESTROY:
 		break;
 	case RUMPUSER_LWP_SET:
