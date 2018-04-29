@@ -233,10 +233,10 @@ int shm_allocate(unsigned int spdid, unsigned int num_pages);
 unsigned long shm_get_vaddr(unsigned int spdid, unsigned int id);
 
 void thread_test(void);
-void *test_func(void *);
+static void *test_func(void *);
 
 
-void *
+static void *
 test_func(void *unused)
 {
 	printf("IN TEST FUNC! PID: %d\n", rump_sys_getpid());
@@ -286,8 +286,7 @@ rumprun(int (*mainfun)(int, char *[]), int argc, char *argv[])
 {
 	printf("\n__________________rumprun_________________\n");
 	/* Test threading and process apis */
-	thread_test();
-	printf("continuing with pid: %d\n", rump_sys_getpid());
+	//thread_test();
 
 	struct rumprunner *rr;
 
