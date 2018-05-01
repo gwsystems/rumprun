@@ -1553,7 +1553,6 @@ static TAILQ_HEAD(, servbouncearg) wrklist = TAILQ_HEAD_INITIALIZER(wrklist);
 static void *
 serv_workbouncer(void *arg)
 {
-	rumpuser_dprintf("%s\n", __func__);
 	struct servbouncearg *sba;
 
 	for (;;) {
@@ -1711,7 +1710,6 @@ static pthread_attr_t pattr_detached;
 static void
 schedulework(struct spclient *spc, enum sbatype sba_type)
 {
-	rumpuser_dprintf("%s\n", __func__);
 	struct servbouncearg *sba;
 	pthread_t pt;
 	uint64_t reqno;
@@ -1770,7 +1768,6 @@ struct spservarg {
 static void
 handlereq(struct spclient *spc)
 {
-	rumpuser_dprintf("%s\n", __func__);
 	uint64_t reqno;
 	int error;
 
@@ -1999,7 +1996,6 @@ handlereq(struct spclient *spc)
 static void *
 spserver(void *arg)
 {
-	rumpuser_dprintf("%s\n", __func__);
 	struct spservarg *sarg = arg;
 	struct spclient *spc;
 	unsigned idx;
@@ -2007,7 +2003,6 @@ spserver(void *arg)
 	int rv;
 	unsigned int nfds, maxidx;
 
-	rumpuser_dprintf("%s, %d\n", __func__, __LINE__);
 	for (idx = 0; idx < MAXCLI; idx++) {
 		pfdlist[idx].fd = -1;
 		pfdlist[idx].events = POLLIN;
@@ -2017,21 +2012,17 @@ spserver(void *arg)
 		pthread_cond_init(&spc->spc_cv, NULL);
 		spc->spc_fd = -1;
 	}
-	rumpuser_dprintf("%s, %d\n", __func__, __LINE__);
 	pfdlist[0].fd = spclist[0].spc_fd = sarg->sps_sock;
 	pfdlist[0].events = POLLIN;
 	nfds = 1;
 	maxidx = 0;
 
-	rumpuser_dprintf("%s, %d\n", __func__, __LINE__);
 	pthread_attr_init(&pattr_detached);
-	rumpuser_dprintf("%s, %d\n", __func__, __LINE__);
 	pthread_attr_setdetachstate(&pattr_detached, PTHREAD_CREATE_DETACHED);
 #if NOTYET
 	pthread_attr_setstacksize(&pattr_detached, 32*1024);
 #endif
 
-	rumpuser_dprintf("%s, %d\n", __func__, __LINE__);
 	pthread_mutex_init(&sbamtx, NULL);
 	pthread_cond_init(&sbacv, NULL);
 
@@ -2041,7 +2032,6 @@ spserver(void *arg)
 		int discoed;
 
 		/* g/c hangarounds (eventually) */
-		rumpuser_dprintf("%s, %d\n", __func__, __LINE__);
 		discoed = getdisco();
 		while (discoed--) {
 			nfds--;

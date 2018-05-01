@@ -73,7 +73,6 @@ isr(void *arg)
 	//didwork = 0;
 	for (;;) {
 		splhigh();
-		bmk_printf("isr_todo: %u\n", isr_todo);
 		if (isr_todo) {
 			unsigned int isrcopy;
 			int nlocks = 1;
@@ -100,7 +99,6 @@ isr(void *arg)
 				if ((i != 13 && i != 15)) rirq = 1;
 
 				SLIST_FOREACH(ih, &isr_ih[i], ih_entries) {
-					bmk_printf("ih->ih_fun: %p\n", (void *)ih->ih_fun);
 					if (ih->ih_fun(ih->ih_arg) != 0) {
 						//didwork = 1;
 						if (rirq) rirq_workdone = 1;
@@ -116,11 +114,8 @@ isr(void *arg)
 //			}
 		} else {
 			/* no interrupts left. block until the next one. */
-			bmk_printf("%s, %d\n", __func__, __LINE__);
 			bmk_sched_blockprepare();
-			bmk_printf("%s, %d\n", __func__, __LINE__);
 			spl0();
-			bmk_printf("%s, %d\n", __func__, __LINE__);
 			bmk_sched_block();
 //			didwork = 0;
 		}

@@ -219,7 +219,7 @@ bmk_sched_gettcb(void)
 
 void *
 bmk_sched_thd_gettcb(struct bmk_thread *thread)
-{ return crcalls.rump_tls_alloc(thread); }
+{ return crcalls.rump_tls_fetch(thread); }
 
 static void
 inittcb(struct bmk_tcb *tcb, void *tlsarea, unsigned long tlssize)
@@ -278,7 +278,6 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 	 * with our own from TLS Manager component
 	 */
 	tlsmgr_area = crcalls.rump_tls_alloc(thread);
-	bmk_printf("tlsmgr_area: %p\n", tlsmgr_area);
 	bmk_memcpy(tlsmgr_area, tlsarea, TLSAREASIZE);
 
 	thread->bt_cookie = cookie;
