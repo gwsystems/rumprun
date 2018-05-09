@@ -33,6 +33,8 @@
 
 #include <bmk-rumpuser/rumpuser.h>
 
+#define BMK_SCREW_INTERRUPT_ROUTING 1
+
 #ifdef BMK_SCREW_INTERRUPT_ROUTING
 #define BMK_INTRLEVS 1
 #else
