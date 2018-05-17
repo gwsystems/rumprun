@@ -26,7 +26,9 @@ bmk_mainthread(void *cmdline)
 	bmk_printf("cmdline: \n%s", (char *)cmdline);
 
 	rumprun_boot(cmdline);
+	bmk_printf("Starting applications.\n");
 	RUNMAINS();
+	bmk_printf("Done creating applications\n");
 
 	while ((cookie = rumprun_get_finished()) != NULL)
 		rumprun_wait(cookie);

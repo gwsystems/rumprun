@@ -78,10 +78,14 @@ static struct rumprun_lwp mainthread = {
 static void rumprun_makelwp_tramp(void *);
 
 static int _meuserthd;
+static char *_meusrname = NULL;
 
 void
-rumprun_set_meuserthd(void)
-{ _meuserthd = 1; }
+rumprun_set_meuserthd(char *name)
+{
+	_meuserthd = 1;
+	_meusrname = name;
+}
 
 static ptrdiff_t meoff;
 static void
@@ -131,8 +135,8 @@ rumprun_makelwp(void (*start)(void *), void *arg, void *private,
 		rl->rl_thread = bmk_sched_create_withtls(name, rl, 0,
 		    rumprun_makelwp_tramp, newlwp, stack_base, stack_size, private);
 	} else {
-		printf("creating user_lwp thread..\n");
-		rl->rl_thread = bmk_sched_create_withtls("user_lwp", rl, 0,
+		printf("creating user_lwp thread..%s\n", _meusrname);
+		rl->rl_thread = bmk_sched_create_withtls(_meusrname, rl, 0,
 		    rumprun_makelwp_tramp, newlwp, stack_base, stack_size, private);
 	}
 
@@ -152,10 +156,18 @@ rumprun_makelwp(void (*start)(void *), void *arg, void *private,
 
 	rump_pub_lwproc_switch(curlwp);
 
-	if (!_meuserthd) TAILQ_INSERT_TAIL(&all_lwp, rl, rl_entries);
+	if (_meuserthd && _meusrname) {
+		int usrlen = strlen(_meusrname);
+		if (usrlen > 4 && strcmp((_meusrname + usrlen - 4), "stub") == 0) {
+			printf("stub component.. not adding to lwp list..\n");
+		} else {
+			TAILQ_INSERT_TAIL(&all_lwp, rl, rl_entries);
+		}
+	}
 
 	*lid = rl->rl_lwpid;
 	_meuserthd = 0;
+	_meusrname = NULL;
 
 	return 0;
 }

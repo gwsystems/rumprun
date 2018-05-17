@@ -196,26 +196,20 @@ static void *
 mainbouncer(void *arg)
 {
 	struct rumprunner *rr = arg;
-	/*
-	 * RG: Removing program name for now...WE JUST WANT TO GET TO MAIN.. *CRAZY LAUGH*
-	 * Please remember to put it back in..
-	 */
-	//const char *progname = rr->rr_argv[0];
-	fprintf(stderr, "FIX PROGNAME\n");
-	const char *progname = "slack_bot";
+	const char *progname = rr->rr_argv[0];
 	int rv;
 
 	rump_pub_lwproc_rfork(RUMP_RFFDG);
 
 	pthread_cleanup_push(releaseme, rr);
 
-	fprintf(stderr,"\n=== calling \"%s\" main() ===\n\n", progname);
+	bmk_printf("\n=== calling \"%s\" main() ===\n\n", progname);
 
 	/* run main application */
 	rv = rr->rr_mainfun(rr->rr_argc, rr->rr_argv);
 
 	fflush(stdout);
-	fprintf(stderr,"\n=== main() of \"%s\" returned %d ===\n",
+	bmk_printf("\n=== main() of \"%s\" returned %d ===\n",
 	    progname, rv);
 
 	pthread_cleanup_pop(1);
@@ -281,12 +275,35 @@ thread_test(void)
 	rump_pub_lwproc_switch(old);
 }
 
+static char *cmdstok = NULL;
+
+static char *
+rumprun_getnext_app(char *cmdline)
+{
+	static int first = 1;
+	char *tok = NULL;
+
+	if (first) {
+		first = 0;
+		cmdstok = (char *)malloc(strlen(cmdline));
+		strcpy(cmdstok, cmdline);
+
+		tok = strtok_r(cmdstok, ".", &cmdstok);
+	} else {
+		tok = strtok_r(NULL, ".", &cmdstok);
+	}
+
+	return tok;
+}
+
 void *
 rumprun(int (*mainfun)(int, char *[]), int argc, char *argv[])
 {
 	printf("\n__________________rumprun_________________\n");
 	/* Test threading and process apis */
 	//thread_test();
+	char *appname = rumprun_getnext_app(argv[0]);
+	int applen = strlen(appname);
 
 	struct rumprunner *rr;
 
@@ -296,9 +313,19 @@ rumprun(int (*mainfun)(int, char *[]), int argc, char *argv[])
 	rr->rr_mainfun = mainfun;
 	rr->rr_argc = argc;
 	rr->rr_argv = argv;
-	rr->rr_flags = 0;
+	/*
+	 * Phani: for being able to run multiple mains, make them DAEMONs..
+	 * Not sure if making them DAEMONs lead to problems!!
+	 * All "main"s still run in the same lwp context!!
+	 */
+	rr->rr_flags = RUMPRUNNER_DAEMON;
 
-	rumprun_set_meuserthd();
+	if (appname) {
+		rumprun_set_meuserthd(appname);
+	} else {
+		printf("no application associated..!!\n");
+		return rr;
+	}
 	printf("pthread_create\n");
 	if (pthread_create(&rr->rr_mainthread, NULL, mainbouncer, rr) != 0) {
 		fprintf(stderr, "rumprun: running %s failed\n", argv[0]);
@@ -306,7 +333,11 @@ rumprun(int (*mainfun)(int, char *[]), int argc, char *argv[])
 		return NULL;
 	}
 	printf("pthread_create done\n");
-	LIST_INSERT_HEAD(&rumprunners, rr, rr_entries);
+	if (applen > 4 && strcmp((appname + applen - 4), "stub") == 0) {
+		printf("Stub component %s.. not adding to the list of rumprunners..\n", appname);
+	} else {
+		LIST_INSERT_HEAD(&rumprunners, rr, rr_entries);
+	}
 
 	pthread_mutex_lock(&w_mtx);
 	while ((rr->rr_flags & (RUMPRUNNER_DONE|RUMPRUNNER_DAEMON)) == 0) {

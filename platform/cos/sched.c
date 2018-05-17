@@ -41,6 +41,7 @@
 
 #include <rumpcalls.h>
 #include <bmk-core/sched.h>
+#include <rumprun-base/fakethd.h>
 
 void *bmk_mainstackbase;
 unsigned long bmk_mainstacksize;
@@ -113,6 +114,15 @@ set_cos_thddata(struct bmk_thread *thread, capid_t thd, thdid_t tid)
 	thread->cos_thdcap = thd;
 	thread->cos_tid = tid;
 	thread->firsttime = 1;
+}
+
+int
+fakethd_create(int instance, char *name)
+{
+	if (name == NULL) return -1;
+
+	bmk_printf("Called fakethd_create\n");
+	return rk_fake_thd_creation(instance, name);
 }
 
 capid_t

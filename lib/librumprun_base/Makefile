@@ -8,10 +8,11 @@ SRCS+=		syscall_mman.c syscall_misc.c
 SRCS+=		__errno.c _lwp.c libc_stubs.c
 SRCS+=		sysproxy.c 
 SRCS+=		cnic_init.c 
+SRCS+=          fakethd.c
 
 CPPFLAGS+=	-I${.CURDIR}/../../include
 
-CFLAGS+=        -I${.CURDIR}/../../../Composite/src/components/implementation/no_interface/rumpbooter
+#CFLAGS+=        -I${.CURDIR}/../../../Composite/src/components/implementation/no_interface/rumpbooter
 
 
 .include <bsd.lib.mk>
