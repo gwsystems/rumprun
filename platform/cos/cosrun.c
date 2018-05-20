@@ -47,6 +47,7 @@ void *bmk_pgalloc(int order);
 void  bmk_pgfree(void *pointer, int order);
 void  bmk_vprintf(const char *fmt, va_list ap);
 char *bmk_strncpy(char *d, const char *s, unsigned long n);
+unsigned long bmk_strlen(const char *str);
 int   rumprun_platform_rumpuser_init(void);
 int   bmk_isr_init(int (*func)(void *), void *arg, int intr);
 
@@ -97,7 +98,7 @@ bmk_printf(const char *fmt, ...)
 void*
 bmk_va2pa(void *addr)
 {
-	return crcalls.rump_va2pa(addr);
+	return crcalls.rump_va2pa(addr, 0);
 }
 
 void*
@@ -181,6 +182,16 @@ bmk_strcpy(char *d, const char *s)
 	while ((*d++ = *s++) != '\0')
 		continue;
 	return orig;
+}
+
+unsigned long
+bmk_strlen(const char *str)
+{
+	unsigned long rv = 0;
+
+	while (*str++)
+		rv++;
+	return rv;
 }
 
 void

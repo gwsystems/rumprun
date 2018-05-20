@@ -264,6 +264,7 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 	struct bmk_thread *thread;
 	void *tlsmgr_area = NULL;
 	capid_t cos_thdcap;
+	int nmlen = bmk_strlen(name);
 
 	thread = bmk_xmalloc_bmk(sizeof(*thread));
 
@@ -299,6 +300,10 @@ bmk_sched_create_withtls(const char *name, void *cookie, int joinable,
 	/* RG set tls in gs register here */
 	cos_thdcap = get_cos_thdcap(thread);
 	crcalls.rump_tls_init((unsigned long)tlsmgr_area, cos_thdcap);
+	/* stub component main threads cannot be scheduled before their tls regions are initialized */
+	if (nmlen > 4 && bmk_strcmp((name + nmlen - 4), "stub") == 0) {
+		crcalls.rump_sched_stub(thread);
+	}
 	TAILQ_INSERT_TAIL(&threadq, thread, bt_threadq);
 
 	return thread;
